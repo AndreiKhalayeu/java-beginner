@@ -91,6 +91,7 @@ public class Calculator {
         //Создаем фрейм и задаем его основную панель
         JFrame frame = new JFrame("Calculator");
         frame.setContentPane(windowContent);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         //делаем размер окна достаточным для того, чтобы вместить все компоненты
         frame.pack();
