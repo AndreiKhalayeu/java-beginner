@@ -1,4 +1,4 @@
-package Task1;
+package task1;
 
 import javax.swing.*;
 import java.awt.*;
