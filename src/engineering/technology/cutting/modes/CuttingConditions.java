@@ -1,6 +1,6 @@
-package engineeringTechnology.cuttingModes;
+package engineering.technology.cutting.modes;
 
-public interface AxialCuttingConditions {
+public interface CuttingConditions {
     void calculateTurns(int cuttingSpeed, double toolDiameter);
     void calculateFeed(int turns, double feed);
 }

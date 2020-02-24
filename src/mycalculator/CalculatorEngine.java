@@ -1,4 +1,4 @@
-package myCalculator;
+package mycalculator;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

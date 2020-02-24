@@ -1,6 +1,6 @@
-package engineeringTechnology.cuttingModes;
+package engineering.technology.cutting.modes;
 
-public class Axialtool implements AxialCuttingConditions {
+public class Axialtool implements CuttingConditions {
     private double diameter;
     private double feed;
 
