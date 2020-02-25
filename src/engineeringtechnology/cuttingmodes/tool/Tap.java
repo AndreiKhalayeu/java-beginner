@@ -1,15 +1,14 @@
-package engineering.technology.tool;
+package engineeringtechnology.cuttingmodes.tool;
 
-import engineering.technology.cutting.modes.Tool;
+import engineeringtechnology.cuttingmodes.AbstractTool;
 
-public class Tap extends Tool {
+public class Tap extends AbstractTool {
     static final int SPEED = 6;
     private double feed;
 
     @Override
     public int calculateFeed(int turns, double feed) {
-        int f;
-        return f = (int)(turns * feed * 0.9);
+        return (int)(turns * feed * 0.9);
     }
 
     public double getFeed() {

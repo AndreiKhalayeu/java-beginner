@@ -1,4 +1,4 @@
-package engineering.technology.cutting.modes;
+package engineeringtechnology.cuttingmodes;
 
 public interface CuttingConditions {
     int calculateTurns(int cuttingSpeed, int toolDiameter);

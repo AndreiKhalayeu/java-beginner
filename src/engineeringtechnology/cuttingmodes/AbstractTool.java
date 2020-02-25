@@ -1,12 +1,11 @@
-package engineering.technology.cutting.modes;
+package engineeringtechnology.cuttingmodes;
 
-public class Tool implements CuttingConditions {
-    static final double Pi = 3.14;
+public class AbstractTool implements CuttingConditions {
     private int diameter;
 
     @Override
     public int calculateTurns(int cuttingSpeed, int toolDiameter) {
-        return (int)(1000 * cuttingSpeed / Pi * toolDiameter);
+        return (int)(1000 * cuttingSpeed / Math.PI * toolDiameter);
     }
 
     @Override

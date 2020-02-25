@@ -1,8 +1,8 @@
-package engineering.technology.tool;
+package engineeringtechnology.cuttingmodes.tool;
 
-import engineering.technology.cutting.modes.Tool;
+import engineeringtechnology.cuttingmodes.AbstractTool;
 
-public class Drill extends Tool {
+public class Drill extends AbstractTool {
     static final int SPEED = 18;
     static final double FEED = 0.2;
 
