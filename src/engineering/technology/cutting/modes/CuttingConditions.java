@@ -1,6 +1,6 @@
 package engineering.technology.cutting.modes;
 
 public interface CuttingConditions {
-    void calculateTurns(int cuttingSpeed, double toolDiameter);
-    void calculateFeed(int turns, double feed);
+    int calculateTurns(int cuttingSpeed, int toolDiameter);
+    int calculateFeed(int turns, double feed);
 }
