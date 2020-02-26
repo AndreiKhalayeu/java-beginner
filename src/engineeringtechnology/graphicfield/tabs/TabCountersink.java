@@ -1,6 +1,8 @@
 package engineeringtechnology.graphicfield.tabs;
 
-import javax.swing.*;
 
-public class TabCountersink extends JPanel {
+public class TabCountersink extends TabCutter {
+    public TabCountersink() {
+        super();
+    }
 }

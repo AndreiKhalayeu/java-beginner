@@ -1,6 +1,6 @@
 package engineeringtechnology.cuttingmodes;
 
-public class AbstractTool implements CuttingConditions {
+public abstract class AbstractTool implements CuttingConditions {
     private int diameter;
 
     @Override

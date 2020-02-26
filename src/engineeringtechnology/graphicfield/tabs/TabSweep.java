@@ -1,6 +1,8 @@
 package engineeringtechnology.graphicfield.tabs;
 
-import javax.swing.*;
 
-public class TabSweep extends JPanel {
+public class TabSweep extends TabCutter {
+    public TabSweep() {
+        super();
+    }
 }
