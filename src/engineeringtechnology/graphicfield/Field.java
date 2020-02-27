@@ -1,7 +1,6 @@
 package engineeringtechnology.graphicfield;
 
 import engineeringtechnology.graphicfield.tabs.*;
-import javafx.scene.control.Tab;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +13,7 @@ public class Field {
     private TabDrill drill;
     private TabSweep sweep;
     private TabTap tap;
+    ProcessingField processingField;
 
     Field() {
         createFrame();
@@ -78,6 +78,7 @@ public class Field {
         JTabbedPane tab = new JTabbedPane();
         countersink = new TabCountersink();
         cutter = new TabCutter();
+        createProcessing(cutter);
         drill = new TabDrill();
         sweep = new TabSweep();
         tap = new TabTap();
@@ -92,7 +93,9 @@ public class Field {
         return tab;
     }
 
-    ProcessingField processingField = new ProcessingField(this, cutter);
+    private void createProcessing(TabCutter cutter) {
+        processingField = new ProcessingField(this, cutter);
+    }
 
     public JButton getButtonStart() {
         return buttonStart;
