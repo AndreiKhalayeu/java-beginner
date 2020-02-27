@@ -1,29 +1,27 @@
 package engineeringtechnology.graphicfield;
 
 import engineeringtechnology.graphicfield.tabs.*;
+import javafx.scene.control.Tab;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Field {
-    private JPanel mainPanel;
-    private JPanel southPanel;
-    private JPanel centerPanel;
+    private JButton buttonStart;
+    private JButton buttonStop;
+    private TabCountersink countersink;
+    private TabCutter cutter;
+    private TabDrill drill;
+    private TabSweep sweep;
+    private TabTap tap;
 
     Field() {
-        createMainPanel();
         createFrame();
-        createNorthPanel();
-        createCenterPanel();
-        createSouthPanel();
-        createButtonStart();
-        createButtonStop();
-        createTads();
     }
 
     private void createFrame() {
         JFrame frame = new JFrame("Calculation of modes");
-        frame.setContentPane(mainPanel);
+        frame.setContentPane(createMainPanel());
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         //frame.setSize(700, 200);
         frame.setVisible(true);
@@ -31,57 +29,100 @@ public class Field {
         frame.setResizable(false);
     }
 
-    private void createMainPanel() {
-        mainPanel = new JPanel();
+    private JPanel createMainPanel() {
+        JPanel mainPanel = new JPanel();
         BorderLayout layout = new BorderLayout();
         mainPanel.setLayout(layout);
+        mainPanel.add("North", createNorthPanel());
+        mainPanel.add("Center", createCenterPanel());
+        mainPanel.add("South", createSouthPanel());
+        return mainPanel;
     }
 
-    private void createNorthPanel() {
+    private JPanel createNorthPanel() {
         JPanel northPanel = new JPanel();
-        mainPanel.add("North", northPanel);
         northPanel.setBackground(Color.BLACK);
+        return northPanel;
     }
 
-    private void createCenterPanel() {
-        centerPanel = new JPanel();
-        mainPanel.add("Center", centerPanel);
+    private JPanel createCenterPanel() {
+        JPanel centerPanel = new JPanel();
         centerPanel.setBackground(Color.BLACK);
+        centerPanel.add(createTads());
+        return centerPanel;
     }
 
-    private void createSouthPanel() {
-        southPanel = new JPanel();
-        mainPanel.add("South", southPanel);
+    private JPanel createSouthPanel() {
+        JPanel southPanel = new JPanel();
         southPanel.setBackground(Color.BLACK);
+        southPanel.add(createButtonStart());
+        southPanel.add(createButtonStop());
+        return southPanel;
     }
 
-    private void createButtonStart() {
-        JButton buttonStart = new JButton("Расчитать");
-        southPanel.add(buttonStart);
+    private JButton createButtonStart() {
+        buttonStart = new JButton("Расчитать");
         buttonStart.setBackground(Color.LIGHT_GRAY);
+        buttonStart.addActionListener(processingField);
+        return buttonStart;
     }
 
-    private void createButtonStop() {
-        JButton buttonStop = new JButton("Сброс");
-        southPanel.add(buttonStop);
+    private JButton createButtonStop() {
+        buttonStop = new JButton("Сброс");
         buttonStop.setBackground(Color.LIGHT_GRAY);
+        buttonStop.addActionListener(processingField);
+        return buttonStop;
     }
 
-    private void createTads() {
+    private JTabbedPane createTads() {
         JTabbedPane tab = new JTabbedPane();
-        tab.add("Зенкер", new TabCountersink());
-        tab.add("Фреза", new TabCutter());
-        tab.add("Сверло", new TabDrill());
-        tab.add("Развертка", new TabSweep());
-        tab.add("Метчик", new TabTap());
-        centerPanel.add(tab);
+        countersink = new TabCountersink();
+        cutter = new TabCutter();
+        drill = new TabDrill();
+        sweep = new TabSweep();
+        tap = new TabTap();
+        tab.add("Зенкер", countersink);
+        tab.add("Фреза", cutter);
+        tab.add("Сверло", drill);
+        tab.add("Развертка", sweep);
+        tab.add("Метчик", tap);
         tab.setBackground(Color.gray);
         tab.setForeground(Color.BLACK);
         tab.setPreferredSize(new Dimension(650,100));
+        return tab;
+    }
+
+    ProcessingField processingField = new ProcessingField(this, cutter);
+
+    public JButton getButtonStart() {
+        return buttonStart;
+    }
+
+    public JButton getButtonStop() {
+        return buttonStop;
+    }
+
+    public JPanel getCountersink() {
+        return countersink;
+    }
+
+    public JPanel getCutter() {
+        return cutter;
+    }
+
+    public JPanel getDrill() {
+        return drill;
+    }
+
+    public JPanel getSweep() {
+        return sweep;
+    }
+
+    public JPanel getTap() {
+        return tap;
     }
 
     public static void main(String[] args) {
         new Field();
     }
-
 }

@@ -2,25 +2,34 @@ package engineeringtechnology.graphicfield.tabs;
 
 
 import javax.swing.*;
+import java.awt.*;
 
 public class TabTap extends TabCutter {
-    private JLabel labelDrill;
+    private JFormattedTextField fieldDrill;
+
     public TabTap() {
         super();
         createLabelDrill();
-        createField();
-        createComboBox();
+        createFieldDrill();
+
+    }
+
+    protected void createFieldDrill() {
+        JFormattedTextField fieldDrill = new JFormattedTextField();
+        add(fieldDrill);
+        fieldDrill.setPreferredSize(new Dimension(45,20));
     }
 
     private void createLabelDrill() {
-        labelDrill = new JLabel("Сверло под метчик D,мм: ");
+        JLabel labelDrill = new JLabel("Сверло под метчик D,мм: ");
         add(labelDrill);
     }
 
-    private void createComboBox() {
-        JComboBox<String> comboBox = new JComboBox<String>();
-        comboBox.addItem("метрическая резьба");
-        comboBox.addItem("Коническая резьба");
-        add(comboBox);
+    public JFormattedTextField getFieldDrill() {
+        return fieldDrill;
+    }
+
+    public void setFieldDrill(JFormattedTextField fieldDrill) {
+        this.fieldDrill = fieldDrill;
     }
 }
