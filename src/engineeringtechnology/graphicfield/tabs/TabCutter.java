@@ -21,25 +21,25 @@ public class TabCutter extends JPanel {
     }
 
     protected void createFieldDiameter() {
-        JFormattedTextField fieldDiameter = new JFormattedTextField();
+        fieldDiameter = new JFormattedTextField();
         add(fieldDiameter);
         fieldDiameter.setPreferredSize(new Dimension(45,20));
     }
 
     protected void createFieldFeed() {
-        JFormattedTextField fieldFeed = new JFormattedTextField();
+        fieldFeed = new JFormattedTextField();
         add(fieldFeed);
         fieldFeed.setPreferredSize(new Dimension(45,20));
     }
 
     protected void createFieldTurns() {
-        JFormattedTextField fieldTurns = new JFormattedTextField();
+        fieldTurns = new JFormattedTextField();
         add(fieldTurns);
         fieldTurns.setPreferredSize(new Dimension(45,20));
     }
 
     protected void createFieldMachineFeed() {
-        JFormattedTextField fieldMachineFeed = new JFormattedTextField();
+        fieldMachineFeed = new JFormattedTextField();
         add(fieldMachineFeed);
         fieldMachineFeed.setPreferredSize(new Dimension(45,20));
     }

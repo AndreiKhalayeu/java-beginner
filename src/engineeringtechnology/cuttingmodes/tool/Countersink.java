@@ -3,6 +3,6 @@ package engineeringtechnology.cuttingmodes.tool;
 import engineeringtechnology.cuttingmodes.AbstractTool;
 
 public class Countersink extends AbstractTool {
-    static final int SPEED = 12;
-    static final double FEED = 0.3;
+    public static final int SPEED = 12;
+    public static final double FEED = 0.3;
 }

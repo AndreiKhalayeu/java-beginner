@@ -3,7 +3,7 @@ package engineeringtechnology.cuttingmodes.tool;
 import engineeringtechnology.cuttingmodes.AbstractTool;
 
 public class Tap extends AbstractTool {
-    static final int SPEED = 6;
+    public static final int SPEED = 6;
     private double feed;
 
     @Override

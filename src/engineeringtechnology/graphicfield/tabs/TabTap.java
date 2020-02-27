@@ -15,7 +15,7 @@ public class TabTap extends TabCutter {
     }
 
     protected void createFieldDrill() {
-        JFormattedTextField fieldDrill = new JFormattedTextField();
+        fieldDrill = new JFormattedTextField();
         add(fieldDrill);
         fieldDrill.setPreferredSize(new Dimension(45,20));
     }

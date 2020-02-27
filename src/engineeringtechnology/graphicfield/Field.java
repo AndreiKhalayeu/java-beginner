@@ -13,7 +13,7 @@ public class Field {
     private TabDrill drill;
     private TabSweep sweep;
     private TabTap tap;
-    ProcessingField processingField;
+    private ProcessingField processingField;
 
     Field() {
         createFrame();
@@ -78,10 +78,10 @@ public class Field {
         JTabbedPane tab = new JTabbedPane();
         countersink = new TabCountersink();
         cutter = new TabCutter();
-        createProcessing(cutter);
         drill = new TabDrill();
         sweep = new TabSweep();
         tap = new TabTap();
+        createProcessing(countersink, cutter, drill, sweep, tap);
         tab.add("Зенкер", countersink);
         tab.add("Фреза", cutter);
         tab.add("Сверло", drill);
@@ -93,8 +93,9 @@ public class Field {
         return tab;
     }
 
-    private void createProcessing(TabCutter cutter) {
-        processingField = new ProcessingField(this, cutter);
+    private void createProcessing(TabCountersink countersink, TabCutter cutter,
+                                  TabDrill drill, TabSweep sweep, TabTap tap) {
+        processingField = new ProcessingField(this, countersink, cutter, drill, sweep, tap);
     }
 
     public JButton getButtonStart() {
