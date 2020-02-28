@@ -8,12 +8,7 @@ import java.awt.*;
 public class Field {
     private JButton buttonStart;
     private JButton buttonStop;
-    private TabCountersink countersink;
-    private TabCutter cutter;
-    private TabDrill drill;
-    private TabSweep sweep;
-    private TabTap tap;
-    private ProcessingField processingField;
+    private ProcessingField processing;
 
     Field() {
         createFrame();
@@ -63,28 +58,28 @@ public class Field {
     private JButton createButtonStart() {
         buttonStart = new JButton("Расчитать");
         buttonStart.setBackground(Color.LIGHT_GRAY);
-        buttonStart.addActionListener(processingField);
+        buttonStart.addActionListener(processing);
         return buttonStart;
     }
 
     private JButton createButtonStop() {
         buttonStop = new JButton("Сброс");
         buttonStop.setBackground(Color.LIGHT_GRAY);
-        buttonStop.addActionListener(processingField);
+        buttonStop.addActionListener(processing);
         return buttonStop;
     }
 
     private JTabbedPane createTads() {
         JTabbedPane tab = new JTabbedPane();
-        countersink = new TabCountersink();
-        cutter = new TabCutter();
-        drill = new TabDrill();
-        sweep = new TabSweep();
-        tap = new TabTap();
-        createProcessing(countersink, cutter, drill, sweep, tap);
-        tab.add("Зенкер", countersink);
+        TabCountersink countersink = new TabCountersink();
+        TabCutter cutter = new TabCutter();
+        TabDrill drill = new TabDrill();
+        TabSweep sweep = new TabSweep();
+        TabTap tap = new TabTap();
+        processing = new ProcessingField(this, countersink, cutter, drill, sweep, tap);
         tab.add("Фреза", cutter);
         tab.add("Сверло", drill);
+        tab.add("Зенкер", countersink);
         tab.add("Развертка", sweep);
         tab.add("Метчик", tap);
         tab.setBackground(Color.gray);
@@ -93,37 +88,12 @@ public class Field {
         return tab;
     }
 
-    private void createProcessing(TabCountersink countersink, TabCutter cutter,
-                                  TabDrill drill, TabSweep sweep, TabTap tap) {
-        processingField = new ProcessingField(this, countersink, cutter, drill, sweep, tap);
-    }
-
     public JButton getButtonStart() {
         return buttonStart;
     }
 
     public JButton getButtonStop() {
         return buttonStop;
-    }
-
-    public JPanel getCountersink() {
-        return countersink;
-    }
-
-    public JPanel getCutter() {
-        return cutter;
-    }
-
-    public JPanel getDrill() {
-        return drill;
-    }
-
-    public JPanel getSweep() {
-        return sweep;
-    }
-
-    public JPanel getTap() {
-        return tap;
     }
 
     public static void main(String[] args) {

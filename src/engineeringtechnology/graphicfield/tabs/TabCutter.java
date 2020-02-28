@@ -64,22 +64,6 @@ public class TabCutter extends JPanel {
         add(labelMachineFeed);
     }
 
-    public void setFieldDiameter(JFormattedTextField fieldDiameter) {
-        this.fieldDiameter = fieldDiameter;
-    }
-
-    public void setFieldFeed(JFormattedTextField fieldFeed) {
-        this.fieldFeed = fieldFeed;
-    }
-
-    public void setFieldTurns(JFormattedTextField fieldTurns) {
-        this.fieldTurns = fieldTurns;
-    }
-
-    public void setFieldMachineFeed(JFormattedTextField fieldMachineFeed) {
-        this.fieldMachineFeed = fieldMachineFeed;
-    }
-
     public JFormattedTextField getFieldDiameter() {
         return fieldDiameter;
     }

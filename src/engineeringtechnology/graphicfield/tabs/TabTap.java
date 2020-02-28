@@ -28,8 +28,4 @@ public class TabTap extends TabCutter {
     public JFormattedTextField getFieldDrill() {
         return fieldDrill;
     }
-
-    public void setFieldDrill(JFormattedTextField fieldDrill) {
-        this.fieldDrill = fieldDrill;
-    }
 }

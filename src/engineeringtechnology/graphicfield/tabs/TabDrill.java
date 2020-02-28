@@ -26,8 +26,4 @@ public class TabDrill extends TabCutter {
     public JFormattedTextField getFieldBlade() {
         return fieldBlade;
     }
-
-    public void setFieldBlade(JFormattedTextField fieldBlade) {
-        this.fieldBlade = fieldBlade;
-    }
 }

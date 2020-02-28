@@ -1,5 +1,6 @@
 package engineeringtechnology.graphicfield;
 
+import engineeringtechnology.cuttingmodes.tool.Countersink;
 import engineeringtechnology.cuttingmodes.tool.Cutter;
 import engineeringtechnology.graphicfield.tabs.*;
 
@@ -31,23 +32,32 @@ public class ProcessingField implements ActionListener {
         JButton clickedButton = (JButton) e.getSource();
 
         if (clickedButton == field.getButtonStart()) {
-            calculationCutterModes();
-
-        } else {
-            cutter.getFieldDiameter().setText("");
-            cutter.getFieldFeed().setText("");
-            cutter.getFieldTurns().setText("");
-            cutter.getFieldMachineFeed().setText("");
+            calculationModes();
+        } else if (clickedButton == field.getButtonStop()){
+            deleteContentField();
         }
     }
 
-    private void calculationCutterModes() {
+    private void calculationModes() {
         Cutter cut = new Cutter();
-        if (!cutter.getFieldDiameter().getText().equals(" ")) {
-            cutter.getFieldTurns().setText("" + cut.calculateTurns(Cutter.SPEED, Integer.parseInt(cutter.getFieldDiameter().getText())));
+        Countersink countersink = new Countersink();
+        try {
+            if (!cutter.getFieldDiameter().getText().equals(" ") && Integer.parseInt(cutter.getFieldDiameter().getText()) > 9
+                    && Integer.parseInt(cutter.getFieldDiameter().getText()) < 51) {
+                cutter.getFieldTurns().setText("" + cut.calculateTurns(Cutter.SPEED, Integer.parseInt(cutter.getFieldDiameter().getText())));
+            }
+
+        } catch (NumberFormatException e) {
+            cutter.getFieldTurns().setText("");
         }
 //        if (!cutter.getFieldFeed().getText().equals(" ")) {
 //            cutter.getFieldMachineFeed().setText("" + cut.calculateFeed(Cutter.FEED, Integer.parseInt(cutter.getFieldDiameter().getText())));
 //        }
+    }
+
+    private void deleteContentField() {
+        cutter.getFieldDiameter().setText("");
+        cutter.getFieldTurns().setText("");
+        cutter.getFieldMachineFeed().setText("");
     }
 }
