@@ -8,7 +8,13 @@ import java.awt.*;
 public class Field {
     private JButton buttonStart;
     private JButton buttonStop;
-    private ProcessingField processing;
+    private ProcessingField processingField;
+    private TabCountersink tabCountersink;
+    private TabCutter tabCutter;
+    private TabDrill tabDrill;
+    private TabSweep tabSweep;
+    private TabTap tabTap;
+    private JTabbedPane tab;
 
     Field() {
         createFrame();
@@ -58,33 +64,38 @@ public class Field {
     private JButton createButtonStart() {
         buttonStart = new JButton("Расчитать");
         buttonStart.setBackground(Color.LIGHT_GRAY);
-        buttonStart.addActionListener(processing);
+        buttonStart.addActionListener(processingField);
         return buttonStart;
     }
 
     private JButton createButtonStop() {
         buttonStop = new JButton("Сброс");
         buttonStop.setBackground(Color.LIGHT_GRAY);
-        buttonStop.addActionListener(processing);
+        buttonStop.addActionListener(processingField);
         return buttonStop;
     }
 
     private JTabbedPane createTads() {
         JTabbedPane tab = new JTabbedPane();
-        TabCountersink countersink = new TabCountersink();
-        TabCutter cutter = new TabCutter();
-        TabDrill drill = new TabDrill();
-        TabSweep sweep = new TabSweep();
-        TabTap tap = new TabTap();
-        processing = new ProcessingField(this, countersink, cutter, drill, sweep, tap);
-        tab.add("Фреза", cutter);
-        tab.add("Сверло", drill);
-        tab.add("Зенкер", countersink);
-        tab.add("Развертка", sweep);
-        tab.add("Метчик", tap);
+        TabCountersink tabCountersink = new TabCountersink();
+        TabCutter tabCutter = new TabCutter();
+        TabDrill tabDrill = new TabDrill();
+        TabSweep tabSweep = new TabSweep();
+        TabTap tabTap = new TabTap();
+        processingField = new ProcessingField(this, tabCountersink, tabCutter, tabDrill, tabSweep, tabTap);
+        tab.add("Фреза", tabCutter);
+        tab.add("Сверло", tabDrill);
+        tab.add("Зенкер", tabCountersink);
+        tab.add("Развертка", tabSweep);
+        tab.add("Метчик", tabTap);
+        tab.addChangeListener(new ProcessingTab(this, tabCountersink, tabCutter, tabDrill, tabSweep, tabTap));
         tab.setBackground(Color.gray);
         tab.setForeground(Color.BLACK);
         tab.setPreferredSize(new Dimension(650,100));
+        return tab;
+    }
+
+    public JTabbedPane getTab() {
         return tab;
     }
 
@@ -94,6 +105,26 @@ public class Field {
 
     public JButton getButtonStop() {
         return buttonStop;
+    }
+
+    public TabCountersink getTabCountersink() {
+        return tabCountersink;
+    }
+
+    public TabCutter getTabCutter() {
+        return tabCutter;
+    }
+
+    public TabDrill getTabDrill() {
+        return tabDrill;
+    }
+
+    public TabSweep getTabSweep() {
+        return tabSweep;
+    }
+
+    public TabTap getTabTap() {
+        return tabTap;
     }
 
     public static void main(String[] args) {

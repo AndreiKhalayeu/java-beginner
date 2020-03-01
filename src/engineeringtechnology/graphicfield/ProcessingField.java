@@ -10,20 +10,20 @@ import java.awt.event.ActionListener;
 
 public class ProcessingField implements ActionListener {
     private Field field;
-    private TabCountersink countersink;
-    private TabCutter cutter;
-    private TabDrill drill;
-    private TabSweep sweep;
-    private TabTap tap;
+    private TabCountersink tabCountersink;
+    private TabCutter tabCutter;
+    private TabDrill tabDrill;
+    private TabSweep tabSweep;
+    private TabTap tabTap;
 
-    ProcessingField(Field field, TabCountersink countersink, TabCutter cutter, TabDrill drill,
-                    TabSweep sweep, TabTap tap) {
+    ProcessingField(Field field, TabCountersink tabCountersink, TabCutter tabCutter, TabDrill tabDrill,
+                    TabSweep tabSweep, TabTap tabTap) {
         this.field = field;
-        this.countersink = countersink;
-        this.cutter = cutter;
-        this.drill = drill;
-        this.sweep = sweep;
-        this.tap = tap;
+        this.tabCountersink = tabCountersink;
+        this.tabCutter = tabCutter;
+        this.tabDrill = tabDrill;
+        this.tabSweep = tabSweep;
+        this.tabTap = tabTap;
     }
 
     @Override
@@ -39,16 +39,16 @@ public class ProcessingField implements ActionListener {
     }
 
     private void calculationModes() {
-        Cutter cut = new Cutter();
+        Cutter cutter = new Cutter();
         Countersink countersink = new Countersink();
         try {
-            if (!cutter.getFieldDiameter().getText().equals(" ") && Integer.parseInt(cutter.getFieldDiameter().getText()) > 9
-                    && Integer.parseInt(cutter.getFieldDiameter().getText()) < 51) {
-                cutter.getFieldTurns().setText("" + cut.calculateTurns(Cutter.SPEED, Integer.parseInt(cutter.getFieldDiameter().getText())));
+            if (!tabCutter.getFieldDiameter().getText().equals(" ") && Integer.parseInt(tabCutter.getFieldDiameter().getText()) > 9
+                    && Integer.parseInt(tabCutter.getFieldDiameter().getText()) < 51) {
+                tabCutter.getFieldTurns().setText("" + cutter.calculateTurns(Cutter.SPEED, Integer.parseInt(tabCutter.getFieldDiameter().getText())));
             }
 
         } catch (NumberFormatException e) {
-            cutter.getFieldTurns().setText("");
+            tabCutter.getFieldTurns().setText("");
         }
 //        if (!cutter.getFieldFeed().getText().equals(" ")) {
 //            cutter.getFieldMachineFeed().setText("" + cut.calculateFeed(Cutter.FEED, Integer.parseInt(cutter.getFieldDiameter().getText())));
@@ -56,8 +56,8 @@ public class ProcessingField implements ActionListener {
     }
 
     private void deleteContentField() {
-        cutter.getFieldDiameter().setText("");
-        cutter.getFieldTurns().setText("");
-        cutter.getFieldMachineFeed().setText("");
+        tabCutter.getFieldDiameter().setText("");
+        tabCutter.getFieldTurns().setText("");
+        tabCutter.getFieldMachineFeed().setText("");
     }
 }
