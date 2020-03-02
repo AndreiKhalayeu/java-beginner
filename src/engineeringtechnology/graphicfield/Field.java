@@ -9,12 +9,6 @@ public class Field {
     private JButton buttonStart;
     private JButton buttonStop;
     private ProcessingField processingField;
-    private TabCountersink tabCountersink;
-    private TabCutter tabCutter;
-    private TabDrill tabDrill;
-    private TabSweep tabSweep;
-    private TabTap tabTap;
-    private JTabbedPane tab;
 
     Field() {
         createFrame();
@@ -88,14 +82,10 @@ public class Field {
         tab.add("Зенкер", tabCountersink);
         tab.add("Развертка", tabSweep);
         tab.add("Метчик", tabTap);
-        tab.addChangeListener(new ProcessingTab(this, tabCountersink, tabCutter, tabDrill, tabSweep, tabTap));
+        tab.addChangeListener(new ProcessingTab());
         tab.setBackground(Color.gray);
         tab.setForeground(Color.BLACK);
         tab.setPreferredSize(new Dimension(650,100));
-        return tab;
-    }
-
-    public JTabbedPane getTab() {
         return tab;
     }
 
@@ -105,26 +95,6 @@ public class Field {
 
     public JButton getButtonStop() {
         return buttonStop;
-    }
-
-    public TabCountersink getTabCountersink() {
-        return tabCountersink;
-    }
-
-    public TabCutter getTabCutter() {
-        return tabCutter;
-    }
-
-    public TabDrill getTabDrill() {
-        return tabDrill;
-    }
-
-    public TabSweep getTabSweep() {
-        return tabSweep;
-    }
-
-    public TabTap getTabTap() {
-        return tabTap;
     }
 
     public static void main(String[] args) {
