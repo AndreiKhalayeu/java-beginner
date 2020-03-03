@@ -1,5 +1,6 @@
 package engineeringtechnology.graphicfield;
 
+import engineeringtechnology.cuttingmodes.AbstractTool;
 import engineeringtechnology.cuttingmodes.tool.*;
 import engineeringtechnology.graphicfield.tabs.*;
 
@@ -31,74 +32,55 @@ public class ProcessingField implements ActionListener {
         JButton clickedButton = (JButton) e.getSource();
 
         if (clickedButton == field.getButtonStart()) {
-            calculationModes();
+            selectTab();
         } else if (clickedButton == field.getButtonStop()){
             deleteContentField();
         }
     }
 
-    private void calculationModes() {
-        if (nameTab.equals("фреза")) {
+    private void selectTab() {
+        if ("фреза".equals(nameTab)) {
             Cutter cutter = new Cutter();
-            //System.out.println("фреза");
-            try {
-                if (!tabCutter.getFieldDiameter().getText().equals(" ") && Integer.parseInt(tabCutter.getFieldDiameter().getText()) > 9
-                        && Integer.parseInt(tabCutter.getFieldDiameter().getText()) < 51) {
-                    tabCutter.getFieldTurns().setText("" + cutter.calculateTurns(Cutter.SPEED, Integer.parseInt(tabCutter.getFieldDiameter().getText())));
-                }
-            } catch (NumberFormatException e) {
-                tabCutter.getFieldTurns().setText("");
-            }
+            calculationModesTool(cutter, tabCutter);
         }
-        if (nameTab.equals("сверло")) {
+        if ("сверло".equals(nameTab)) {
             Drill drill = new Drill();
-            //System.out.println("сверло");
-            try {
-                if (!tabDrill.getFieldDiameter().getText().equals(" ") && Integer.parseInt(tabDrill.getFieldDiameter().getText()) > 5
-                        && Integer.parseInt(tabDrill.getFieldDiameter().getText()) < 51) {
-                    tabDrill.getFieldTurns().setText("" + drill.calculateTurns(Drill.SPEED, Integer.parseInt(tabDrill.getFieldDiameter().getText())));
-                }
-            } catch (NumberFormatException e) {
-                tabDrill.getFieldTurns().setText("");
-            }
+            calculationModesTool(drill, tabDrill);
         }
-        if (nameTab.equals("зенкер")) {
+        if ("зенкер".equals(nameTab)) {
             Countersink countersink = new Countersink();
-            //System.out.println("зенкер");
-            try {
-                if (!tabCountersink.getFieldDiameter().getText().equals(" ") && Integer.parseInt(tabCountersink.getFieldDiameter().getText()) > 7
-                        && Integer.parseInt(tabCountersink.getFieldDiameter().getText()) < 41) {
-                    tabCountersink.getFieldTurns().setText("" + countersink.calculateTurns(Countersink.SPEED, Integer.parseInt(tabCountersink.getFieldDiameter().getText())));
-                }
-            } catch (NumberFormatException e) {
-                tabCountersink.getFieldTurns().setText("");
-            }
+            calculationModesTool(countersink, tabCountersink);
         }
-        if (nameTab.equals("развертка")) {
+        if ("развертка".equals(nameTab)) {
             Sweep sweep = new Sweep();
-            //System.out.println("развертка");
-            try {
-                if (!tabSweep.getFieldDiameter().getText().equals(" ") && Integer.parseInt(tabSweep.getFieldDiameter().getText()) > 7
-                        && Integer.parseInt(tabSweep.getFieldDiameter().getText()) < 41) {
-                    tabSweep.getFieldTurns().setText("" + sweep.calculateTurns(Sweep.SPEED, Integer.parseInt(tabSweep.getFieldDiameter().getText())));
-                }
-            } catch (NumberFormatException e) {
-                tabSweep.getFieldTurns().setText("");
-            }
+            calculationModesTool(sweep, tabSweep);
         }
-        if (nameTab.equals("метчик")) {
+        if ("метчик".equals(nameTab)) {
             Tap tap = new Tap();
-            //System.out.println("метчик");
-            try {
-                if (!tabTap.getFieldDiameter().getText().equals(" ") && Integer.parseInt(tabTap.getFieldDiameter().getText()) > 5
-                        && Integer.parseInt(tabTap.getFieldDiameter().getText()) < 35) {
-                    tabTap.getFieldTurns().setText("" + tap.calculateTurns(Tap.SPEED, Integer.parseInt(tabTap.getFieldDiameter().getText())));
-                }
-            } catch (NumberFormatException e) {
-                tabTap.getFieldTurns().setText("");
-            }
+            calculationModesTool(tap, tabTap);
         }
     }
+
+    private void calculationModesTool(AbstractTool tool, TabCutter tab) {
+        int number = Integer.parseInt(tab.getFieldDiameter().getText());
+        String string = tab.getFieldDiameter().getText();
+        try {
+            if (!string.equals(" ") && number > 9 && number < 51) {
+                tab.getFieldTurns().setText("" + tool.calculateTurns(tool.getSpeed(), number));
+                tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(tool.getSpeed(), number), tool.getFeed()));
+                tab.getFieldFeed().setText("" + tool.getFeed());
+            }
+        } catch (NumberFormatException e) {
+            tab.getFieldTurns().setText("");
+            tab.getFieldFeed().setText("");
+            tab.getFieldMachineFeed().setText("");
+        }
+    }
+
+
+
+
+
 
     private void deleteContentField() {
         tabCutter.getFieldDiameter().setText("");
