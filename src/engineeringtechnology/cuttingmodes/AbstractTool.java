@@ -2,17 +2,13 @@ package engineeringtechnology.cuttingmodes;
 
 public abstract class AbstractTool implements CuttingConditions {
     private int speed;
-    private double feed;
+    private double feed ;
 
     @Override
-    public int calculateTurns(int cuttingSpeed, int toolDiameter) {
-        return (int)(1000 * cuttingSpeed / 3.14 / toolDiameter);
-    }
+    public abstract int calculateTurns(int toolDiameter);
 
     @Override
-    public int calculateFeed(int turns, double feed) {
-        return (int)(turns * feed);
-    }
+    public abstract int calculateFeed(int turns);
 
     public int getSpeed() {
         return speed;

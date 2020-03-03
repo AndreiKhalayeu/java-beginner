@@ -66,8 +66,8 @@ public class ProcessingField implements ActionListener {
         String string = tab.getFieldDiameter().getText();
         try {
             if (!string.equals(" ") && number > 9 && number < 51) {
-                tab.getFieldTurns().setText("" + tool.calculateTurns(tool.getSpeed(), number));
-                tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(tool.getSpeed(), number), tool.getFeed()));
+                tab.getFieldTurns().setText("" + tool.calculateTurns(number));
+                tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(number)));
                 tab.getFieldFeed().setText("" + tool.getFeed());
             }
         } catch (NumberFormatException e) {
