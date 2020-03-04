@@ -2,26 +2,13 @@ package engineeringtechnology.cuttingmodes.tool;
 
 import engineeringtechnology.cuttingmodes.AbstractTool;
 
-public class Tap extends Cutter {
-    private int speed = 6;
-    private double feed = 1;
-
-    @Override
-    public int calculateTurns(int toolDiameter) {
-        return (int)(1000 * speed / 3.14 / toolDiameter);
+public class Tap extends AbstractTool {
+    public Tap(int speed, double feed, double minDiameter, double maxDiameter, double minFeed, double maxFeed) {
+        super(speed, feed, minDiameter, maxDiameter, minFeed, maxFeed);
     }
 
     @Override
     public int calculateFeed(int turns) {
-        return (int)(turns * feed * 0.9);
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    @Override
-    public double getFeed() {
-        return feed;
+        return (int)(turns * toolFeed * 0.9);
     }
 }

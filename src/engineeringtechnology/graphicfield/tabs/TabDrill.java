@@ -19,7 +19,7 @@ public class TabDrill extends TabCutter {
     }
 
     private void createLabelLengthBlade() {
-        JLabel labelLengthBlade = new JLabel(">: ");
+        JLabel labelLengthBlade = new JLabel(">,мм: ");
         add(labelLengthBlade);
     }
 

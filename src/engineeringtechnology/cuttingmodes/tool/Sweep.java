@@ -2,25 +2,9 @@ package engineeringtechnology.cuttingmodes.tool;
 
 import engineeringtechnology.cuttingmodes.AbstractTool;
 
-public class Sweep extends Cutter {
-    private int speed = 8;
-    private double feed = 0.5;
+public class Sweep extends AbstractTool {
 
-    @Override
-    public int calculateTurns(int toolDiameter) {
-        return (int)(1000 * speed / 3.14 / toolDiameter);
-    }
-
-    @Override
-    public int calculateFeed(int turns) {
-        return (int)(turns * feed);
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public double getFeed() {
-        return feed;
+    public Sweep(int speed, double feed, double minDiameter, double maxDiameter, double minFeed, double maxFeed) {
+        super(speed, feed, minDiameter, maxDiameter, minFeed, maxFeed);
     }
 }

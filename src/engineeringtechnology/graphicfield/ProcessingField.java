@@ -15,6 +15,8 @@ public class ProcessingField implements ActionListener {
     private TabDrill tabDrill;
     private TabSweep tabSweep;
     private TabTap tabTap;
+    private int numberDiameter;
+    private double numberFeed;
     private static String nameTab = "фреза";
 
     ProcessingField(Field field, TabCountersink tabCountersink, TabCutter tabCutter, TabDrill tabDrill,
@@ -40,41 +42,61 @@ public class ProcessingField implements ActionListener {
 
     private void selectTab() {
         if ("фреза".equals(nameTab)) {
-            Cutter cutter = new Cutter();
+            Cutter cutter = new Cutter(25,0.2,5,65,0.1,0.3);
             calculationModesTool(cutter, tabCutter);
         }
         if ("сверло".equals(nameTab)) {
-            Drill drill = new Drill();
+            Drill drill = new Drill(18,0.2, 4, 50, 0.1, 0.3);
             calculationModesTool(drill, tabDrill);
         }
         if ("зенкер".equals(nameTab)) {
-            Countersink countersink = new Countersink();
+            Countersink countersink = new Countersink(12, 0.3, 7, 60, 0.2, 0.4);
             calculationModesTool(countersink, tabCountersink);
         }
         if ("развертка".equals(nameTab)) {
-            Sweep sweep = new Sweep();
+            Sweep sweep = new Sweep(8, 0.5,4,50,0.4,0.6);
             calculationModesTool(sweep, tabSweep);
         }
         if ("метчик".equals(nameTab)) {
-            Tap tap = new Tap();
+            Tap tap = new Tap(6, 1,6,30,0.8,3.5);
             calculationModesTool(tap, tabTap);
         }
     }
 
     private void calculationModesTool(AbstractTool tool, TabCutter tab) {
-        int number = Integer.parseInt(tab.getFieldDiameter().getText());
-        String string = tab.getFieldDiameter().getText();
         try {
-            if (!string.equals(" ") && number > 9 && number < 51) {
-                tab.getFieldTurns().setText("" + tool.calculateTurns(number));
-                tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(number)));
+            if (conditionInputDiameter(tool, tab) && conditionInputDiameterFeed(tool, tab)) {
+                tab.getFieldTurns().setText("" + tool.calculateTurns(numberDiameter));
+                tab.getFieldMachineFeed().setText("" + tool.calculateFeed(numberFeed, tool.calculateTurns(numberDiameter)));
+            }
+            if (conditionInputDiameter(tool, tab)) {
+                tab.getFieldTurns().setText("" + tool.calculateTurns(numberDiameter));
+                tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(numberDiameter)));
                 tab.getFieldFeed().setText("" + tool.getFeed());
             }
         } catch (NumberFormatException e) {
-            tab.getFieldTurns().setText("");
-            tab.getFieldFeed().setText("");
-            tab.getFieldMachineFeed().setText("");
+            System.out.println("76445");
         }
+    }
+
+    private boolean conditionInputDiameter(AbstractTool tool, TabCutter tab) {
+        String stringDiameter = tab.getFieldDiameter().getText();
+        numberDiameter = Integer.parseInt(stringDiameter);
+        return !stringDiameter.equals("") && allowableDiameter(tool, numberDiameter);
+    }
+
+    private boolean conditionInputDiameterFeed(AbstractTool tool, TabCutter tab) {
+        String stringFeed = tab.getFieldFeed().getText();
+        numberFeed = Double.parseDouble(stringFeed);
+        return !stringFeed.equals("") && allowableFeed(tool, numberFeed);
+    }
+
+    private boolean allowableDiameter(AbstractTool tool, int diameter) {
+        return diameter >= tool.getMinDiameter() && diameter <= tool.getMaxDiameter();
+    }
+
+    private boolean allowableFeed(AbstractTool tool, double feed) {
+        return feed >= tool.getMinFeed() && feed <= tool.getMaxFeed();
     }
 
 
