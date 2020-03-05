@@ -4,7 +4,7 @@ import engineeringtechnology.cuttingmodes.AbstractTool;
 
 public class Sweep extends AbstractTool {
 
-    public Sweep(int speed, double feed, double minDiameter, double maxDiameter, double minFeed, double maxFeed) {
-        super(speed, feed, minDiameter, maxDiameter, minFeed, maxFeed);
+    public Sweep() {
+        super(8, 0.5,4,50,0.4,0.6);
     }
 }

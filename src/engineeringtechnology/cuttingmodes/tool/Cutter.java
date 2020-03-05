@@ -4,7 +4,7 @@ import engineeringtechnology.cuttingmodes.AbstractTool;
 
 public class Cutter extends AbstractTool {
 
-    public Cutter(int speed, double feed, double minDiameter, double maxDiameter, double minFeed, double maxFeed) {
-        super(speed, feed, minDiameter, maxDiameter, minFeed, maxFeed);
+    public Cutter() {
+        super(25,0.2,5,65,0.1,0.3);
     }
 }

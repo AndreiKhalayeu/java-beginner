@@ -13,9 +13,10 @@ public class TabDrill extends TabCutter {
     }
 
     protected void createFieldBlade() {
-        fieldBlade = new JFormattedTextField();
+        fieldBlade = new JFormattedTextField("0");
         add(fieldBlade);
         fieldBlade.setPreferredSize(new Dimension(45,20));
+        fieldBlade.setEditable(false);
     }
 
     private void createLabelLengthBlade() {

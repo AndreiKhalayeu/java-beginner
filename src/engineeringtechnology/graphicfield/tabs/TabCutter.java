@@ -14,10 +14,10 @@ public class TabCutter extends JPanel {
         createFieldDiameter();
         createLabelFeed();
         createFieldFeed();
-        createLabelTurns();
-        createFieldTurns();
         createLabelMachineFeed();
         createFieldMachineFeed();
+        createLabelTurns();
+        createFieldTurns();
     }
 
     protected void createFieldDiameter() {
@@ -33,15 +33,17 @@ public class TabCutter extends JPanel {
     }
 
     protected void createFieldTurns() {
-        fieldTurns = new JFormattedTextField();
+        fieldTurns = new JFormattedTextField("0");
         add(fieldTurns);
         fieldTurns.setPreferredSize(new Dimension(45,20));
+        fieldTurns.setEditable(false);
     }
 
     protected void createFieldMachineFeed() {
-        fieldMachineFeed = new JFormattedTextField();
+        fieldMachineFeed = new JFormattedTextField("0");
         add(fieldMachineFeed);
         fieldMachineFeed.setPreferredSize(new Dimension(45,20));
+        fieldMachineFeed.setEditable(false);
     }
 
     private void createLabelField() {

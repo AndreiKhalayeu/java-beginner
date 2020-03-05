@@ -42,23 +42,25 @@ public class ProcessingField implements ActionListener {
 
     private void selectTab() {
         if ("фреза".equals(nameTab)) {
-            Cutter cutter = new Cutter(25,0.2,5,65,0.1,0.3);
+            Cutter cutter = new Cutter();
             calculationModesTool(cutter, tabCutter);
+
         }
         if ("сверло".equals(nameTab)) {
-            Drill drill = new Drill(18,0.2, 4, 50, 0.1, 0.3);
+            Drill drill = new Drill();
             calculationModesTool(drill, tabDrill);
+            calculationLengthPointDrill(drill, tabDrill);
         }
         if ("зенкер".equals(nameTab)) {
-            Countersink countersink = new Countersink(12, 0.3, 7, 60, 0.2, 0.4);
+            Countersink countersink = new Countersink();
             calculationModesTool(countersink, tabCountersink);
         }
         if ("развертка".equals(nameTab)) {
-            Sweep sweep = new Sweep(8, 0.5,4,50,0.4,0.6);
+            Sweep sweep = new Sweep();
             calculationModesTool(sweep, tabSweep);
         }
         if ("метчик".equals(nameTab)) {
-            Tap tap = new Tap(6, 1,6,30,0.8,3.5);
+            Tap tap = new Tap();
             calculationModesTool(tap, tabTap);
         }
     }
@@ -68,19 +70,29 @@ public class ProcessingField implements ActionListener {
             if (conditionInputDiameter(tool, tab) && conditionInputDiameterFeed(tool, tab)) {
                 tab.getFieldTurns().setText("" + tool.calculateTurns(numberDiameter));
                 tab.getFieldMachineFeed().setText("" + tool.calculateFeed(numberFeed, tool.calculateTurns(numberDiameter)));
-            }
-            if (conditionInputDiameter(tool, tab)) {
-                tab.getFieldTurns().setText("" + tool.calculateTurns(numberDiameter));
-                tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(numberDiameter)));
-                tab.getFieldFeed().setText("" + tool.getFeed());
+                tab.getFieldFeed().setText("" + numberFeed);
             }
         } catch (NumberFormatException e) {
-            System.out.println("76445");
+            tab.getFieldTurns().setText("" + tool.calculateTurns(numberDiameter));
+            tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(numberDiameter)));
+            tab.getFieldFeed().setText("" + tool.getFeed());
         }
     }
 
     private boolean conditionInputDiameter(AbstractTool tool, TabCutter tab) {
         String stringDiameter = tab.getFieldDiameter().getText();
+        try {
+            if (stringDiameter.equals("")) {
+                numberDiameter = Integer.parseInt(stringDiameter);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("введи диаметр");
+            tab.getFieldTurns().setText("0");
+            tab.getFieldMachineFeed().setText("0");
+            tab.getFieldFeed().setText("");
+            numberDiameter = 0;
+            return false;
+        }
         numberDiameter = Integer.parseInt(stringDiameter);
         return !stringDiameter.equals("") && allowableDiameter(tool, numberDiameter);
     }
@@ -99,15 +111,20 @@ public class ProcessingField implements ActionListener {
         return feed >= tool.getMinFeed() && feed <= tool.getMaxFeed();
     }
 
-
-
-
-
+    private void calculationLengthPointDrill(Drill drill, TabDrill tab) {
+        if (numberDiameter >= drill.getMinDiameter() && numberDiameter <= drill.getMaxDiameter()) {
+            tab.getFieldBlade().setText("" + drill.lengthPointDrill(numberDiameter));
+        } else {
+            tab.getFieldBlade().setText("0");
+        }
+    }
 
     private void deleteContentField() {
-        tabCutter.getFieldDiameter().setText("");
-        tabCutter.getFieldTurns().setText("");
-        tabCutter.getFieldMachineFeed().setText("");
+        tabDrill.getFieldDiameter().setText("");
+        tabDrill.getFieldTurns().setText("0");
+        tabDrill.getFieldFeed().setText("");
+        tabDrill.getFieldMachineFeed().setText("0");
+        tabDrill.getFieldBlade().setText("0");
     }
 
     public static void setNameTab(String nameTab) {

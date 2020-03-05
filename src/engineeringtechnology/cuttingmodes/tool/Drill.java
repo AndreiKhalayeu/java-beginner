@@ -4,11 +4,11 @@ import engineeringtechnology.cuttingmodes.AbstractTool;
 
 public class Drill extends AbstractTool {
 
-    public Drill(int speed, double feed, double minDiameter, double maxDiameter, double minFeed, double maxFeed) {
-        super(speed, feed, minDiameter, maxDiameter, minFeed, maxFeed);
+    public Drill() {
+        super(18,0.2, 4, 50, 0.1, 0.3);
     }
 
-    public double tipDrill(int toolDiameter) {
+    public double lengthPointDrill(int toolDiameter) {
         return 0.3 * toolDiameter;
     }
 }
