@@ -1,9 +1,9 @@
 package engineeringtechnology.cuttingmodes.datamachine;
 
-import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 public class DataGF {
-    public static final LinkedHashMap<Integer, Integer> LIST_TURNS = new LinkedHashMap<>();
+    public static final TreeMap<Integer, Integer> LIST_TURNS = new TreeMap<>();
     static {
         LIST_TURNS.put(56, 50);
         LIST_TURNS.put(71, 63);
