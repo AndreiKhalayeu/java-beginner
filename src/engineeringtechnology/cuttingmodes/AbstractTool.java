@@ -1,5 +1,10 @@
 package engineeringtechnology.cuttingmodes;
 
+import engineeringtechnology.cuttingmodes.datamachine.DataGF;
+
+import java.util.Map;
+import java.util.Set;
+
 public abstract class AbstractTool implements CuttingConditions {
     protected final int speed;
     protected final double feed ;
@@ -19,8 +24,21 @@ public abstract class AbstractTool implements CuttingConditions {
     }
 
     @Override
-    public int calculateTurns(int toolDiameter) {
+    public int calculateTurns(double toolDiameter) {
         return (int)(1000 * speed / 3.14 / toolDiameter);
+    }
+
+    @Override
+    public int calculateTurnsGF(int turns) {
+        int turnsGF = 0;
+        Set<Map.Entry<Integer, Integer>> data = DataGF.LIST_TURNS.entrySet();
+        for (Map.Entry<Integer, Integer> value : data) {
+            if (turns <= value.getKey()) {
+                turnsGF = value.getValue();
+                break;
+            }
+        }
+        return  turnsGF;
     }
 
     @Override
@@ -31,10 +49,6 @@ public abstract class AbstractTool implements CuttingConditions {
     @Override
     public int calculateFeed(double toolFeed, int turns) {
         return (int)(turns * toolFeed);
-    }
-
-    public int getSpeed() {
-        return speed;
     }
 
     public double getFeed() {
@@ -55,9 +69,5 @@ public abstract class AbstractTool implements CuttingConditions {
 
     public double getMaxFeed() {
         return maxFeed;
-    }
-
-    public double getToolFeed() {
-        return toolFeed;
     }
 }

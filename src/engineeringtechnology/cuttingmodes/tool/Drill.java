@@ -8,7 +8,7 @@ public class Drill extends AbstractTool {
         super(18,0.2, 4, 50, 0.1, 0.3);
     }
 
-    public double lengthPointDrill(int toolDiameter) {
+    public double lengthPointDrill(double toolDiameter) {
         return 0.3 * toolDiameter;
     }
 }

@@ -15,7 +15,7 @@ public class ProcessingField implements ActionListener {
     private TabDrill tabDrill;
     private TabSweep tabSweep;
     private TabTap tabTap;
-    private int numberDiameter;
+    private double numberDiameter;
     private double numberFeed;
     private static String nameTab = "фреза";
 
@@ -83,7 +83,7 @@ public class ProcessingField implements ActionListener {
         String stringDiameter = tab.getFieldDiameter().getText();
         try {
             if (stringDiameter.equals("")) {
-                numberDiameter = Integer.parseInt(stringDiameter);
+                numberDiameter = Double.parseDouble(stringDiameter);
             }
         } catch (NumberFormatException e) {
             System.out.println("введи диаметр");
@@ -93,7 +93,7 @@ public class ProcessingField implements ActionListener {
             numberDiameter = 0;
             return false;
         }
-        numberDiameter = Integer.parseInt(stringDiameter);
+        numberDiameter = Double.parseDouble(stringDiameter);
         return !stringDiameter.equals("") && allowableDiameter(tool, numberDiameter);
     }
 
@@ -103,7 +103,7 @@ public class ProcessingField implements ActionListener {
         return !stringFeed.equals("") && allowableFeed(tool, numberFeed);
     }
 
-    private boolean allowableDiameter(AbstractTool tool, int diameter) {
+    private boolean allowableDiameter(AbstractTool tool, double diameter) {
         return diameter >= tool.getMinDiameter() && diameter <= tool.getMaxDiameter();
     }
 
@@ -113,7 +113,11 @@ public class ProcessingField implements ActionListener {
 
     private void calculationLengthPointDrill(Drill drill, TabDrill tab) {
         if (numberDiameter >= drill.getMinDiameter() && numberDiameter <= drill.getMaxDiameter()) {
-            tab.getFieldBlade().setText("" + drill.lengthPointDrill(numberDiameter));
+            if (drill.lengthPointDrill(numberDiameter) % 1 == 0) {
+                tab.getFieldBlade().setText("" + (int)drill.lengthPointDrill(numberDiameter));
+            } else {
+                tab.getFieldBlade().setText(String.format("%.2f", drill.lengthPointDrill(numberDiameter)).replaceAll("\\.?0*$", ""));
+            }
         } else {
             tab.getFieldBlade().setText("0");
         }
