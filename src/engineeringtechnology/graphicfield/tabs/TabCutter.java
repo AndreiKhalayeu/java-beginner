@@ -10,6 +10,7 @@ public class TabCutter extends JPanel {
     private JFormattedTextField fieldMachineFeed;
 
     public TabCutter() {
+        createCheckBox();
         createLabelField();
         createFieldDiameter();
         createLabelFeed();
@@ -18,6 +19,11 @@ public class TabCutter extends JPanel {
         createFieldMachineFeed();
         createLabelTurns();
         createFieldTurns();
+    }
+
+    protected void createCheckBox() {
+        JCheckBox checkBox = new JCheckBox("ГФ2171");
+        add(checkBox);
     }
 
     protected void createFieldDiameter() {

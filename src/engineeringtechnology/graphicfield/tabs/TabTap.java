@@ -22,7 +22,7 @@ public class TabTap extends TabCutter {
     }
 
     private void createLabelDrill() {
-        JLabel labelDrill = new JLabel("Сверло под метчик D,мм: ");
+        JLabel labelDrill = new JLabel("Сверло D,мм: ");
         add(labelDrill);
     }
 
