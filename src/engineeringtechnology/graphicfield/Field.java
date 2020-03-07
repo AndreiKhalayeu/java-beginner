@@ -9,6 +9,7 @@ public class Field {
     private JButton buttonStart;
     private JButton buttonStop;
     private ProcessingField processingField;
+    private JLabel messageError;
 
     Field() {
         createFrame();
@@ -37,6 +38,9 @@ public class Field {
     private JPanel createNorthPanel() {
         JPanel northPanel = new JPanel();
         northPanel.setBackground(Color.BLACK);
+        messageError = new JLabel("");
+        messageError.setForeground(Color.red);
+        northPanel.add(messageError);
         return northPanel;
     }
 
@@ -95,6 +99,10 @@ public class Field {
 
     public JButton getButtonStop() {
         return buttonStop;
+    }
+
+    public JLabel getMessageError() {
+        return messageError;
     }
 
     public static void main(String[] args) {

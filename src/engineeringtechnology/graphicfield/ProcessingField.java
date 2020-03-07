@@ -5,6 +5,7 @@ import engineeringtechnology.cuttingmodes.tool.*;
 import engineeringtechnology.graphicfield.tabs.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -73,6 +74,8 @@ public class ProcessingField implements ActionListener {
                 tab.getFieldFeed().setText("" + numberFeed);
             }
         } catch (NumberFormatException e) {
+            field.getMessageError().setForeground(Color.LIGHT_GRAY);
+            field.getMessageError().setText("Установлена средняя подача");
             tab.getFieldTurns().setText("" + tool.calculateTurns(numberDiameter));
             tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(numberDiameter)));
             tab.getFieldFeed().setText("" + tool.getFeed());
@@ -86,13 +89,14 @@ public class ProcessingField implements ActionListener {
                 numberDiameter = Double.parseDouble(stringDiameter);
             }
         } catch (NumberFormatException e) {
-            System.out.println("введи диаметр");
+            field.getMessageError().setText("Введите диаметр!");
             tab.getFieldTurns().setText("0");
             tab.getFieldMachineFeed().setText("0");
             tab.getFieldFeed().setText("");
             numberDiameter = 0;
             return false;
         }
+        field.getMessageError().setText("");
         numberDiameter = Double.parseDouble(stringDiameter);
         return !stringDiameter.equals("") && allowableDiameter(tool, numberDiameter);
     }
