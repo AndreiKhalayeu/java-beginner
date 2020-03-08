@@ -39,7 +39,6 @@ public class Field {
         JPanel northPanel = new JPanel();
         northPanel.setBackground(Color.BLACK);
         messageError = new JLabel("");
-        messageError.setForeground(Color.red);
         northPanel.add(messageError);
         return northPanel;
     }

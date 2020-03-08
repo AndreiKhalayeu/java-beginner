@@ -74,8 +74,8 @@ public class ProcessingField implements ActionListener {
                 tab.getFieldFeed().setText("" + numberFeed);
             }
         } catch (NumberFormatException e) {
-            field.getMessageError().setForeground(Color.LIGHT_GRAY);
-            field.getMessageError().setText("Установлена средняя подача");
+            field.getMessageError().setForeground(Color.green);
+            field.getMessageError().setText("Установлена средняя подача S=" + tool.getFeed() + " мм/об");
             tab.getFieldTurns().setText("" + tool.calculateTurns(numberDiameter));
             tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(numberDiameter)));
             tab.getFieldFeed().setText("" + tool.getFeed());
@@ -89,7 +89,8 @@ public class ProcessingField implements ActionListener {
                 numberDiameter = Double.parseDouble(stringDiameter);
             }
         } catch (NumberFormatException e) {
-            field.getMessageError().setText("Введите диаметр!");
+            field.getMessageError().setForeground(Color.red);
+            field.getMessageError().setText("Введите диаметр инструмента от " + (int)tool.getMinDiameter() + " до " + (int)tool.getMaxDiameter() + " мм!");
             tab.getFieldTurns().setText("0");
             tab.getFieldMachineFeed().setText("0");
             tab.getFieldFeed().setText("");
