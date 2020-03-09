@@ -1,18 +1,25 @@
 package engineeringtechnology.cuttingmodes;
 
-import engineeringtechnology.cuttingmodes.datamachine.DataGF;
+import engineeringtechnology.cuttingmodes.data.DataGF;
 
 import java.util.Map;
 import java.util.Set;
 
 public abstract class AbstractTool implements CuttingConditions {
     protected final int speed;
-    protected final double feed ;
     protected final double minDiameter;
     protected final double maxDiameter;
-    protected final double minFeed;
-    protected final double maxFeed;
+    protected double feed;
+    protected double minFeed;
+    protected double maxFeed;
+
     protected double toolFeed;
+
+    public AbstractTool(int speed, double minDiameter, double maxDiameter) {
+        this.speed = speed;
+        this.minDiameter = minDiameter;
+        this.maxDiameter = maxDiameter;
+    }
 
     public AbstractTool(int speed, double feed, double minDiameter, double maxDiameter, double minFeed, double maxFeed) {
         this.speed = speed;

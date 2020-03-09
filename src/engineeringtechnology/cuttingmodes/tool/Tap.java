@@ -2,9 +2,23 @@ package engineeringtechnology.cuttingmodes.tool;
 
 import engineeringtechnology.cuttingmodes.AbstractTool;
 
+import java.util.ArrayList;
+
 public class Tap extends AbstractTool {
+    public static final ArrayList<String> FEED = new ArrayList<>();
+    static {
+        FEED.add("0.8");
+        FEED.add("1.0");
+        FEED.add("1.25");
+        FEED.add("1.5");
+        FEED.add("1.75");
+        FEED.add("2.0");
+        FEED.add("2.5");
+        FEED.add("3.0");
+        FEED.add("3.5");
+    }
     public Tap() {
-        super(6, 1,6,30,0.8,3.5);
+        super(6,6,30);
     }
 
     @Override

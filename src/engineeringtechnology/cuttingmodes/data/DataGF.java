@@ -1,4 +1,4 @@
-package engineeringtechnology.cuttingmodes.datamachine;
+package engineeringtechnology.cuttingmodes.data;
 
 import java.util.TreeMap;
 

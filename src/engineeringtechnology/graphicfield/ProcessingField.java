@@ -30,14 +30,20 @@ public class ProcessingField implements ActionListener {
         this.tabTap = tabTap;
     }
 
+    public ProcessingField() {
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton clickedButton = (JButton) e.getSource();
-
-        if (clickedButton == field.getButtonStart()) {
-            selectTab();
-        } else if (clickedButton == field.getButtonStop()){
-            deleteContentField();
+        if (e.getSource() instanceof JButton) {
+            JButton clickedButton = (JButton) e.getSource();
+            if (clickedButton == field.getButtonStart()) {
+                selectTab();
+            } else if (clickedButton == field.getButtonStop()) {
+                deleteContentField();
+            }
+        } else if (e.getSource() instanceof JComboBox) {
+            System.out.println("4554");
         }
     }
 
@@ -45,7 +51,6 @@ public class ProcessingField implements ActionListener {
         if ("фреза".equals(nameTab)) {
             Cutter cutter = new Cutter();
             calculationModesTool(cutter, tabCutter);
-
         }
         if ("сверло".equals(nameTab)) {
             Drill drill = new Drill();
