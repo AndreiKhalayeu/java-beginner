@@ -45,11 +45,10 @@ public class ProcessingField implements ActionListener {
             }
         } else if (e.getSource() instanceof JComboBox) {
             try {
-                JComboBox clickedComboBox = (JComboBox) e.getSource();
-                if ("фреза".equals(nameTab) && clickedComboBox.getSelectedIndex() == 0) {
+                if ("фреза".equals(nameTab) && tabCutter.getComboBoxNameCutter().getSelectedIndex() == 0) {
                     nameComboBox = "Коническая фреза";
                 }
-                if ("фреза".equals(nameTab) && clickedComboBox.getSelectedIndex() == 1) {
+                if ("фреза".equals(nameTab) && tabCutter.getComboBoxNameCutter().getSelectedIndex() == 1) {
                     nameComboBox = "Торцевая фреза";
                 }
             } catch (NullPointerException g) {
