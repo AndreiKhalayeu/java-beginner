@@ -10,6 +10,7 @@ public class TabCutter extends JPanel {
     private JFormattedTextField fieldFeed;
     private JFormattedTextField fieldTurns;
     private JFormattedTextField fieldMachineFeed;
+    private JComboBox<String> comboBoxNameCutter;
 
     public TabCutter() {
         createCheckBox();
@@ -26,7 +27,7 @@ public class TabCutter extends JPanel {
 
     protected void createFieldName() {
         ProcessingField processingField = new ProcessingField();
-        JComboBox<String> comboBoxNameCutter = new JComboBox<>();
+        comboBoxNameCutter = new JComboBox<>();
         comboBoxNameCutter.addItem("Коническая фреза");
         comboBoxNameCutter.addItem("Торцевая фреза");
         add(comboBoxNameCutter);
@@ -104,5 +105,9 @@ public class TabCutter extends JPanel {
 
     public JFormattedTextField getFieldMachineFeed() {
         return fieldMachineFeed;
+    }
+
+    public JComboBox<String> getComboBoxNameCutter() {
+        return comboBoxNameCutter;
     }
 }

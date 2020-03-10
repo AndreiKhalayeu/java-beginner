@@ -9,6 +9,7 @@ import java.awt.*;
 
 public class TabTap extends TabCutter {
     private JFormattedTextField fieldDrill;
+    private JComboBox<String> comboBoxNameTap;
 
     public TabTap() {
     }
@@ -16,7 +17,7 @@ public class TabTap extends TabCutter {
     @Override
     protected void createFieldName() {
         ProcessingField processingField = new ProcessingField();
-        JComboBox<String> comboBoxNameTap = new JComboBox<>();
+        comboBoxNameTap = new JComboBox<>();
         comboBoxNameTap.addItem("Метр. резьба ГОСТ 24705-81");
         comboBoxNameTap.addItem("Конич. резьба ГОСТ 6111-52");
         comboBoxNameTap.addItem("Тр. цилиндр. резьба ГОСТ 21348-75");
@@ -52,6 +53,10 @@ public class TabTap extends TabCutter {
         createFieldDrill();
         JLabel labelFormulaTurnsFeed = new JLabel("n = 1000*6 / 3.14*D, об/мин  F = n*s*0.9, мм/мин");
         add(labelFormulaTurnsFeed);
+    }
+
+    public JComboBox<String> getComboBoxNameTap() {
+        return comboBoxNameTap;
     }
 
     public JFormattedTextField getFieldDrill() {

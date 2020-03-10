@@ -19,6 +19,7 @@ public class ProcessingField implements ActionListener {
     private double numberDiameter;
     private double numberFeed;
     private static String nameTab = "фреза";
+    private String nameComboBox = "Коническая фреза";
 
     ProcessingField(Field field, TabCountersink tabCountersink, TabCutter tabCutter, TabDrill tabDrill,
                     TabSweep tabSweep, TabTap tabTap) {
@@ -36,21 +37,36 @@ public class ProcessingField implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof JButton) {
-            JButton clickedButton = (JButton) e.getSource();
+            JButton clickedButton = (JButton)e.getSource();
             if (clickedButton == field.getButtonStart()) {
                 selectTab();
             } else if (clickedButton == field.getButtonStop()) {
                 deleteContentField();
             }
         } else if (e.getSource() instanceof JComboBox) {
-            System.out.println("4554");
+            try {
+                JComboBox clickedComboBox = (JComboBox) e.getSource();
+                if ("фреза".equals(nameTab) && clickedComboBox.getSelectedIndex() == 0) {
+                    nameComboBox = "Коническая фреза";
+                }
+                if ("фреза".equals(nameTab) && clickedComboBox.getSelectedIndex() == 1) {
+                    nameComboBox = "Торцевая фреза";
+                }
+            } catch (NullPointerException g) {
+                System.out.println("5456");
+            }
+
         }
     }
 
     private void selectTab() {
-        if ("фреза".equals(nameTab)) {
+        if ("фреза".equals(nameTab) && "Коническая фреза".equals(nameComboBox)) {
             Cutter cutter = new Cutter();
             calculationModesTool(cutter, tabCutter);
+        }
+        if ("фреза".equals(nameTab) && "Торцевая фреза".equals(nameComboBox)) {
+            CutterButt cutterButt = new CutterButt();
+            calculationModesTool(cutterButt, tabCutter);
         }
         if ("сверло".equals(nameTab)) {
             Drill drill = new Drill();
