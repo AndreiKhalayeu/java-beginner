@@ -1,6 +1,6 @@
 package engineeringtechnology.graphicfield.tabs;
 
-import engineeringtechnology.graphicfield.ProcessingField;
+import engineeringtechnology.graphicfield.ProcessingComboBox;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,12 +26,12 @@ public class TabCutter extends JPanel {
     }
 
     protected void createFieldName() {
-        ProcessingField processingField = new ProcessingField(this);
+        ProcessingComboBox processingComboBox = new ProcessingComboBox(this);
         comboBoxNameCutter = new JComboBox<>();
         comboBoxNameCutter.addItem("Коническая фреза");
         comboBoxNameCutter.addItem("Торцевая фреза");
         add(comboBoxNameCutter);
-        comboBoxNameCutter.addActionListener(processingField);
+        comboBoxNameCutter.addActionListener(processingComboBox);
     }
 
     protected void createCheckBox() {

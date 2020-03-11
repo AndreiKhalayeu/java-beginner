@@ -2,7 +2,7 @@ package engineeringtechnology.graphicfield.tabs;
 
 
 import engineeringtechnology.cuttingmodes.tool.Tap;
-import engineeringtechnology.graphicfield.ProcessingField;
+import engineeringtechnology.graphicfield.ProcessingComboBox;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,14 +16,14 @@ public class TabTap extends TabCutter {
 
     @Override
     protected void createFieldName() {
-        ProcessingField processingField = new ProcessingField(this);
+        ProcessingComboBox processingComboBox = new ProcessingComboBox(this);
         comboBoxNameTap = new JComboBox<>();
         comboBoxNameTap.addItem("Метр. резьба ГОСТ 24705-81");
         comboBoxNameTap.addItem("Конич. резьба ГОСТ 6111-52");
         comboBoxNameTap.addItem("Тр. цилиндр. резьба ГОСТ 21348-75");
         comboBoxNameTap.addItem("Тр. конич. резьба ГОСТ 21350-75");
         add(comboBoxNameTap);
-        comboBoxNameTap.addActionListener(processingField);
+        comboBoxNameTap.addActionListener(processingComboBox);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package engineeringtechnology.graphicfield.tabs;
 
 
-import engineeringtechnology.graphicfield.ProcessingField;
+import engineeringtechnology.graphicfield.ProcessingComboBox;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,12 +13,12 @@ public class TabSweep extends TabCutter {
 
     @Override
     protected void createFieldName() {
-        ProcessingField processingField = new ProcessingField(this);
+        ProcessingComboBox processingComboBox = new ProcessingComboBox(this);
         comboBoxNameSweep = new JComboBox<>();
         comboBoxNameSweep.addItem("Цилиндр. развертка");
         comboBoxNameSweep.addItem("Конич. развертка");
         add(comboBoxNameSweep);
-        comboBoxNameSweep.addActionListener(processingField);
+        comboBoxNameSweep.addActionListener(processingComboBox);
     }
 
     @Override

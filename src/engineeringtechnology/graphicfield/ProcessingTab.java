@@ -12,19 +12,19 @@ public class ProcessingTab implements ChangeListener {
         JTabbedPane clickedTabbedPane = (JTabbedPane) e.getSource();
 
         if (clickedTabbedPane.getSelectedIndex() == 0) {
-            ProcessingField.setNameTab("фреза");
+            ProcessingButton.setNameTab("фреза");
         }
         if (clickedTabbedPane.getSelectedIndex() == 1) {
-            ProcessingField.setNameTab("сверло");
+            ProcessingButton.setNameTab("сверло");
         }
         if (clickedTabbedPane.getSelectedIndex() == 2) {
-            ProcessingField.setNameTab("зенкер");
+            ProcessingButton.setNameTab("зенкер");
         }
         if (clickedTabbedPane.getSelectedIndex() == 3) {
-            ProcessingField.setNameTab("развертка");
+            ProcessingButton.setNameTab("развертка");
         }
         if (clickedTabbedPane.getSelectedIndex() == 4) {
-            ProcessingField.setNameTab("метчик");
+            ProcessingButton.setNameTab("метчик");
         }
     }
 }

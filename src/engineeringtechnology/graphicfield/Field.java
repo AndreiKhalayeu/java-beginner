@@ -8,7 +8,7 @@ import java.awt.*;
 public class Field {
     private JButton buttonStart;
     private JButton buttonStop;
-    private ProcessingField processingField;
+    private ProcessingButton processingButton;
     private JLabel messageError;
 
     Field() {
@@ -61,14 +61,14 @@ public class Field {
     private JButton createButtonStart() {
         buttonStart = new JButton("Расчитать");
         buttonStart.setBackground(Color.LIGHT_GRAY);
-        buttonStart.addActionListener(processingField);
+        buttonStart.addActionListener(processingButton);
         return buttonStart;
     }
 
     private JButton createButtonStop() {
         buttonStop = new JButton("Сброс");
         buttonStop.setBackground(Color.LIGHT_GRAY);
-        buttonStop.addActionListener(processingField);
+        buttonStop.addActionListener(processingButton);
         return buttonStop;
     }
 
@@ -79,7 +79,7 @@ public class Field {
         TabDrill tabDrill = new TabDrill();
         TabSweep tabSweep = new TabSweep();
         TabTap tabTap = new TabTap();
-        processingField = new ProcessingField(this, tabCountersink, tabCutter, tabDrill, tabSweep, tabTap);
+        processingButton = new ProcessingButton(this, tabCountersink, tabCutter, tabDrill, tabSweep, tabTap);
         tab.add("Фреза", tabCutter);
         tab.add("Сверло", tabDrill);
         tab.add("Зенкер", tabCountersink);

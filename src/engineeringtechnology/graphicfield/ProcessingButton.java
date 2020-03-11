@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ProcessingField implements ActionListener {
+public class ProcessingButton implements ActionListener {
     private Field field;
     private TabCountersink tabCountersink;
     private TabCutter tabCutter;
@@ -19,10 +19,10 @@ public class ProcessingField implements ActionListener {
     private double numberDiameter;
     private double numberFeed;
     private static String nameTab = "фреза";
-    private String nameComboBox = "Коническая фреза";
+    private static String nameComboBox = "Коническая фреза";
 
-    ProcessingField(Field field, TabCountersink tabCountersink, TabCutter tabCutter, TabDrill tabDrill,
-                    TabSweep tabSweep, TabTap tabTap) {
+    ProcessingButton(Field field, TabCountersink tabCountersink, TabCutter tabCutter, TabDrill tabDrill,
+                     TabSweep tabSweep, TabTap tabTap) {
         this.field = field;
         this.tabCountersink = tabCountersink;
         this.tabCutter = tabCutter;
@@ -31,32 +31,13 @@ public class ProcessingField implements ActionListener {
         this.tabTap = tabTap;
     }
 
-    public ProcessingField(TabCutter tabCutter) {
-        this.tabCutter = tabCutter;
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof JButton) {
-            JButton clickedButton = (JButton)e.getSource();
-            if (clickedButton == field.getButtonStart()) {
-                selectTab();
-            } else if (clickedButton == field.getButtonStop()) {
-                deleteContentField();
-            }
-        } else if (e.getSource() instanceof JComboBox) {
-            try {
-                JComboBox<String> clickedComboBox = (JComboBox<String>)e.getSource();
-                if ("фреза".equals(nameTab) && clickedComboBox == tabCutter.getComboBoxNameCutter() && tabCutter.getComboBoxNameCutter().getSelectedIndex() == 0) {
-                    nameComboBox = "Коническая фреза";
-                }
-                if ("фреза".equals(nameTab) && clickedComboBox == tabCutter.getComboBoxNameCutter() && tabCutter.getComboBoxNameCutter().getSelectedIndex() == 1) {
-                    nameComboBox = "Торцевая фреза";
-                }
-            } catch (NullPointerException ex) {
-                ex.printStackTrace(System.out);
-            }
-
+        JButton clickedButton = (JButton)e.getSource();
+        if (clickedButton == field.getButtonStart()) {
+            selectTab();
+        } else if (clickedButton == field.getButtonStop()) {
+            deleteSelectTab();
         }
     }
 
@@ -150,15 +131,40 @@ public class ProcessingField implements ActionListener {
         }
     }
 
-    private void deleteContentField() {
-        tabDrill.getFieldDiameter().setText("");
-        tabDrill.getFieldTurns().setText("0");
-        tabDrill.getFieldFeed().setText("");
-        tabDrill.getFieldMachineFeed().setText("0");
-        tabDrill.getFieldBlade().setText("0");
+    private void deleteSelectTab() {
+        if ("фреза".equals(nameTab)) {
+            deleteContentField(tabCutter);
+        }
+        if ("сверло".equals(nameTab)) {
+            deleteContentField(tabDrill);
+            tabDrill.getFieldBlade().setText("0");
+        }
+        if ("зенкер".equals(nameTab)) {
+            deleteContentField(tabCountersink);
+        }
+        if ("развертка".equals(nameTab)) {
+            deleteContentField(tabSweep);
+        }
+        if ("метчик".equals(nameTab)) {
+            tabTap.getFieldDiameter().setText("");
+            tabTap.getFieldTurns().setText("0");
+            tabTap.getFieldMachineFeed().setText("0");
+            tabTap.getFieldDrill().setText("0");
+        }
+    }
+
+    private void deleteContentField(TabCutter tab) {
+        tab.getFieldDiameter().setText("");
+        tab.getFieldTurns().setText("0");
+        tab.getFieldFeed().setText("");
+        tab.getFieldMachineFeed().setText("0");
     }
 
     public static void setNameTab(String nameTab) {
-        ProcessingField.nameTab = nameTab;
+        ProcessingButton.nameTab = nameTab;
+    }
+
+    public static void setNameComboBox(String nameComboBox) {
+        ProcessingButton.nameComboBox = nameComboBox;
     }
 }
