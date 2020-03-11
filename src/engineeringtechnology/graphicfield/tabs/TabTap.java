@@ -16,7 +16,7 @@ public class TabTap extends TabCutter {
 
     @Override
     protected void createFieldName() {
-        ProcessingField processingField = new ProcessingField();
+        ProcessingField processingField = new ProcessingField(this);
         comboBoxNameTap = new JComboBox<>();
         comboBoxNameTap.addItem("Метр. резьба ГОСТ 24705-81");
         comboBoxNameTap.addItem("Конич. резьба ГОСТ 6111-52");
@@ -51,8 +51,9 @@ public class TabTap extends TabCutter {
     protected void createLabelFormulaTurnsFeed() {
         createLabelDrill();
         createFieldDrill();
-        JLabel labelFormulaTurnsFeed = new JLabel("n = 1000*6 / 3.14*D, об/мин  F = n*s*0.9, мм/мин");
+        JLabel labelFormulaTurnsFeed = new JLabel("       n = 1000*6 / 3.14*D, об/мин  F = n*s*0.9, мм/мин");
         add(labelFormulaTurnsFeed);
+        labelFormulaTurnsFeed.setForeground(Color.gray);
     }
 
     public JComboBox<String> getComboBoxNameTap() {

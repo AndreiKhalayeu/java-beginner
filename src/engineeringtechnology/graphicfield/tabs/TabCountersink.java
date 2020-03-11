@@ -2,6 +2,7 @@ package engineeringtechnology.graphicfield.tabs;
 
 
 import javax.swing.*;
+import java.awt.*;
 
 public class TabCountersink extends TabCutter {
     public TabCountersink() {
@@ -17,5 +18,6 @@ public class TabCountersink extends TabCutter {
     protected void createLabelFormulaTurnsFeed() {
         JLabel labelFormulaTurnsFeed = new JLabel("n = 1000*12 / 3.14*D, об/мин  F = n*s, мм/мин  s = 0.2...0.4, мм/об");
         add(labelFormulaTurnsFeed);
+        labelFormulaTurnsFeed.setForeground(Color.gray);
     }
 }

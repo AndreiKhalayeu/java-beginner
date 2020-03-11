@@ -31,7 +31,8 @@ public class ProcessingField implements ActionListener {
         this.tabTap = tabTap;
     }
 
-    public ProcessingField() {
+    public ProcessingField(TabCutter tabCutter) {
+        this.tabCutter = tabCutter;
     }
 
     @Override
@@ -45,14 +46,15 @@ public class ProcessingField implements ActionListener {
             }
         } else if (e.getSource() instanceof JComboBox) {
             try {
-                if ("фреза".equals(nameTab) && tabCutter.getComboBoxNameCutter().getSelectedIndex() == 0) {
+                JComboBox<String> clickedComboBox = (JComboBox<String>)e.getSource();
+                if ("фреза".equals(nameTab) && clickedComboBox == tabCutter.getComboBoxNameCutter() && tabCutter.getComboBoxNameCutter().getSelectedIndex() == 0) {
                     nameComboBox = "Коническая фреза";
                 }
-                if ("фреза".equals(nameTab) && tabCutter.getComboBoxNameCutter().getSelectedIndex() == 1) {
+                if ("фреза".equals(nameTab) && clickedComboBox == tabCutter.getComboBoxNameCutter() && tabCutter.getComboBoxNameCutter().getSelectedIndex() == 1) {
                     nameComboBox = "Торцевая фреза";
                 }
-            } catch (NullPointerException g) {
-                System.out.println("5456");
+            } catch (NullPointerException ex) {
+                ex.printStackTrace(System.out);
             }
 
         }

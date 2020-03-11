@@ -26,7 +26,7 @@ public class TabCutter extends JPanel {
     }
 
     protected void createFieldName() {
-        ProcessingField processingField = new ProcessingField();
+        ProcessingField processingField = new ProcessingField(this);
         comboBoxNameCutter = new JComboBox<>();
         comboBoxNameCutter.addItem("Коническая фреза");
         comboBoxNameCutter.addItem("Торцевая фреза");
@@ -89,6 +89,7 @@ public class TabCutter extends JPanel {
     protected void createLabelFormulaTurnsFeed() {
         JLabel labelFormulaTurnsFeed = new JLabel("n = 1000*25 / 3.14*D, об/мин  F = n*s, мм/мин  s = 0.1...0.3, мм/об");
         add(labelFormulaTurnsFeed);
+        labelFormulaTurnsFeed.setForeground(Color.gray);
     }
 
     public JFormattedTextField getFieldDiameter() {

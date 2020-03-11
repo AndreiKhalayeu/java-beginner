@@ -33,6 +33,7 @@ public class TabDrill extends TabCutter {
         createFieldBlade();
         JLabel labelFormulaTurnsFeed = new JLabel("n = 1000*18 / 3.14*D, об/мин  F = n*s, мм/мин  s = 0.1...0.3, мм/об");
         add(labelFormulaTurnsFeed);
+        labelFormulaTurnsFeed.setForeground(Color.gray);
     }
 
     public JFormattedTextField getFieldBlade() {
