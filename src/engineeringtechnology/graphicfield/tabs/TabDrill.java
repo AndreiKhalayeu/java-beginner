@@ -1,5 +1,7 @@
 package engineeringtechnology.graphicfield.tabs;
 
+import engineeringtechnology.graphicfield.ProcessingCheckBox;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,8 +13,10 @@ public class TabDrill extends TabCutter {
 
     @Override
     protected void createCheckBox() {
+        ProcessingCheckBox processingCheckBox = new ProcessingCheckBox(this);
         JCheckBox checkBox = new JCheckBox("ГФ2171");
         add(checkBox);
+        checkBox.addActionListener(processingCheckBox);
     }
 
     private void createFieldBlade() {

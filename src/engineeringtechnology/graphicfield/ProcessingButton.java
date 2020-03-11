@@ -20,6 +20,7 @@ public class ProcessingButton implements ActionListener {
     private double numberFeed;
     private static String nameTab = "фреза";
     private static String nameComboBox = "Коническая фреза";
+    private static boolean check = false;
 
     ProcessingButton(Field field, TabCountersink tabCountersink, TabCutter tabCutter, TabDrill tabDrill,
                      TabSweep tabSweep, TabTap tabTap) {
@@ -44,44 +45,52 @@ public class ProcessingButton implements ActionListener {
     private void selectTab() {
         if ("фреза".equals(nameTab) && "Коническая фреза".equals(nameComboBox)) {
             Cutter cutter = new Cutter();
-            calculationModesTool(cutter, tabCutter);
+            calculationModesTool(cutter, tabCutter, check);
         }
         if ("фреза".equals(nameTab) && "Торцевая фреза".equals(nameComboBox)) {
             CutterButt cutterButt = new CutterButt();
-            calculationModesTool(cutterButt, tabCutter);
+            calculationModesTool(cutterButt, tabCutter, check);
         }
         if ("сверло".equals(nameTab)) {
             Drill drill = new Drill();
-            calculationModesTool(drill, tabDrill);
+            calculationModesTool(drill, tabDrill, check);
             calculationLengthPointDrill(drill, tabDrill);
         }
         if ("зенкер".equals(nameTab)) {
             Countersink countersink = new Countersink();
-            calculationModesTool(countersink, tabCountersink);
+            calculationModesTool(countersink, tabCountersink, check);
         }
         if ("развертка".equals(nameTab)) {
             Sweep sweep = new Sweep();
-            calculationModesTool(sweep, tabSweep);
+            calculationModesTool(sweep, tabSweep, check);
         }
         if ("метчик".equals(nameTab)) {
             Tap tap = new Tap();
-            calculationModesTool(tap, tabTap);
+            calculationModesTool(tap, tabTap, check);
         }
     }
 
-    private void calculationModesTool(AbstractTool tool, TabCutter tab) {
+    private void calculationModesTool(AbstractTool tool, TabCutter tab, boolean check) {
         try {
             if (conditionInputDiameter(tool, tab) && conditionInputDiameterFeed(tool, tab)) {
-                tab.getFieldTurns().setText("" + tool.calculateTurns(numberDiameter));
+                check(tool, tab, check);
                 tab.getFieldMachineFeed().setText("" + tool.calculateFeed(numberFeed, tool.calculateTurns(numberDiameter)));
                 tab.getFieldFeed().setText("" + numberFeed);
             }
         } catch (NumberFormatException e) {
             field.getMessageError().setForeground(Color.green);
             field.getMessageError().setText("Установлена средняя подача S=" + tool.getFeed() + " мм/об");
-            tab.getFieldTurns().setText("" + tool.calculateTurns(numberDiameter));
+            check(tool, tab, check);
             tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(numberDiameter)));
             tab.getFieldFeed().setText("" + tool.getFeed());
+        }
+    }
+
+    private void check(AbstractTool tool, TabCutter tab, boolean check) {
+        if (check) {
+            tab.getFieldTurns().setText("" + tool.calculateTurnsGF(tool.calculateTurns(numberDiameter)));
+        } else {
+            tab.getFieldTurns().setText("" + tool.calculateTurns(numberDiameter));
         }
     }
 
@@ -166,5 +175,13 @@ public class ProcessingButton implements ActionListener {
 
     public static void setNameComboBox(String nameComboBox) {
         ProcessingButton.nameComboBox = nameComboBox;
+    }
+
+    public static boolean getCheck() {
+        return check;
+    }
+
+    public static void setCheck(boolean check) {
+        ProcessingButton.check = check;
     }
 }

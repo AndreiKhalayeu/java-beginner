@@ -1,5 +1,6 @@
 package engineeringtechnology.graphicfield.tabs;
 
+import engineeringtechnology.graphicfield.ProcessingCheckBox;
 import engineeringtechnology.graphicfield.ProcessingComboBox;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ public class TabCutter extends JPanel {
     private JFormattedTextField fieldTurns;
     private JFormattedTextField fieldMachineFeed;
     private JComboBox<String> comboBoxNameCutter;
+    private JCheckBox checkBoxCutter;
 
     public TabCutter() {
         createCheckBox();
@@ -35,9 +37,11 @@ public class TabCutter extends JPanel {
     }
 
     protected void createCheckBox() {
+        ProcessingCheckBox processingCheckBox = new ProcessingCheckBox(this);
         createFieldName();
-        JCheckBox checkBox = new JCheckBox("ГФ2171");
-        add(checkBox);
+        checkBoxCutter = new JCheckBox("ГФ2171");
+        add(checkBoxCutter);
+        checkBoxCutter.addActionListener(processingCheckBox);
     }
 
     protected void createFieldDiameter() {
@@ -110,5 +114,9 @@ public class TabCutter extends JPanel {
 
     public JComboBox<String> getComboBoxNameCutter() {
         return comboBoxNameCutter;
+    }
+
+    public JCheckBox getCheckBoxCutter() {
+        return checkBoxCutter;
     }
 }
