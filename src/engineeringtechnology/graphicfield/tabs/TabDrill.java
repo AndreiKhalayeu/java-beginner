@@ -1,6 +1,6 @@
 package engineeringtechnology.graphicfield.tabs;
 
-import engineeringtechnology.graphicfield.ProcessingCheckBox;
+import engineeringtechnology.graphicfield.ProcessingComboBox;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,36 +8,37 @@ import java.awt.*;
 public class TabDrill extends TabCutter {
     private JFormattedTextField fieldBlade;
 
-    public TabDrill() {
+    @Override
+    protected JPanel createPanelFlowLayoutTabRight() {
+        JPanel rightPanelBorderLayout = new JPanel();
+        rightPanelBorderLayout.setLayout(new FlowLayout());
+        rightPanelBorderLayout.add(createLabelLengthBlade());
+        rightPanelBorderLayout.add(createFieldBlade());
+        return rightPanelBorderLayout;
     }
 
     @Override
-    protected void createCheckBox() {
-        ProcessingCheckBox processingCheckBox = new ProcessingCheckBox(this);
-        JCheckBox checkBox = new JCheckBox("ГФ2171");
-        add(checkBox);
-        checkBox.addActionListener(processingCheckBox);
+    protected JComboBox<String> createFieldName() {
+        ProcessingComboBox processingComboBox = new ProcessingComboBox(this);
+        comboBoxName = new JComboBox<>();
+        comboBoxName.addItem("Сверло");
+        add(comboBoxName);
+        comboBoxName.addActionListener(processingComboBox);
+        return comboBoxName;
     }
 
-    private void createFieldBlade() {
+    private JLabel createLabelLengthBlade() {
+        JLabel labelLengthBlade = new JLabel(">,мм: ");
+        add(labelLengthBlade);
+        return labelLengthBlade;
+    }
+
+    private JFormattedTextField createFieldBlade() {
         fieldBlade = new JFormattedTextField("0");
         add(fieldBlade);
         fieldBlade.setPreferredSize(new Dimension(45,20));
         fieldBlade.setEditable(false);
-    }
-
-    private void createLabelLengthBlade() {
-        JLabel labelLengthBlade = new JLabel(">,мм: ");
-        add(labelLengthBlade);
-    }
-
-    @Override
-    protected void createLabelFormulaTurnsFeed() {
-        createLabelLengthBlade();
-        createFieldBlade();
-        JLabel labelFormulaTurnsFeed = new JLabel("n = 1000*18 / 3.14*D, об/мин  F = n*s, мм/мин  s = 0.1...0.3, мм/об");
-        add(labelFormulaTurnsFeed);
-        labelFormulaTurnsFeed.setForeground(Color.gray);
+        return fieldBlade;
     }
 
     public JFormattedTextField getFieldBlade() {

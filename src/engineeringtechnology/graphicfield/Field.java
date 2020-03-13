@@ -21,7 +21,7 @@ public class Field {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         //frame.setSize(700, 200);
         frame.setVisible(true);
-        frame.setBounds(600,400,800,200);
+        frame.setBounds(600,400,840,180);
         frame.setResizable(false);
     }
 
@@ -88,7 +88,7 @@ public class Field {
         tab.addChangeListener(new ProcessingTab());
         tab.setBackground(Color.gray);
         tab.setForeground(Color.BLACK);
-        tab.setPreferredSize(new Dimension(770,100));
+        tab.setPreferredSize(new Dimension(830,90));
         return tab;
     }
 

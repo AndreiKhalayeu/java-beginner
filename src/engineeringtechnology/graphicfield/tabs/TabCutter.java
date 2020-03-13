@@ -11,89 +11,143 @@ public class TabCutter extends JPanel {
     private JFormattedTextField fieldFeed;
     private JFormattedTextField fieldTurns;
     private JFormattedTextField fieldMachineFeed;
-    private JComboBox<String> comboBoxNameCutter;
-    private JCheckBox checkBoxCutter;
+    private JCheckBox jCheckBox;
+    protected JComboBox<String> comboBoxName;
 
     public TabCutter() {
-        createCheckBox();
-        createLabelField();
-        createFieldDiameter();
-        createLabelFeed();
-        createFieldFeed();
-        createLabelMachineFeed();
-        createFieldMachineFeed();
-        createLabelTurns();
-        createFieldTurns();
-        createLabelFormulaTurnsFeed();
+        createFlowLayoutTab();
     }
 
-    protected void createFieldName() {
+    protected void createFlowLayoutTab() {
+        FlowLayout flowLayout = new FlowLayout();
+        this.setLayout(flowLayout);
+        this.add(createPanelBorderLayoutTabLeft());
+        this.add(createPanelBorderLayoutTabCenter());
+        this.add(createPanelBorderLayoutTabRight());
+        flowLayout.setAlignment(FlowLayout.LEFT);
+    }
+
+    protected JPanel createPanelBorderLayoutTabLeft() {
+        JPanel panelBorderLayoutTabLeft = new JPanel();
+        panelBorderLayoutTabLeft.setLayout(new BorderLayout());
+        panelBorderLayoutTabLeft.add("Center", createFieldName());
+        panelBorderLayoutTabLeft.add("South", createCheckBox());
+        panelBorderLayoutTabLeft.setPreferredSize(new Dimension(220,50));
+        return panelBorderLayoutTabLeft;
+    }
+
+    protected JPanel createPanelBorderLayoutTabCenter() {
+        JPanel panelBorderLayoutTabCenter = new JPanel();
+        panelBorderLayoutTabCenter.setLayout(new BorderLayout());
+        panelBorderLayoutTabCenter.add("Center", createPanelFlowLayoutTabCenter());
+        panelBorderLayoutTabCenter.add("South", createLabelFormulaTurnsFeed());
+        return panelBorderLayoutTabCenter;
+    }
+
+    protected JPanel createPanelFlowLayoutTabCenter() {
+        JPanel panelFlowLayoutTabCenter = new JPanel();
+        panelFlowLayoutTabCenter.setLayout(new FlowLayout());
+        panelFlowLayoutTabCenter.add(createLabelDiameter());
+        panelFlowLayoutTabCenter.add(createFieldDiameter());
+        panelFlowLayoutTabCenter.add(createLabelFeed());
+        panelFlowLayoutTabCenter.add(createFieldFeed());
+        panelFlowLayoutTabCenter.add(createLabelMachineFeed());
+        panelFlowLayoutTabCenter.add(createFieldMachineFeed());
+        panelFlowLayoutTabCenter.add(createLabelTurns() );
+        panelFlowLayoutTabCenter.add(createFieldTurns());
+        return panelFlowLayoutTabCenter;
+    }
+
+    protected JPanel createPanelBorderLayoutTabRight() {
+        JPanel panelBorderLayoutTabRight = new JPanel();
+        panelBorderLayoutTabRight.setLayout(new BorderLayout());
+        panelBorderLayoutTabRight.add("Center", createPanelFlowLayoutTabRight());
+        return panelBorderLayoutTabRight;
+    }
+
+    protected JPanel createPanelFlowLayoutTabRight() {
+        JPanel rightPanelBorderLayout = new JPanel();
+        rightPanelBorderLayout.setLayout(new FlowLayout());
+        return rightPanelBorderLayout;
+    }
+
+    protected JComboBox<String> createFieldName() {
         ProcessingComboBox processingComboBox = new ProcessingComboBox(this);
-        comboBoxNameCutter = new JComboBox<>();
-        comboBoxNameCutter.addItem("Коническая фреза");
-        comboBoxNameCutter.addItem("Торцевая фреза");
-        add(comboBoxNameCutter);
-        comboBoxNameCutter.addActionListener(processingComboBox);
+        comboBoxName = new JComboBox<>();
+        comboBoxName.addItem("Коническая фреза");
+        comboBoxName.addItem("Торцевая фреза");
+        add(comboBoxName);
+        comboBoxName.addActionListener(processingComboBox);
+        return comboBoxName;
     }
 
-    protected void createCheckBox() {
+    protected JCheckBox createCheckBox() {
         ProcessingCheckBox processingCheckBox = new ProcessingCheckBox(this);
-        createFieldName();
-        checkBoxCutter = new JCheckBox("ГФ2171");
-        add(checkBoxCutter);
-        checkBoxCutter.addActionListener(processingCheckBox);
+        jCheckBox = new JCheckBox("ГФ2171");
+        add(jCheckBox);
+        jCheckBox.addActionListener(processingCheckBox);
+        return jCheckBox;
     }
 
-    protected void createFieldDiameter() {
+    protected JLabel createLabelDiameter() {
+        JLabel labelDiameter = new JLabel("D,мм: ");
+        add(labelDiameter);
+        return labelDiameter;
+    }
+
+    protected JFormattedTextField createFieldDiameter() {
         fieldDiameter = new JFormattedTextField();
         add(fieldDiameter);
         fieldDiameter.setPreferredSize(new Dimension(45,20));
+        return fieldDiameter;
     }
 
-    protected void createFieldFeed() {
+    protected JLabel createLabelFeed() {
+        JLabel labelFeed = new JLabel("s,мм/об: ");
+        add(labelFeed);
+        return labelFeed;
+    }
+
+    private JFormattedTextField createFieldFeed() {
         fieldFeed = new JFormattedTextField();
         add(fieldFeed);
         fieldFeed.setPreferredSize(new Dimension(45,20));
+        return fieldFeed;
     }
 
-    protected void createFieldMachineFeed() {
+    protected JLabel createLabelMachineFeed() {
+        JLabel labelMachineFeed = new JLabel("F,мм/мин: ");
+        add(labelMachineFeed);
+        return labelMachineFeed;
+    }
+
+    protected JFormattedTextField createFieldMachineFeed() {
         fieldMachineFeed = new JFormattedTextField("0");
         add(fieldMachineFeed);
         fieldMachineFeed.setPreferredSize(new Dimension(45,20));
         fieldMachineFeed.setEditable(false);
+        return fieldMachineFeed;
     }
 
-    protected void createFieldTurns() {
+    protected JLabel createLabelTurns() {
+        JLabel labelTurns = new JLabel("n,об/мин: ");
+        add(labelTurns);
+        return labelTurns;
+    }
+
+    protected JFormattedTextField createFieldTurns() {
         fieldTurns = new JFormattedTextField("0");
         add(fieldTurns);
         fieldTurns.setPreferredSize(new Dimension(45,20));
         fieldTurns.setEditable(false);
+        return fieldTurns;
     }
 
-    private void createLabelField() {
-        JLabel labelDiameter = new JLabel("D,мм: ");
-        add(labelDiameter);
-    }
-
-    private void createLabelFeed() {
-        JLabel labelFeed = new JLabel("s,мм/об: ");
-        add(labelFeed);
-    }
-
-    private void createLabelMachineFeed() {
-        JLabel labelMachineFeed = new JLabel("F,мм/мин: ");
-        add(labelMachineFeed);
-    }
-
-    private void createLabelTurns() {
-        JLabel labelTurns = new JLabel("n,об/мин: ");
-        add(labelTurns);
-    }
-
-    protected void createLabelFormulaTurnsFeed() {
-        JLabel labelFormulaTurnsFeed = new JLabel("n = 1000*25 / 3.14*D, об/мин  F = n*s, мм/мин  s = 0.1...0.3, мм/об");
+    private JLabel createLabelFormulaTurnsFeed() {
+        JLabel labelFormulaTurnsFeed = new JLabel("n = 1000*V / 3.14*D, об/мин  F = n*s, мм/мин");
         add(labelFormulaTurnsFeed);
         labelFormulaTurnsFeed.setForeground(Color.gray);
+        return labelFormulaTurnsFeed;
     }
 
     public JFormattedTextField getFieldDiameter() {
@@ -112,11 +166,11 @@ public class TabCutter extends JPanel {
         return fieldMachineFeed;
     }
 
-    public JComboBox<String> getComboBoxNameCutter() {
-        return comboBoxNameCutter;
+    public JCheckBox getCheckBox() {
+        return jCheckBox;
     }
 
-    public JCheckBox getCheckBoxCutter() {
-        return checkBoxCutter;
+    public JComboBox<String> getComboBoxNameCutter() {
+        return comboBoxName;
     }
 }

@@ -15,7 +15,7 @@ public class ProcessingCheckBox implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JCheckBox clickedCheckBox = (JCheckBox) e.getSource();
-        if (clickedCheckBox == tabCutter.getCheckBoxCutter()) {
+        if (clickedCheckBox == tabCutter.getCheckBox()) {
             if (ProcessingButton.getCheck()) {
                 ProcessingButton.setCheck(false);
             } else {
