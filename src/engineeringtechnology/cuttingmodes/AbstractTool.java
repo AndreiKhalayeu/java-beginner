@@ -32,20 +32,18 @@ public abstract class AbstractTool implements CuttingConditions {
 
     @Override
     public int calculateTurns(double toolDiameter) {
-        return (int)(1000 * speed / 3.14 / toolDiameter);
+        return (int)(1000 * speed / (Math.PI * toolDiameter));
     }
 
     @Override
     public int calculateTurnsGF(int turns) {
-        int turnsGF = 0;
         Set<Map.Entry<Integer, Integer>> data = DataGF.LIST_TURNS.entrySet();
         for (Map.Entry<Integer, Integer> value : data) {
             if (turns <= value.getKey()) {
-                turnsGF = value.getValue();
-                break;
+                return value.getValue();
             }
         }
-        return  turnsGF;
+        return 0;
     }
 
     @Override

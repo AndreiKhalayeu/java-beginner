@@ -5,6 +5,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class ProcessingTab implements ChangeListener {
+    private static String nameTab = "фреза";
 
     @Override
     public void stateChanged(ChangeEvent e) {
@@ -12,19 +13,23 @@ public class ProcessingTab implements ChangeListener {
         JTabbedPane clickedTabbedPane = (JTabbedPane) e.getSource();
 
         if (clickedTabbedPane.getSelectedIndex() == 0) {
-            ProcessingButton.setNameTab("фреза");
+            nameTab = "фреза";
         }
         if (clickedTabbedPane.getSelectedIndex() == 1) {
-            ProcessingButton.setNameTab("сверло");
+            nameTab = "сверло";
         }
         if (clickedTabbedPane.getSelectedIndex() == 2) {
-            ProcessingButton.setNameTab("зенкер");
+            nameTab = "зенкер";
         }
         if (clickedTabbedPane.getSelectedIndex() == 3) {
-            ProcessingButton.setNameTab("развертка");
+            nameTab = "развертка";
         }
         if (clickedTabbedPane.getSelectedIndex() == 4) {
-            ProcessingButton.setNameTab("метчик");
+            nameTab = "метчик";
         }
+    }
+
+    public static String getNameTab() {
+        return nameTab;
     }
 }

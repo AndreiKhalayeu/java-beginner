@@ -18,9 +18,6 @@ public class ProcessingButton implements ActionListener {
     private TabTap tabTap;
     private double numberDiameter;
     private double numberFeed;
-    private static String nameTab = "фреза";
-    private static String nameComboBox = "Коническая фреза";
-    private static boolean check = false;
 
     ProcessingButton(Field field, TabCountersink tabCountersink, TabCutter tabCutter, TabDrill tabDrill,
                      TabSweep tabSweep, TabTap tabTap) {
@@ -43,30 +40,34 @@ public class ProcessingButton implements ActionListener {
     }
 
     private void selectTab() {
-        if ("фреза".equals(nameTab) && "Коническая фреза".equals(nameComboBox)) {
+        if ("фреза".equals(ProcessingTab.getNameTab()) && "Концевая фреза".equals(ProcessingComboBox.getNameComboBoxCutter())) {
             Cutter cutter = new Cutter();
-            calculationModesTool(cutter, tabCutter, check);
+            calculationModesTool(cutter, tabCutter, ProcessingCheckBox.getCheckCutter());
         }
-        if ("фреза".equals(nameTab) && "Торцевая фреза".equals(nameComboBox)) {
+        if ("фреза".equals(ProcessingTab.getNameTab()) && "Торцевая фреза".equals(ProcessingComboBox.getNameComboBoxCutter())) {
             CutterButt cutterButt = new CutterButt();
-            calculationModesTool(cutterButt, tabCutter, check);
+            calculationModesTool(cutterButt, tabCutter, ProcessingCheckBox.getCheckCutter());
         }
-        if ("сверло".equals(nameTab)) {
+        if ("сверло".equals(ProcessingTab.getNameTab()) && "Сверло".equals(ProcessingComboBox.getNameComboBoxDrill())) {
             Drill drill = new Drill();
-            calculationModesTool(drill, tabDrill, check);
+            calculationModesTool(drill, tabDrill, ProcessingCheckBox.getCheckDrill());
             calculationLengthPointDrill(drill, tabDrill);
         }
-        if ("зенкер".equals(nameTab)) {
+        if ("зенкер".equals(ProcessingTab.getNameTab()) && "Цилиндр. зенкер".equals(ProcessingComboBox.getNameComboBoxCountersink())) {
             Countersink countersink = new Countersink();
-            calculationModesTool(countersink, tabCountersink, check);
+            calculationModesTool(countersink, tabCountersink, ProcessingCheckBox.getCheckCountersink());
         }
-        if ("развертка".equals(nameTab)) {
+        if ("зенкер".equals(ProcessingTab.getNameTab()) && "Торц. зенкер".equals(ProcessingComboBox.getNameComboBoxCountersink())) {
+            CountersinkButt countersinkButt = new CountersinkButt();
+            calculationModesTool(countersinkButt, tabCountersink, ProcessingCheckBox.getCheckCountersink());
+        }
+        if ("развертка".equals(ProcessingTab.getNameTab())) {
             Sweep sweep = new Sweep();
-            calculationModesTool(sweep, tabSweep, check);
+            calculationModesTool(sweep, tabSweep, ProcessingCheckBox.getCheckSweep());
         }
-        if ("метчик".equals(nameTab)) {
+        if ("метчик".equals(ProcessingTab.getNameTab())) {
             Tap tap = new Tap();
-            calculationModesTool(tap, tabTap, check);
+            calculationModesTool(tap, tabTap, ProcessingCheckBox.getCheckTap());
         }
     }
 
@@ -141,20 +142,20 @@ public class ProcessingButton implements ActionListener {
     }
 
     private void deleteSelectTab() {
-        if ("фреза".equals(nameTab)) {
+        if ("фреза".equals(ProcessingTab.getNameTab())) {
             deleteContentField(tabCutter);
         }
-        if ("сверло".equals(nameTab)) {
+        if ("сверло".equals(ProcessingTab.getNameTab())) {
             deleteContentField(tabDrill);
             tabDrill.getFieldBlade().setText("0");
         }
-        if ("зенкер".equals(nameTab)) {
+        if ("зенкер".equals(ProcessingTab.getNameTab())) {
             deleteContentField(tabCountersink);
         }
-        if ("развертка".equals(nameTab)) {
+        if ("развертка".equals(ProcessingTab.getNameTab())) {
             deleteContentField(tabSweep);
         }
-        if ("метчик".equals(nameTab)) {
+        if ("метчик".equals(ProcessingTab.getNameTab())) {
             tabTap.getFieldDiameter().setText("");
             tabTap.getFieldTurns().setText("0");
             tabTap.getFieldMachineFeed().setText("0");
@@ -167,21 +168,5 @@ public class ProcessingButton implements ActionListener {
         tab.getFieldTurns().setText("0");
         tab.getFieldFeed().setText("");
         tab.getFieldMachineFeed().setText("0");
-    }
-
-    public static void setNameTab(String nameTab) {
-        ProcessingButton.nameTab = nameTab;
-    }
-
-    public static void setNameComboBox(String nameComboBox) {
-        ProcessingButton.nameComboBox = nameComboBox;
-    }
-
-    public static boolean getCheck() {
-        return check;
-    }
-
-    public static void setCheck(boolean check) {
-        ProcessingButton.check = check;
     }
 }

@@ -74,7 +74,7 @@ public class TabCutter extends JPanel {
     protected JComboBox<String> createFieldName() {
         ProcessingComboBox processingComboBox = new ProcessingComboBox(this);
         comboBoxName = new JComboBox<>();
-        comboBoxName.addItem("Коническая фреза");
+        comboBoxName.addItem("Концевая фреза");
         comboBoxName.addItem("Торцевая фреза");
         add(comboBoxName);
         comboBoxName.addActionListener(processingComboBox);
