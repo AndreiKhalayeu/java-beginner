@@ -102,30 +102,46 @@ public class ProcessingButton implements ActionListener {
                 numberDiameter = Double.parseDouble(stringDiameter);
             }
         } catch (NumberFormatException e) {
-            field.getMessageError().setForeground(Color.red);
-            field.getMessageError().setText("Введите диаметр инструмента от " + (int)tool.getMinDiameter() + " до " + (int)tool.getMaxDiameter() + " мм!");
-            tab.getFieldTurns().setText("0");
-            tab.getFieldMachineFeed().setText("0");
-            tab.getFieldFeed().setText("");
-            numberDiameter = 0;
+            massageForDiameter(tool, tab);
             return false;
         }
         field.getMessageError().setText("");
         numberDiameter = Double.parseDouble(stringDiameter);
-        return !stringDiameter.equals("") && allowableDiameter(tool, numberDiameter);
+        return !stringDiameter.equals("") && allowableDiameter(tool, tab, numberDiameter);
+    }
+
+    private boolean allowableDiameter(AbstractTool tool, TabCutter tab, double diameter) {
+        if (diameter >= tool.getMinDiameter() && diameter <= tool.getMaxDiameter()) {
+            return true;
+        } else {
+            massageForDiameter(tool, tab);
+        }
+        return false;
+    }
+
+    private void massageForDiameter(AbstractTool tool, TabCutter tab) {
+        field.getMessageError().setForeground(Color.red);
+        field.getMessageError().setText("Введите диаметр инструмента от " + (int)tool.getMinDiameter() + " до " + (int)tool.getMaxDiameter() + " мм!");
+        tab.getFieldTurns().setText("0");
+        tab.getFieldMachineFeed().setText("0");
+        tab.getFieldFeed().setText("");
     }
 
     private boolean conditionInputDiameterFeed(AbstractTool tool, TabCutter tab) {
         String stringFeed = tab.getFieldFeed().getText();
         numberFeed = Double.parseDouble(stringFeed);
-        return !stringFeed.equals("") && allowableFeed(tool, numberFeed);
+        return !stringFeed.equals("") && allowableFeed(tool, tab, numberFeed);
     }
 
-    private boolean allowableDiameter(AbstractTool tool, double diameter) {
-        return diameter >= tool.getMinDiameter() && diameter <= tool.getMaxDiameter();
-    }
-
-    private boolean allowableFeed(AbstractTool tool, double feed) {
+    private boolean allowableFeed(AbstractTool tool, TabCutter tab, double feed) {
+        if (feed >= tool.getMinFeed() && feed <= tool.getMaxFeed()) {
+            return true;
+        } else {
+            field.getMessageError().setForeground(Color.red);
+            field.getMessageError().setText("Введите подачу инструмента от " + tool.getMinFeed()+ " до " + tool.getMaxFeed() + " мм!");
+            tab.getFieldTurns().setText("0");
+            tab.getFieldMachineFeed().setText("0");
+        }
         return feed >= tool.getMinFeed() && feed <= tool.getMaxFeed();
     }
 
@@ -156,6 +172,7 @@ public class ProcessingButton implements ActionListener {
             deleteContentField(tabSweep);
         }
         if ("метчик".equals(ProcessingTab.getNameTab())) {
+            field.getMessageError().setText("");
             tabTap.getFieldDiameter().setText("");
             tabTap.getFieldTurns().setText("0");
             tabTap.getFieldMachineFeed().setText("0");
@@ -164,6 +181,7 @@ public class ProcessingButton implements ActionListener {
     }
 
     private void deleteContentField(TabCutter tab) {
+        field.getMessageError().setText("");
         tab.getFieldDiameter().setText("");
         tab.getFieldTurns().setText("0");
         tab.getFieldFeed().setText("");
