@@ -19,7 +19,7 @@ public class TabDrill extends TabCutter {
 
     @Override
     protected JComboBox<String> createFieldName() {
-        ProcessingComboBox processingComboBox = new ProcessingComboBox(this);
+        ProcessingComboBox processingComboBox = new ProcessingComboBox();
         comboBoxName = new JComboBox<>();
         comboBoxName.addItem("Сверло");
         add(comboBoxName);

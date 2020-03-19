@@ -40,32 +40,43 @@ public class ProcessingButton implements ActionListener {
     }
 
     private void selectTab() {
-        if ("фреза".equals(ProcessingTab.getNameTab()) && "Концевая фреза".equals(ProcessingComboBox.getNameComboBoxCutter())) {
+        if (ProcessingTab.getNumberTab() == 0 && ProcessingComboBox.getNumberBox() == 0) {
             Cutter cutter = new Cutter();
             calculationModesTool(cutter, tabCutter, ProcessingCheckBox.getCheckCutter());
         }
-        if ("фреза".equals(ProcessingTab.getNameTab()) && "Торцевая фреза".equals(ProcessingComboBox.getNameComboBoxCutter())) {
+        if (ProcessingTab.getNumberTab() == 0 && ProcessingComboBox.getNumberBox() == 1) {
             CutterButt cutterButt = new CutterButt();
             calculationModesTool(cutterButt, tabCutter, ProcessingCheckBox.getCheckCutter());
         }
-        if ("сверло".equals(ProcessingTab.getNameTab()) && "Сверло".equals(ProcessingComboBox.getNameComboBoxDrill())) {
+        if (ProcessingTab.getNumberTab() == 1 && ProcessingComboBox.getNumberBox() == 0) {
             Drill drill = new Drill();
             calculationModesTool(drill, tabDrill, ProcessingCheckBox.getCheckDrill());
             calculationLengthPointDrill(drill, tabDrill);
         }
-        if ("зенкер".equals(ProcessingTab.getNameTab()) && "Цилиндр. зенкер".equals(ProcessingComboBox.getNameComboBoxCountersink())) {
+        if (ProcessingTab.getNumberTab() == 1 && ProcessingComboBox.getNumberBox() == 1) {
+            // создать объект для другого сверла
+            Drill drill = new Drill();
+            calculationModesTool(drill, tabDrill, ProcessingCheckBox.getCheckDrill());
+            calculationLengthPointDrill(drill, tabDrill);
+        }
+        if (ProcessingTab.getNumberTab() == 2 && ProcessingComboBox.getNumberBox() == 0) {
             Countersink countersink = new Countersink();
             calculationModesTool(countersink, tabCountersink, ProcessingCheckBox.getCheckCountersink());
         }
-        if ("зенкер".equals(ProcessingTab.getNameTab()) && "Торц. зенкер".equals(ProcessingComboBox.getNameComboBoxCountersink())) {
+        if (ProcessingTab.getNumberTab() == 2 && ProcessingComboBox.getNumberBox() == 1) {
             CountersinkButt countersinkButt = new CountersinkButt();
             calculationModesTool(countersinkButt, tabCountersink, ProcessingCheckBox.getCheckCountersink());
         }
-        if ("развертка".equals(ProcessingTab.getNameTab())) {
+        if (ProcessingTab.getNumberTab() == 3 && ProcessingComboBox.getNumberBox() == 0) {
             Sweep sweep = new Sweep();
             calculationModesTool(sweep, tabSweep, ProcessingCheckBox.getCheckSweep());
         }
-        if ("метчик".equals(ProcessingTab.getNameTab())) {
+        if (ProcessingTab.getNumberTab() == 3 && ProcessingComboBox.getNumberBox() == 1) {
+            //создать объект для конусной
+            Sweep sweep = new Sweep();
+            calculationModesTool(sweep, tabSweep, ProcessingCheckBox.getCheckSweep());
+        }
+        if (ProcessingTab.getNumberTab() == 4 && ProcessingComboBox.getNumberBox() == 0) {
             Tap tap = new Tap();
             calculationModesTool(tap, tabTap, ProcessingCheckBox.getCheckTap());
         }
@@ -158,20 +169,20 @@ public class ProcessingButton implements ActionListener {
     }
 
     private void deleteSelectTab() {
-        if ("фреза".equals(ProcessingTab.getNameTab())) {
+        if (ProcessingTab.getNumberTab() == 0) {
             deleteContentField(tabCutter);
         }
-        if ("сверло".equals(ProcessingTab.getNameTab())) {
+        if (ProcessingTab.getNumberTab() == 1) {
             deleteContentField(tabDrill);
             tabDrill.getFieldBlade().setText("0");
         }
-        if ("зенкер".equals(ProcessingTab.getNameTab())) {
+        if (ProcessingTab.getNumberTab() == 2) {
             deleteContentField(tabCountersink);
         }
-        if ("развертка".equals(ProcessingTab.getNameTab())) {
+        if (ProcessingTab.getNumberTab() == 3) {
             deleteContentField(tabSweep);
         }
-        if ("метчик".equals(ProcessingTab.getNameTab())) {
+        if (ProcessingTab.getNumberTab() == 4) {
             field.getMessageError().setText("");
             tabTap.getFieldDiameter().setText("");
             tabTap.getFieldTurns().setText("0");

@@ -72,7 +72,7 @@ public class TabCutter extends JPanel {
     }
 
     protected JComboBox<String> createFieldName() {
-        ProcessingComboBox processingComboBox = new ProcessingComboBox(this);
+        ProcessingComboBox processingComboBox = new ProcessingComboBox();
         comboBoxName = new JComboBox<>();
         comboBoxName.addItem("Концевая фреза");
         comboBoxName.addItem("Торцевая фреза");
@@ -82,7 +82,7 @@ public class TabCutter extends JPanel {
     }
 
     protected JCheckBox createCheckBox() {
-        ProcessingCheckBox processingCheckBox = new ProcessingCheckBox(this);
+        ProcessingCheckBox processingCheckBox = new ProcessingCheckBox();
         jCheckBox = new JCheckBox("ГФ2171");
         add(jCheckBox);
         jCheckBox.addActionListener(processingCheckBox);
@@ -170,7 +170,7 @@ public class TabCutter extends JPanel {
         return jCheckBox;
     }
 
-    public JComboBox<String> getComboBoxNameCutter() {
+    public JComboBox<String> getComboBoxName() {
         return comboBoxName;
     }
 }

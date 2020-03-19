@@ -35,7 +35,7 @@ public class TabTap extends TabCutter {
 
     @Override
     protected JComboBox<String> createFieldName() {
-        ProcessingComboBox processingComboBox = new ProcessingComboBox(this);
+        ProcessingComboBox processingComboBox = new ProcessingComboBox();
         comboBoxName = new JComboBox<>();
         comboBoxName.addItem("Метр. резьба ГОСТ 24705-81");
         comboBoxName.addItem("Конич. резьба ГОСТ 6111-52");
