@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TabCutter extends JPanel {
+    protected boolean check = false;
+    protected int numberBox;
     private JFormattedTextField fieldDiameter;
     private JFormattedTextField fieldFeed;
     private JFormattedTextField fieldTurns;
@@ -166,11 +168,24 @@ public class TabCutter extends JPanel {
         return fieldMachineFeed;
     }
 
-    public JCheckBox getCheckBox() {
-        return jCheckBox;
-    }
 
     public JComboBox<String> getComboBoxName() {
         return comboBoxName;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
+
+    public int getNumberBox() {
+        return numberBox;
+    }
+
+    public void setNumberBox(int numberBox) {
+        this.numberBox = numberBox;
     }
 }

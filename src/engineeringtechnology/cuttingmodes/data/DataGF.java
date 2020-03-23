@@ -1,5 +1,10 @@
 package engineeringtechnology.cuttingmodes.data;
 
+import engineeringtechnology.cuttingmodes.AbstractTool;
+import engineeringtechnology.cuttingmodes.tool.*;
+import engineeringtechnology.graphicfield.tabs.*;
+
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 public class DataGF {
@@ -23,5 +28,53 @@ public class DataGF {
         LIST_TURNS.put(1799, 1600);
         LIST_TURNS.put(2249, 2000);
         LIST_TURNS.put(2500, 2500);
+    }
+
+    public static final TreeMap<Integer, TabCutter> LIST_TAB = new TreeMap<>();
+    static {
+        LIST_TAB.put(0, new TabCutter());
+        LIST_TAB.put(1, new TabDrill());
+        LIST_TAB.put(2, new TabCountersink());
+        LIST_TAB.put(3, new TabSweep());
+        LIST_TAB.put(4, new TabTap());
+    }
+
+    public static final ArrayList<AbstractTool> LIST_CUTTER = new ArrayList<>();
+    static {
+        LIST_CUTTER.add(new Cutter());
+        LIST_CUTTER.add(new CutterButt());
+    }
+
+    public static final ArrayList<AbstractTool> LIST_DRILL = new ArrayList<>();
+    static {
+        LIST_DRILL.add(new Drill());
+    }
+
+    public static final ArrayList<AbstractTool> LIST_COUNTERSINK = new ArrayList<>();
+    static {
+        LIST_COUNTERSINK.add(new Countersink());
+        LIST_COUNTERSINK.add(new CountersinkButt());
+    }
+
+    public static final ArrayList<AbstractTool> LIST_SWEEP = new ArrayList<>();
+    static {
+        LIST_SWEEP.add(new Sweep());
+    }
+
+    public static final ArrayList<AbstractTool> LIST_TAP = new ArrayList<>();
+    static {
+        LIST_TAP.add(new Tap());
+        LIST_TAP.add(new TapConical());
+        LIST_TAP.add(new TapTubeConical());
+        LIST_TAP.add(new TapTubeCylindrical());
+    }
+
+    public static final TreeMap<Integer, ArrayList<AbstractTool>> LIST_TOOL = new TreeMap<>();
+    static {
+        LIST_TOOL.put(0, LIST_CUTTER);
+        LIST_TOOL.put(1, LIST_DRILL);
+        LIST_TOOL.put(2, LIST_COUNTERSINK);
+        LIST_TOOL.put(3, LIST_SWEEP);
+        LIST_TOOL.put(4, LIST_TAP);
     }
 }

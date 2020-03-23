@@ -1,6 +1,7 @@
 package engineeringtechnology.graphicfield;
 
 import engineeringtechnology.cuttingmodes.AbstractTool;
+import engineeringtechnology.cuttingmodes.data.DataGF;
 import engineeringtechnology.cuttingmodes.tool.*;
 import engineeringtechnology.graphicfield.tabs.*;
 
@@ -8,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 public class ProcessingButton implements ActionListener {
     private Field field;
@@ -32,74 +36,73 @@ public class ProcessingButton implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clickedButton = (JButton)e.getSource();
+        TabCutter tab = getTab(ProcessingTab.getNumberTab());
+        int numberBox = getBox(ProcessingTab.getNumberTab());
+        AbstractTool tool = getTool(ProcessingTab.getNumberTab(), numberBox);
         if (clickedButton == field.getButtonStart()) {
-            selectTab();
+            calculationModesTool(tool, tab);
         } else if (clickedButton == field.getButtonStop()) {
             deleteSelectTab();
         }
     }
 
-    private void selectTab() {
-        if (ProcessingTab.getNumberTab() == 0 && ProcessingComboBox.getNumberBox() == 0) {
-            Cutter cutter = new Cutter();
-            calculationModesTool(cutter, tabCutter, ProcessingCheckBox.getCheckCutter());
+    private AbstractTool getTool(int numberTab, int numberBox) {
+        ArrayList<AbstractTool> list;
+        AbstractTool tool = null;
+        Set<Map.Entry<Integer, ArrayList<AbstractTool>>> dataTool = DataGF.LIST_TOOL.entrySet();
+        for (Map.Entry<Integer, ArrayList<AbstractTool>> value : dataTool) {
+            if (numberTab == value.getKey()) {
+                list = value.getValue();
+                for (int i = 0; i < list.size(); i++) {
+                    if (numberBox == i) {
+                        tool = list.get(i);
+                    }
+                }
+            }
         }
-        if (ProcessingTab.getNumberTab() == 0 && ProcessingComboBox.getNumberBox() == 1) {
-            CutterButt cutterButt = new CutterButt();
-            calculationModesTool(cutterButt, tabCutter, ProcessingCheckBox.getCheckCutter());
-        }
-        if (ProcessingTab.getNumberTab() == 1 && ProcessingComboBox.getNumberBox() == 0) {
-            Drill drill = new Drill();
-            calculationModesTool(drill, tabDrill, ProcessingCheckBox.getCheckDrill());
-            calculationLengthPointDrill(drill, tabDrill);
-        }
-        if (ProcessingTab.getNumberTab() == 1 && ProcessingComboBox.getNumberBox() == 1) {
-            // создать объект для другого сверла
-            Drill drill = new Drill();
-            calculationModesTool(drill, tabDrill, ProcessingCheckBox.getCheckDrill());
-            calculationLengthPointDrill(drill, tabDrill);
-        }
-        if (ProcessingTab.getNumberTab() == 2 && ProcessingComboBox.getNumberBox() == 0) {
-            Countersink countersink = new Countersink();
-            calculationModesTool(countersink, tabCountersink, ProcessingCheckBox.getCheckCountersink());
-        }
-        if (ProcessingTab.getNumberTab() == 2 && ProcessingComboBox.getNumberBox() == 1) {
-            CountersinkButt countersinkButt = new CountersinkButt();
-            calculationModesTool(countersinkButt, tabCountersink, ProcessingCheckBox.getCheckCountersink());
-        }
-        if (ProcessingTab.getNumberTab() == 3 && ProcessingComboBox.getNumberBox() == 0) {
-            Sweep sweep = new Sweep();
-            calculationModesTool(sweep, tabSweep, ProcessingCheckBox.getCheckSweep());
-        }
-        if (ProcessingTab.getNumberTab() == 3 && ProcessingComboBox.getNumberBox() == 1) {
-            //создать объект для конусной
-            Sweep sweep = new Sweep();
-            calculationModesTool(sweep, tabSweep, ProcessingCheckBox.getCheckSweep());
-        }
-        if (ProcessingTab.getNumberTab() == 4 && ProcessingComboBox.getNumberBox() == 0) {
-            Tap tap = new Tap();
-            calculationModesTool(tap, tabTap, ProcessingCheckBox.getCheckTap());
-        }
+        return tool;
     }
 
-    private void calculationModesTool(AbstractTool tool, TabCutter tab, boolean check) {
+    private int getBox(int numberTab) {
+        int numberBox = 0;
+        Set<Map.Entry<Integer, TabCutter>> dataTool = DataGF.LIST_TAB.entrySet();
+        for (Map.Entry<Integer, TabCutter> value : dataTool) {
+            if (numberTab == value.getKey()) {
+                numberBox = value.getValue().getNumberBox();
+            }
+        }
+        return numberBox;
+    }
+
+    private TabCutter getTab(int numberTab) {
+        TabCutter tab = null;
+        Set<Map.Entry<Integer, TabCutter>> dataTool = DataGF.LIST_TAB.entrySet();
+        for (Map.Entry<Integer, TabCutter> value : dataTool) {
+            if (numberTab == value.getKey()) {
+                tab = value.getValue();
+            }
+        }
+        return tab;
+    }
+
+    private void calculationModesTool(AbstractTool tool, TabCutter tab) {
         try {
             if (conditionInputDiameter(tool, tab) && conditionInputDiameterFeed(tool, tab)) {
-                check(tool, tab, check);
+                check(tool, tab);
                 tab.getFieldMachineFeed().setText("" + tool.calculateFeed(numberFeed, tool.calculateTurns(numberDiameter)));
                 tab.getFieldFeed().setText("" + numberFeed);
             }
         } catch (NumberFormatException e) {
             field.getMessageError().setForeground(Color.green);
             field.getMessageError().setText("Установлена средняя подача S=" + tool.getFeed() + " мм/об");
-            check(tool, tab, check);
+            check(tool, tab);
             tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(numberDiameter)));
             tab.getFieldFeed().setText("" + tool.getFeed());
         }
     }
 
-    private void check(AbstractTool tool, TabCutter tab, boolean check) {
-        if (check) {
+    private void check(AbstractTool tool, TabCutter tab) {
+        if (tab.isCheck()) {
             tab.getFieldTurns().setText("" + tool.calculateTurnsGF(tool.calculateTurns(numberDiameter)));
         } else {
             tab.getFieldTurns().setText("" + tool.calculateTurns(numberDiameter));
