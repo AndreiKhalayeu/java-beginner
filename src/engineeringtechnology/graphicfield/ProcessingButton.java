@@ -9,9 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
 
 public class ProcessingButton implements ActionListener {
     private Field field;
@@ -47,15 +44,12 @@ public class ProcessingButton implements ActionListener {
     }
 
     private AbstractTool getTool(int numberTab, int numberBox) {
-        ArrayList<AbstractTool> list;
         AbstractTool tool = null;
-        Set<Map.Entry<Integer, ArrayList<AbstractTool>>> dataTool = DataGF.LIST_TOOL.entrySet();
-        for (Map.Entry<Integer, ArrayList<AbstractTool>> value : dataTool) {
-            if (numberTab == value.getKey()) {
-                list = value.getValue();
-                for (int i = 0; i < list.size(); i++) {
-                    if (numberBox == i) {
-                        tool = list.get(i);
+        for (int i = 0; i < DataGF.LIST_TOOL.size(); i++) {
+            if (numberTab == i) {
+                for (int j = 0; j < DataGF.LIST_TOOL.get(i).size(); j++) {
+                    if (numberBox == j) {
+                        tool = DataGF.LIST_TOOL.get(i).get(j);
                     }
                 }
             }
@@ -65,10 +59,9 @@ public class ProcessingButton implements ActionListener {
 
     private int getBox(int numberTab) {
         int numberBox = 0;
-        Set<Map.Entry<Integer, TabCutter>> dataTool = DataGF.LIST_TAB.entrySet();
-        for (Map.Entry<Integer, TabCutter> value : dataTool) {
-            if (numberTab == value.getKey()) {
-                numberBox = value.getValue().getNumberBox();
+        for (int i = 0; i < DataGF.LIST_TAB.size(); i++) {
+            if (numberTab == i) {
+                numberBox = DataGF.LIST_TAB.get(i).getNumberBox();
             }
         }
         return numberBox;
@@ -76,10 +69,9 @@ public class ProcessingButton implements ActionListener {
 
     private TabCutter getTab(int numberTab) {
         TabCutter tab = null;
-        Set<Map.Entry<Integer, TabCutter>> dataTool = DataGF.LIST_TAB.entrySet();
-        for (Map.Entry<Integer, TabCutter> value : dataTool) {
-            if (numberTab == value.getKey()) {
-                tab = value.getValue();
+        for (int i = 0; i < DataGF.LIST_TAB.size(); i++) {
+            if (numberTab == i) {
+                tab = DataGF.LIST_TAB.get(i);
             }
         }
         return tab;
@@ -91,6 +83,7 @@ public class ProcessingButton implements ActionListener {
                 check(tool, tab);
                 tab.getFieldMachineFeed().setText("" + tool.calculateFeed(numberFeed, tool.calculateTurns(numberDiameter)));
                 tab.getFieldFeed().setText("" + numberFeed);
+                tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин" + "  F = " + tool.calculateTurns(numberDiameter) + " * " + numberFeed + ", мм/мин");
             }
         } catch (NumberFormatException e) {
             field.getMessageError().setForeground(Color.green);
@@ -98,6 +91,7 @@ public class ProcessingButton implements ActionListener {
             check(tool, tab);
             tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(numberDiameter)));
             tab.getFieldFeed().setText("" + tool.getFeed());
+            tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин" + "  F = " + tool.calculateTurns(numberDiameter) + " * " + tool.getFeed() + ", мм/мин");
         }
     }
 
@@ -111,17 +105,13 @@ public class ProcessingButton implements ActionListener {
 
     private boolean conditionInputDiameter(AbstractTool tool, TabCutter tab) {
         String stringDiameter = tab.getFieldDiameter().getText();
-        try {
-            if (stringDiameter.equals("")) {
-                numberDiameter = Double.parseDouble(stringDiameter);
-            }
-        } catch (NumberFormatException e) {
+        if (stringDiameter.equals("")) {
             massageForDiameter(tool, tab);
             return false;
         }
         field.getMessageError().setText("");
         numberDiameter = Double.parseDouble(stringDiameter);
-        return !stringDiameter.equals("") && allowableDiameter(tool, tab, numberDiameter);
+        return allowableDiameter(tool, tab, numberDiameter);
     }
 
     private boolean allowableDiameter(AbstractTool tool, TabCutter tab, double diameter) {
@@ -139,6 +129,7 @@ public class ProcessingButton implements ActionListener {
         tab.getFieldTurns().setText("0");
         tab.getFieldMachineFeed().setText("0");
         tab.getFieldFeed().setText("");
+        tab.getLabelFormulaTurnsFeed().setText("");
     }
 
     private boolean conditionInputDiameterFeed(AbstractTool tool, TabCutter tab) {
@@ -200,5 +191,6 @@ public class ProcessingButton implements ActionListener {
         tab.getFieldTurns().setText("0");
         tab.getFieldFeed().setText("");
         tab.getFieldMachineFeed().setText("0");
+        tab.getLabelFormulaTurnsFeed().setText("");
     }
 }

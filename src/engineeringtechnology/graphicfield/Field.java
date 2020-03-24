@@ -1,5 +1,6 @@
 package engineeringtechnology.graphicfield;
 
+import engineeringtechnology.cuttingmodes.data.DataGF;
 import engineeringtechnology.graphicfield.tabs.*;
 
 import javax.swing.*;
@@ -74,11 +75,11 @@ public class Field {
 
     private JTabbedPane createTads() {
         JTabbedPane tab = new JTabbedPane();
-        TabCountersink tabCountersink = new TabCountersink();
-        TabCutter tabCutter = new TabCutter();
-        TabDrill tabDrill = new TabDrill();
-        TabSweep tabSweep = new TabSweep();
-        TabTap tabTap = new TabTap();
+        TabCutter tabCutter = DataGF.LIST_TAB.get(0);
+        TabDrill tabDrill = (TabDrill) DataGF.LIST_TAB.get(1);
+        TabCountersink tabCountersink = (TabCountersink) DataGF.LIST_TAB.get(2);
+        TabSweep tabSweep = (TabSweep) DataGF.LIST_TAB.get(3);
+        TabTap tabTap = (TabTap) DataGF.LIST_TAB.get(4);
         processingButton = new ProcessingButton(this, tabCountersink, tabCutter, tabDrill, tabSweep, tabTap);
         tab.add("Фреза", tabCutter);
         tab.add("Сверло", tabDrill);

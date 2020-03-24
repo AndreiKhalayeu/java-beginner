@@ -30,13 +30,13 @@ public class DataGF {
         LIST_TURNS.put(2500, 2500);
     }
 
-    public static final TreeMap<Integer, TabCutter> LIST_TAB = new TreeMap<>();
+    public static final ArrayList<TabCutter> LIST_TAB = new ArrayList<>();
     static {
-        LIST_TAB.put(0, new TabCutter());
-        LIST_TAB.put(1, new TabDrill());
-        LIST_TAB.put(2, new TabCountersink());
-        LIST_TAB.put(3, new TabSweep());
-        LIST_TAB.put(4, new TabTap());
+        LIST_TAB.add(new TabCutter());
+        LIST_TAB.add(new TabDrill());
+        LIST_TAB.add(new TabCountersink());
+        LIST_TAB.add(new TabSweep());
+        LIST_TAB.add(new TabTap());
     }
 
     public static final ArrayList<AbstractTool> LIST_CUTTER = new ArrayList<>();
@@ -69,12 +69,12 @@ public class DataGF {
         LIST_TAP.add(new TapTubeCylindrical());
     }
 
-    public static final TreeMap<Integer, ArrayList<AbstractTool>> LIST_TOOL = new TreeMap<>();
+    public static final ArrayList<ArrayList<AbstractTool>> LIST_TOOL = new ArrayList<>();
     static {
-        LIST_TOOL.put(0, LIST_CUTTER);
-        LIST_TOOL.put(1, LIST_DRILL);
-        LIST_TOOL.put(2, LIST_COUNTERSINK);
-        LIST_TOOL.put(3, LIST_SWEEP);
-        LIST_TOOL.put(4, LIST_TAP);
+        LIST_TOOL.add(LIST_CUTTER);
+        LIST_TOOL.add(LIST_DRILL);
+        LIST_TOOL.add(LIST_COUNTERSINK);
+        LIST_TOOL.add(LIST_SWEEP);
+        LIST_TOOL.add(LIST_TAP);
     }
 }

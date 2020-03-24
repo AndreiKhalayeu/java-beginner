@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TabTap extends TabCutter {
-//    private boolean check = false;
     private JFormattedTextField fieldDrill;
 
     @Override
@@ -73,12 +72,4 @@ public class TabTap extends TabCutter {
     public JFormattedTextField getFieldDrill() {
         return fieldDrill;
     }
-
-//    public boolean isCheck() {
-//        return check;
-//    }
-//
-//    public void setCheck(boolean check) {
-//        this.check = check;
-//    }
 }

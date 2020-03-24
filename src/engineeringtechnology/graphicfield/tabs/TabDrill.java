@@ -6,8 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TabDrill extends TabCutter {
-//    private boolean check = false;
-//    private int numberBox;
     private JFormattedTextField fieldBlade;
 
     @Override
@@ -46,20 +44,4 @@ public class TabDrill extends TabCutter {
     public JFormattedTextField getFieldBlade() {
         return fieldBlade;
     }
-
-//    public boolean isCheck() {
-//        return check;
-//    }
-//
-//    public void setCheck(boolean check) {
-//        this.check = check;
-//    }
-//
-//    public int getNumberBox() {
-//        return numberBox;
-//    }
-//
-//    public void setNumberBox(int numberBox) {
-//        this.numberBox = numberBox;
-//    }
 }

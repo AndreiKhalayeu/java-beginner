@@ -75,4 +75,8 @@ public abstract class AbstractTool implements CuttingConditions {
     public double getMaxFeed() {
         return maxFeed;
     }
+
+    public int getSpeed() {
+        return speed;
+    }
 }

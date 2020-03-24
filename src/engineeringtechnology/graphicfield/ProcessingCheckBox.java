@@ -5,8 +5,6 @@ import engineeringtechnology.graphicfield.tabs.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Map;
-import java.util.Set;
 
 public class ProcessingCheckBox implements ActionListener {
 
@@ -17,10 +15,9 @@ public class ProcessingCheckBox implements ActionListener {
 
     private TabCutter setTab(int numberTab) {
         TabCutter tab = null;
-        Set<Map.Entry<Integer, TabCutter>> dataTab = DataGF.LIST_TAB.entrySet();
-        for (Map.Entry<Integer, TabCutter> value : dataTab) {
-            if (numberTab == value.getKey()) {
-                tab = value.getValue();
+        for (int i = 0; i < DataGF.LIST_TAB.size(); i++) {
+            if (numberTab == i) {
+                tab = DataGF.LIST_TAB.get(i);
             }
         }
         return tab;

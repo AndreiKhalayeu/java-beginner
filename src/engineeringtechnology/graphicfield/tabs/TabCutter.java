@@ -15,6 +15,7 @@ public class TabCutter extends JPanel {
     private JFormattedTextField fieldMachineFeed;
     private JCheckBox jCheckBox;
     protected JComboBox<String> comboBoxName;
+    private JLabel labelFormulaTurnsFeed;
 
     public TabCutter() {
         createFlowLayoutTab();
@@ -146,7 +147,7 @@ public class TabCutter extends JPanel {
     }
 
     private JLabel createLabelFormulaTurnsFeed() {
-        JLabel labelFormulaTurnsFeed = new JLabel("n = 1000*V / 3.14*D, об/мин  F = n*s, мм/мин");
+        labelFormulaTurnsFeed = new JLabel("");
         add(labelFormulaTurnsFeed);
         labelFormulaTurnsFeed.setForeground(Color.gray);
         return labelFormulaTurnsFeed;
@@ -187,5 +188,9 @@ public class TabCutter extends JPanel {
 
     public void setNumberBox(int numberBox) {
         this.numberBox = numberBox;
+    }
+
+    public JLabel getLabelFormulaTurnsFeed() {
+        return labelFormulaTurnsFeed;
     }
 }
