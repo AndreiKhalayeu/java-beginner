@@ -12,7 +12,6 @@ public abstract class AbstractTool implements CuttingConditions {
     protected double feed;
     protected double minFeed;
     protected double maxFeed;
-
     protected double toolFeed;
 
     public AbstractTool(int speed, double minDiameter, double maxDiameter) {

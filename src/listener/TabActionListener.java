@@ -1,10 +1,10 @@
-package engineeringtechnology.graphicfield;
+package listener;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class ProcessingTab implements ChangeListener {
+public class TabActionListener implements ChangeListener {
     private static int numberTab;
 
     @Override

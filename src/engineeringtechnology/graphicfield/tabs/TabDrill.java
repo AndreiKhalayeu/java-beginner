@@ -1,6 +1,6 @@
 package engineeringtechnology.graphicfield.tabs;
 
-import engineeringtechnology.graphicfield.ProcessingComboBox;
+import listener.ComboBoxActionListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,11 +19,11 @@ public class TabDrill extends TabCutter {
 
     @Override
     protected JComboBox<String> createFieldName() {
-        ProcessingComboBox processingComboBox = new ProcessingComboBox();
+        ComboBoxActionListener comboBoxActionListener = new ComboBoxActionListener();
         comboBoxName = new JComboBox<>();
         comboBoxName.addItem("Сверло");
         add(comboBoxName);
-        comboBoxName.addActionListener(processingComboBox);
+        comboBoxName.addActionListener(comboBoxActionListener);
         return comboBoxName;
     }
 

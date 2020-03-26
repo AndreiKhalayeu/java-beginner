@@ -2,6 +2,8 @@ package engineeringtechnology.graphicfield;
 
 import engineeringtechnology.cuttingmodes.data.DataGF;
 import engineeringtechnology.graphicfield.tabs.*;
+import listener.ButtonActionListener;
+import listener.TabActionListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +11,7 @@ import java.awt.*;
 public class Field {
     private JButton buttonStart;
     private JButton buttonStop;
-    private ProcessingButton processingButton;
+    private ButtonActionListener buttonActionListener;
     private JLabel messageError;
 
     Field() {
@@ -62,14 +64,14 @@ public class Field {
     private JButton createButtonStart() {
         buttonStart = new JButton("Расчитать");
         buttonStart.setBackground(Color.LIGHT_GRAY);
-        buttonStart.addActionListener(processingButton);
+        buttonStart.addActionListener(buttonActionListener);
         return buttonStart;
     }
 
     private JButton createButtonStop() {
         buttonStop = new JButton("Сброс");
         buttonStop.setBackground(Color.LIGHT_GRAY);
-        buttonStop.addActionListener(processingButton);
+        buttonStop.addActionListener(buttonActionListener);
         return buttonStop;
     }
 
@@ -80,13 +82,13 @@ public class Field {
         TabCountersink tabCountersink = (TabCountersink) DataGF.LIST_TAB.get(2);
         TabSweep tabSweep = (TabSweep) DataGF.LIST_TAB.get(3);
         TabTap tabTap = (TabTap) DataGF.LIST_TAB.get(4);
-        processingButton = new ProcessingButton(this, tabCountersink, tabCutter, tabDrill, tabSweep, tabTap);
+        buttonActionListener = new ButtonActionListener(this, tabCountersink, tabCutter, tabDrill, tabSweep, tabTap);
         tab.add("Фреза", tabCutter);
         tab.add("Сверло", tabDrill);
         tab.add("Зенкер", tabCountersink);
         tab.add("Развертка", tabSweep);
         tab.add("Метчик", tabTap);
-        tab.addChangeListener(new ProcessingTab());
+        tab.addChangeListener(new TabActionListener());
         tab.setBackground(Color.gray);
         tab.setForeground(Color.BLACK);
         tab.setPreferredSize(new Dimension(830,90));

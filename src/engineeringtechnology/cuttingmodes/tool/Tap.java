@@ -3,9 +3,10 @@ package engineeringtechnology.cuttingmodes.tool;
 import engineeringtechnology.cuttingmodes.AbstractTool;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Tap extends AbstractTool {
-    public static final ArrayList<String> FEED = new ArrayList<>();
+    public static final List<String> FEED = new ArrayList<>();
     static {
         FEED.add("0.8");
         FEED.add("1.0");

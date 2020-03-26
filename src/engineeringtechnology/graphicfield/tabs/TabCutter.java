@@ -1,19 +1,18 @@
 package engineeringtechnology.graphicfield.tabs;
 
-import engineeringtechnology.graphicfield.ProcessingCheckBox;
-import engineeringtechnology.graphicfield.ProcessingComboBox;
+import listener.CheckBoxActionListener;
+import listener.ComboBoxActionListener;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class TabCutter extends JPanel {
-    protected boolean check = false;
-    protected int numberBox;
+    protected boolean checkBox = false;
+    protected int numberComboBox;
     private JFormattedTextField fieldDiameter;
     private JFormattedTextField fieldFeed;
     private JFormattedTextField fieldTurns;
     private JFormattedTextField fieldMachineFeed;
-    private JCheckBox jCheckBox;
     protected JComboBox<String> comboBoxName;
     private JLabel labelFormulaTurnsFeed;
 
@@ -75,20 +74,20 @@ public class TabCutter extends JPanel {
     }
 
     protected JComboBox<String> createFieldName() {
-        ProcessingComboBox processingComboBox = new ProcessingComboBox();
+        ComboBoxActionListener comboBoxActionListener = new ComboBoxActionListener();
         comboBoxName = new JComboBox<>();
         comboBoxName.addItem("Концевая фреза");
         comboBoxName.addItem("Торцевая фреза");
         add(comboBoxName);
-        comboBoxName.addActionListener(processingComboBox);
+        comboBoxName.addActionListener(comboBoxActionListener);
         return comboBoxName;
     }
 
     protected JCheckBox createCheckBox() {
-        ProcessingCheckBox processingCheckBox = new ProcessingCheckBox();
-        jCheckBox = new JCheckBox("ГФ2171");
+        CheckBoxActionListener checkBoxActionListener = new CheckBoxActionListener();
+        JCheckBox jCheckBox = new JCheckBox("ГФ2171");
         add(jCheckBox);
-        jCheckBox.addActionListener(processingCheckBox);
+        jCheckBox.addActionListener(checkBoxActionListener);
         return jCheckBox;
     }
 
@@ -169,25 +168,20 @@ public class TabCutter extends JPanel {
         return fieldMachineFeed;
     }
 
-
-    public JComboBox<String> getComboBoxName() {
-        return comboBoxName;
+    public boolean isCheckBox() {
+        return checkBox;
     }
 
-    public boolean isCheck() {
-        return check;
+    public void setCheckBox(boolean checkBox) {
+        this.checkBox = checkBox;
     }
 
-    public void setCheck(boolean check) {
-        this.check = check;
+    public int getNumberComboBox() {
+        return numberComboBox;
     }
 
-    public int getNumberBox() {
-        return numberBox;
-    }
-
-    public void setNumberBox(int numberBox) {
-        this.numberBox = numberBox;
+    public void setNumberComboBox(int numberComboBox) {
+        this.numberComboBox = numberComboBox;
     }
 
     public JLabel getLabelFormulaTurnsFeed() {

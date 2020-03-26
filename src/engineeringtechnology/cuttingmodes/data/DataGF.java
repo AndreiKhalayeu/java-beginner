@@ -5,10 +5,12 @@ import engineeringtechnology.cuttingmodes.tool.*;
 import engineeringtechnology.graphicfield.tabs.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class DataGF {
-    public static final TreeMap<Integer, Integer> LIST_TURNS = new TreeMap<>();
+    public static final Map<Integer, Integer> LIST_TURNS = new TreeMap<>();
     static {
         LIST_TURNS.put(56, 50);
         LIST_TURNS.put(71, 63);
@@ -30,7 +32,7 @@ public class DataGF {
         LIST_TURNS.put(2500, 2500);
     }
 
-    public static final ArrayList<TabCutter> LIST_TAB = new ArrayList<>();
+    public static final List<TabCutter> LIST_TAB = new ArrayList<>();
     static {
         LIST_TAB.add(new TabCutter());
         LIST_TAB.add(new TabDrill());
@@ -39,29 +41,30 @@ public class DataGF {
         LIST_TAB.add(new TabTap());
     }
 
-    public static final ArrayList<AbstractTool> LIST_CUTTER = new ArrayList<>();
+    public static final List<AbstractTool> LIST_CUTTER = new ArrayList<>();
     static {
         LIST_CUTTER.add(new Cutter());
         LIST_CUTTER.add(new CutterButt());
     }
 
-    public static final ArrayList<AbstractTool> LIST_DRILL = new ArrayList<>();
+    public static final List<AbstractTool> LIST_DRILL = new ArrayList<>();
     static {
         LIST_DRILL.add(new Drill());
     }
 
-    public static final ArrayList<AbstractTool> LIST_COUNTERSINK = new ArrayList<>();
+    public static final List<AbstractTool> LIST_COUNTERSINK = new ArrayList<>();
     static {
         LIST_COUNTERSINK.add(new Countersink());
         LIST_COUNTERSINK.add(new CountersinkButt());
     }
 
-    public static final ArrayList<AbstractTool> LIST_SWEEP = new ArrayList<>();
+    public static final List<AbstractTool> LIST_SWEEP = new ArrayList<>();
     static {
         LIST_SWEEP.add(new Sweep());
+        LIST_SWEEP.add(new SweepConical());
     }
 
-    public static final ArrayList<AbstractTool> LIST_TAP = new ArrayList<>();
+    public static final List<AbstractTool> LIST_TAP = new ArrayList<>();
     static {
         LIST_TAP.add(new Tap());
         LIST_TAP.add(new TapConical());
@@ -69,7 +72,7 @@ public class DataGF {
         LIST_TAP.add(new TapTubeCylindrical());
     }
 
-    public static final ArrayList<ArrayList<AbstractTool>> LIST_TOOL = new ArrayList<>();
+    public static final List<List<AbstractTool>> LIST_TOOL = new ArrayList<>();
     static {
         LIST_TOOL.add(LIST_CUTTER);
         LIST_TOOL.add(LIST_DRILL);

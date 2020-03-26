@@ -1,8 +1,9 @@
-package engineeringtechnology.graphicfield;
+package listener;
 
 import engineeringtechnology.cuttingmodes.AbstractTool;
 import engineeringtechnology.cuttingmodes.data.DataGF;
 import engineeringtechnology.cuttingmodes.tool.*;
+import engineeringtechnology.graphicfield.Field;
 import engineeringtechnology.graphicfield.tabs.*;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ProcessingButton implements ActionListener {
+public class ButtonActionListener implements ActionListener {
     private Field field;
     private TabCountersink tabCountersink;
     private TabCutter tabCutter;
@@ -20,8 +21,8 @@ public class ProcessingButton implements ActionListener {
     private double numberDiameter;
     private double numberFeed;
 
-    ProcessingButton(Field field, TabCountersink tabCountersink, TabCutter tabCutter, TabDrill tabDrill,
-                     TabSweep tabSweep, TabTap tabTap) {
+    public ButtonActionListener(Field field, TabCountersink tabCountersink, TabCutter tabCutter, TabDrill tabDrill,
+                                TabSweep tabSweep, TabTap tabTap) {
         this.field = field;
         this.tabCountersink = tabCountersink;
         this.tabCutter = tabCutter;
@@ -33,9 +34,9 @@ public class ProcessingButton implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clickedButton = (JButton)e.getSource();
-        TabCutter tab = getTab(ProcessingTab.getNumberTab());
-        int numberBox = getBox(ProcessingTab.getNumberTab());
-        AbstractTool tool = getTool(ProcessingTab.getNumberTab(), numberBox);
+        TabCutter tab = getTab(TabActionListener.getNumberTab());
+        int numberComboBox = getNumberComboBox(TabActionListener.getNumberTab());
+        AbstractTool tool = getTool(TabActionListener.getNumberTab(), numberComboBox);
         if (clickedButton == field.getButtonStart()) {
             calculationModesTool(tool, tab);
         } else if (clickedButton == field.getButtonStop()) {
@@ -43,44 +44,72 @@ public class ProcessingButton implements ActionListener {
         }
     }
 
-    private AbstractTool getTool(int numberTab, int numberBox) {
-        AbstractTool tool = null;
+    private AbstractTool getTool(int numberTab, int numberComboBox) {
         for (int i = 0; i < DataGF.LIST_TOOL.size(); i++) {
             if (numberTab == i) {
                 for (int j = 0; j < DataGF.LIST_TOOL.get(i).size(); j++) {
-                    if (numberBox == j) {
-                        tool = DataGF.LIST_TOOL.get(i).get(j);
+                    if (numberComboBox == j) {
+                        return DataGF.LIST_TOOL.get(i).get(j);
                     }
                 }
             }
         }
-        return tool;
+        return null;
     }
 
-    private int getBox(int numberTab) {
-        int numberBox = 0;
+    private int getNumberComboBox(int numberTab) {
         for (int i = 0; i < DataGF.LIST_TAB.size(); i++) {
             if (numberTab == i) {
-                numberBox = DataGF.LIST_TAB.get(i).getNumberBox();
+                return DataGF.LIST_TAB.get(i).getNumberComboBox();
             }
         }
-        return numberBox;
+        return 0;
     }
 
     private TabCutter getTab(int numberTab) {
-        TabCutter tab = null;
         for (int i = 0; i < DataGF.LIST_TAB.size(); i++) {
             if (numberTab == i) {
-                tab = DataGF.LIST_TAB.get(i);
+                return DataGF.LIST_TAB.get(i);
             }
         }
-        return tab;
+        return null;
     }
+
+//    private AbstractTool getTool(int numberTab, int numberComboBox) {
+//        for (int i = 0; i < DataGF.LIST_TOOL.size(); i++) {
+//            if (numberTab == i) {
+//                for (int j = 0; j < DataGF.LIST_TOOL.get(i).size(); j++) {
+//                    if (numberComboBox == j) {
+//                        return DataGF.LIST_TOOL.get(i).get(j);
+//                    }
+//                }
+//            }
+//        }
+//        return null;
+//    }
+//
+//    private int getNumberComboBox(int numberTab) {
+//        for (int i = 0; i < DataGF.LIST_TAB.size(); i++) {
+//            if (numberTab == i) {
+//                return DataGF.LIST_TAB.get(i).getNumberComboBox();
+//            }
+//        }
+//        return 0;
+//    }
+//
+//    private TabCutter getTab(int numberTab) {
+//        for (int i = 0; i < DataGF.LIST_TAB.size(); i++) {
+//            if (numberTab == i) {
+//                return DataGF.LIST_TAB.get(i);
+//            }
+//        }
+//        return null;
+//    }
 
     private void calculationModesTool(AbstractTool tool, TabCutter tab) {
         try {
             if (conditionInputDiameter(tool, tab) && conditionInputDiameterFeed(tool, tab)) {
-                check(tool, tab);
+                calculateWithCheckBox(tool, tab);
                 tab.getFieldMachineFeed().setText("" + tool.calculateFeed(numberFeed, tool.calculateTurns(numberDiameter)));
                 tab.getFieldFeed().setText("" + numberFeed);
                 tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин" + "  F = " + tool.calculateTurns(numberDiameter) + " * " + numberFeed + ", мм/мин");
@@ -88,15 +117,15 @@ public class ProcessingButton implements ActionListener {
         } catch (NumberFormatException e) {
             field.getMessageError().setForeground(Color.green);
             field.getMessageError().setText("Установлена средняя подача S=" + tool.getFeed() + " мм/об");
-            check(tool, tab);
+            calculateWithCheckBox(tool, tab);
             tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(numberDiameter)));
             tab.getFieldFeed().setText("" + tool.getFeed());
             tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин" + "  F = " + tool.calculateTurns(numberDiameter) + " * " + tool.getFeed() + ", мм/мин");
         }
     }
 
-    private void check(AbstractTool tool, TabCutter tab) {
-        if (tab.isCheck()) {
+    private void calculateWithCheckBox(AbstractTool tool, TabCutter tab) {
+        if (tab.isCheckBox()) {
             tab.getFieldTurns().setText("" + tool.calculateTurnsGF(tool.calculateTurns(numberDiameter)));
         } else {
             tab.getFieldTurns().setText("" + tool.calculateTurns(numberDiameter));
@@ -126,9 +155,9 @@ public class ProcessingButton implements ActionListener {
     private void massageForDiameter(AbstractTool tool, TabCutter tab) {
         field.getMessageError().setForeground(Color.red);
         field.getMessageError().setText("Введите диаметр инструмента от " + (int)tool.getMinDiameter() + " до " + (int)tool.getMaxDiameter() + " мм!");
+        tab.getFieldFeed().setText("");
         tab.getFieldTurns().setText("0");
         tab.getFieldMachineFeed().setText("0");
-        tab.getFieldFeed().setText("");
         tab.getLabelFormulaTurnsFeed().setText("");
     }
 
@@ -146,6 +175,7 @@ public class ProcessingButton implements ActionListener {
             field.getMessageError().setText("Введите подачу инструмента от " + tool.getMinFeed()+ " до " + tool.getMaxFeed() + " мм!");
             tab.getFieldTurns().setText("0");
             tab.getFieldMachineFeed().setText("0");
+            tab.getLabelFormulaTurnsFeed().setText("");
         }
         return feed >= tool.getMinFeed() && feed <= tool.getMaxFeed();
     }
@@ -163,33 +193,34 @@ public class ProcessingButton implements ActionListener {
     }
 
     private void deleteSelectTab() {
-        if (ProcessingTab.getNumberTab() == 0) {
+        if (TabActionListener.getNumberTab() == 0) {
             deleteContentField(tabCutter);
         }
-        if (ProcessingTab.getNumberTab() == 1) {
+        if (TabActionListener.getNumberTab() == 1) {
             deleteContentField(tabDrill);
             tabDrill.getFieldBlade().setText("0");
         }
-        if (ProcessingTab.getNumberTab() == 2) {
+        if (TabActionListener.getNumberTab() == 2) {
             deleteContentField(tabCountersink);
         }
-        if (ProcessingTab.getNumberTab() == 3) {
+        if (TabActionListener.getNumberTab() == 3) {
             deleteContentField(tabSweep);
         }
-        if (ProcessingTab.getNumberTab() == 4) {
+        if (TabActionListener.getNumberTab() == 4) {
             field.getMessageError().setText("");
             tabTap.getFieldDiameter().setText("");
             tabTap.getFieldTurns().setText("0");
             tabTap.getFieldMachineFeed().setText("0");
             tabTap.getFieldDrill().setText("0");
+            tabTap.getLabelFormulaTurnsFeed().setText("");
         }
     }
 
     private void deleteContentField(TabCutter tab) {
         field.getMessageError().setText("");
         tab.getFieldDiameter().setText("");
-        tab.getFieldTurns().setText("0");
         tab.getFieldFeed().setText("");
+        tab.getFieldTurns().setText("0");
         tab.getFieldMachineFeed().setText("0");
         tab.getLabelFormulaTurnsFeed().setText("");
     }

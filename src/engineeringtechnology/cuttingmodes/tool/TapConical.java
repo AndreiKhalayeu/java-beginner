@@ -1,9 +1,10 @@
 package engineeringtechnology.cuttingmodes.tool;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TapConical extends Tap {
-    public static final ArrayList<String> FEED = new ArrayList<>();
+    public static final List<String> FEED = new ArrayList<>();
     static {
         FEED.add("1/16");
         FEED.add("1/8");
