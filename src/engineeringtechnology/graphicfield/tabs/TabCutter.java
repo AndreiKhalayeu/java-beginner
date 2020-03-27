@@ -84,10 +84,10 @@ public class TabCutter extends JPanel {
     }
 
     protected JCheckBox createCheckBox() {
-        CheckBoxActionListener checkBoxActionListener = new CheckBoxActionListener();
+        CheckBoxActionListener processingCheckBox = new CheckBoxActionListener();
         JCheckBox jCheckBox = new JCheckBox("ГФ2171");
         add(jCheckBox);
-        jCheckBox.addActionListener(checkBoxActionListener);
+        jCheckBox.addActionListener(processingCheckBox);
         return jCheckBox;
     }
 

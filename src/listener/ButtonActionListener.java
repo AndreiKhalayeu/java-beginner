@@ -1,7 +1,7 @@
 package listener;
 
 import engineeringtechnology.cuttingmodes.AbstractTool;
-import engineeringtechnology.cuttingmodes.data.DataGF;
+import engineeringtechnology.cuttingmodes.data.Data;
 import engineeringtechnology.cuttingmodes.tool.*;
 import engineeringtechnology.graphicfield.Field;
 import engineeringtechnology.graphicfield.tabs.*;
@@ -35,21 +35,34 @@ public class ButtonActionListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton clickedButton = (JButton)e.getSource();
         TabCutter tab = getTab(TabActionListener.getNumberTab());
-        int numberComboBox = getNumberComboBox(TabActionListener.getNumberTab());
-        AbstractTool tool = getTool(TabActionListener.getNumberTab(), numberComboBox);
+        AbstractTool tool = getTool(TabActionListener.getNumberTab(), tab.getNumberComboBox());
         if (clickedButton == field.getButtonStart()) {
-            calculationModesTool(tool, tab);
+            if (TabActionListener.getNumberTab() == 4) {
+                calculationModesTap((Tap)tool, (TabTap)tab);
+            } else {
+                calculationModesTool(tool, tab);
+            }
         } else if (clickedButton == field.getButtonStop()) {
             deleteSelectTab();
         }
     }
 
-    private AbstractTool getTool(int numberTab, int numberComboBox) {
-        for (int i = 0; i < DataGF.LIST_TOOL.size(); i++) {
+    private TabCutter getTab(int numberTab) {
+        TabCutter tab = null;
+        for (int i = 0; i < Data.LIST_TAB.size(); i++) {
             if (numberTab == i) {
-                for (int j = 0; j < DataGF.LIST_TOOL.get(i).size(); j++) {
+                tab = Data.LIST_TAB.get(i);
+            }
+        }
+        return tab;
+    }
+
+    private AbstractTool getTool(int numberTab, int numberComboBox) {
+        for (int i = 0; i < Data.LIST_TOOL.size(); i++) {
+            if (numberTab == i) {
+                for (int j = 0; j < Data.LIST_TOOL.get(i).size(); j++) {
                     if (numberComboBox == j) {
-                        return DataGF.LIST_TOOL.get(i).get(j);
+                        return Data.LIST_TOOL.get(i).get(j);
                     }
                 }
             }
@@ -57,59 +70,56 @@ public class ButtonActionListener implements ActionListener {
         return null;
     }
 
-    private int getNumberComboBox(int numberTab) {
-        for (int i = 0; i < DataGF.LIST_TAB.size(); i++) {
-            if (numberTab == i) {
-                return DataGF.LIST_TAB.get(i).getNumberComboBox();
-            }
+
+
+
+    private void calculationModesTap(Tap tool, TabTap tab) {
+        if (conditionInputDiameterTap(tool, tab)) {
+            calculateWithCheckBox(tool, tab);
+            tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(numberDiameter)));
+            tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин" + "  F = " + tool.calculateTurns(numberDiameter) + " * " + Tap.getFeedTap() + ", мм/мин");
         }
-        return 0;
     }
 
-    private TabCutter getTab(int numberTab) {
-        for (int i = 0; i < DataGF.LIST_TAB.size(); i++) {
-            if (numberTab == i) {
-                return DataGF.LIST_TAB.get(i);
-            }
+    private boolean conditionInputDiameterTap(Tap tool, TabTap tab) {
+        String stringDiameter = tab.getFieldDiameter().getText();
+        if (stringDiameter.equals("")) {
+            massageForDiameterTap(tool, tab);
+            return false;
         }
-        return null;
+        field.getMessageError().setText("");
+        numberDiameter = Double.parseDouble(stringDiameter);
+        return allowableDiameterTap(tool, tab, numberDiameter);
     }
 
-//    private AbstractTool getTool(int numberTab, int numberComboBox) {
-//        for (int i = 0; i < DataGF.LIST_TOOL.size(); i++) {
-//            if (numberTab == i) {
-//                for (int j = 0; j < DataGF.LIST_TOOL.get(i).size(); j++) {
-//                    if (numberComboBox == j) {
-//                        return DataGF.LIST_TOOL.get(i).get(j);
-//                    }
-//                }
-//            }
-//        }
-//        return null;
-//    }
-//
-//    private int getNumberComboBox(int numberTab) {
-//        for (int i = 0; i < DataGF.LIST_TAB.size(); i++) {
-//            if (numberTab == i) {
-//                return DataGF.LIST_TAB.get(i).getNumberComboBox();
-//            }
-//        }
-//        return 0;
-//    }
-//
-//    private TabCutter getTab(int numberTab) {
-//        for (int i = 0; i < DataGF.LIST_TAB.size(); i++) {
-//            if (numberTab == i) {
-//                return DataGF.LIST_TAB.get(i);
-//            }
-//        }
-//        return null;
-//    }
+    private boolean allowableDiameterTap(Tap tool, TabTap tab, double diameter) {
+        if (diameter >= tool.getMinDiameter() && diameter <= tool.getMaxDiameter()) {
+            return true;
+        } else {
+            massageForDiameterTap(tool, tab);
+        }
+        return false;
+    }
+
+    private void massageForDiameterTap(Tap tool, TabTap tab) {
+        field.getMessageError().setForeground(Color.red);
+        field.getMessageError().setText("Введите диаметр инструмента от " + (int)tool.getMinDiameter() + " до " + (int)tool.getMaxDiameter() + " мм!");
+        tab.getFieldTurns().setText("0");
+        tab.getFieldMachineFeed().setText("0");
+        tab.getLabelFormulaTurnsFeed().setText("");
+    }
+
+
+
+
+
+
 
     private void calculationModesTool(AbstractTool tool, TabCutter tab) {
         try {
             if (conditionInputDiameter(tool, tab) && conditionInputDiameterFeed(tool, tab)) {
                 calculateWithCheckBox(tool, tab);
+                selectSpecificTab(tool, tab);
                 tab.getFieldMachineFeed().setText("" + tool.calculateFeed(numberFeed, tool.calculateTurns(numberDiameter)));
                 tab.getFieldFeed().setText("" + numberFeed);
                 tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин" + "  F = " + tool.calculateTurns(numberDiameter) + " * " + numberFeed + ", мм/мин");
@@ -118,9 +128,16 @@ public class ButtonActionListener implements ActionListener {
             field.getMessageError().setForeground(Color.green);
             field.getMessageError().setText("Установлена средняя подача S=" + tool.getFeed() + " мм/об");
             calculateWithCheckBox(tool, tab);
+            selectSpecificTab(tool, tab);
             tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(numberDiameter)));
             tab.getFieldFeed().setText("" + tool.getFeed());
             tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин" + "  F = " + tool.calculateTurns(numberDiameter) + " * " + tool.getFeed() + ", мм/мин");
+        }
+    }
+
+    private void selectSpecificTab(AbstractTool tool, TabCutter tab) {
+        if (TabActionListener.getNumberTab() == 1) {
+            calculationLengthPointDrill((Drill) tool, (TabDrill) tab);
         }
     }
 

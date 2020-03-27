@@ -1,6 +1,6 @@
 package engineeringtechnology.graphicfield;
 
-import engineeringtechnology.cuttingmodes.data.DataGF;
+import engineeringtechnology.cuttingmodes.data.Data;
 import engineeringtechnology.graphicfield.tabs.*;
 import listener.ButtonActionListener;
 import listener.TabActionListener;
@@ -77,11 +77,11 @@ public class Field {
 
     private JTabbedPane createTads() {
         JTabbedPane tab = new JTabbedPane();
-        TabCutter tabCutter = DataGF.LIST_TAB.get(0);
-        TabDrill tabDrill = (TabDrill) DataGF.LIST_TAB.get(1);
-        TabCountersink tabCountersink = (TabCountersink) DataGF.LIST_TAB.get(2);
-        TabSweep tabSweep = (TabSweep) DataGF.LIST_TAB.get(3);
-        TabTap tabTap = (TabTap) DataGF.LIST_TAB.get(4);
+        TabCutter tabCutter = Data.LIST_TAB.get(0);
+        TabDrill tabDrill = (TabDrill) Data.LIST_TAB.get(1);
+        TabCountersink tabCountersink = (TabCountersink) Data.LIST_TAB.get(2);
+        TabSweep tabSweep = (TabSweep) Data.LIST_TAB.get(3);
+        TabTap tabTap = (TabTap) Data.LIST_TAB.get(4);
         buttonActionListener = new ButtonActionListener(this, tabCountersink, tabCutter, tabDrill, tabSweep, tabTap);
         tab.add("Фреза", tabCutter);
         tab.add("Сверло", tabDrill);

@@ -1,6 +1,6 @@
 package listener;
 
-import engineeringtechnology.cuttingmodes.data.DataGF;
+import engineeringtechnology.cuttingmodes.data.Data;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,9 +17,9 @@ public class ComboBoxActionListener implements ActionListener {
     }
 
     private void setNumberComboBox(int numberTab) {
-        for (int i = 0; i < DataGF.LIST_TAB.size(); i++) {
+        for (int i = 0; i < Data.LIST_TAB.size(); i++) {
             if (numberTab == i) {
-                DataGF.LIST_TAB.get(i).setNumberComboBox(numberComboBox);
+                Data.LIST_TAB.get(i).setNumberComboBox(numberComboBox);
             }
         }
     }

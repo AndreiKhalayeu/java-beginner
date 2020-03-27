@@ -11,7 +11,6 @@ public class TabSweep extends TabCutter {
         ComboBoxActionListener comboBoxActionListener = new ComboBoxActionListener();
         comboBoxName = new JComboBox<>();
         comboBoxName.addItem("Цилиндр. развертка");
-        comboBoxName.addItem("Конич. развертка");
         add(comboBoxName);
         comboBoxName.addActionListener(comboBoxActionListener);
         return comboBoxName;

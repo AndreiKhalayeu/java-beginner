@@ -1,6 +1,6 @@
 package listener;
 
-import engineeringtechnology.cuttingmodes.data.DataGF;
+import engineeringtechnology.cuttingmodes.data.Data;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,12 +13,12 @@ public class CheckBoxActionListener implements ActionListener {
     }
 
     private void verifyCheckBox(int numberTab) {
-        for (int i = 0; i < DataGF.LIST_TAB.size(); i++) {
+        for (int i = 0; i < Data.LIST_TAB.size(); i++) {
             if (numberTab == i) {
-                if (DataGF.LIST_TAB.get(i).isCheckBox()) {
-                    DataGF.LIST_TAB.get(i).setCheckBox(false);
+                if (Data.LIST_TAB.get(i).isCheckBox()) {
+                    Data.LIST_TAB.get(i).setCheckBox(false);
                 } else {
-                    DataGF.LIST_TAB.get(i).setCheckBox(true);
+                    Data.LIST_TAB.get(i).setCheckBox(true);
                 }
             }
         }

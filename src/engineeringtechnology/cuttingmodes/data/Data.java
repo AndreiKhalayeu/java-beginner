@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class DataGF {
+public class Data {
     public static final Map<Integer, Integer> LIST_TURNS = new TreeMap<>();
     static {
         LIST_TURNS.put(56, 50);
@@ -55,21 +55,16 @@ public class DataGF {
     public static final List<AbstractTool> LIST_COUNTERSINK = new ArrayList<>();
     static {
         LIST_COUNTERSINK.add(new Countersink());
-        LIST_COUNTERSINK.add(new CountersinkButt());
     }
 
     public static final List<AbstractTool> LIST_SWEEP = new ArrayList<>();
     static {
         LIST_SWEEP.add(new Sweep());
-        LIST_SWEEP.add(new SweepConical());
     }
 
     public static final List<AbstractTool> LIST_TAP = new ArrayList<>();
     static {
         LIST_TAP.add(new Tap());
-        LIST_TAP.add(new TapConical());
-        LIST_TAP.add(new TapTubeConical());
-        LIST_TAP.add(new TapTubeCylindrical());
     }
 
     public static final List<List<AbstractTool>> LIST_TOOL = new ArrayList<>();

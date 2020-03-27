@@ -11,7 +11,6 @@ public class TabCountersink extends TabCutter {
         ComboBoxActionListener comboBoxActionListener = new ComboBoxActionListener();
         comboBoxName = new JComboBox<>();
         comboBoxName.addItem("Цилиндр. зенкер");
-        comboBoxName.addItem("Торц. зенкер");
         add(comboBoxName);
         comboBoxName.addActionListener(comboBoxActionListener);
         return comboBoxName;
