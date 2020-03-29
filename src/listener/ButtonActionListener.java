@@ -37,7 +37,7 @@ public class ButtonActionListener implements ActionListener {
         TabCutter tab = getTab(TabActionListener.getNumberTab());
         AbstractTool tool = getTool(TabActionListener.getNumberTab(), tab.getNumberComboBox());
         if (clickedButton == field.getButtonStart()) {
-            if (TabActionListener.getNumberTab() == 4) {
+            if (tool instanceof Tap && tab instanceof TabTap) {
                 calculationModesTap((Tap)tool, (TabTap)tab);
             } else {
                 calculationModesTool(tool, tab);
@@ -136,7 +136,7 @@ public class ButtonActionListener implements ActionListener {
     }
 
     private void selectSpecificTab(AbstractTool tool, TabCutter tab) {
-        if (TabActionListener.getNumberTab() == 1) {
+        if (tool instanceof Drill && tab instanceof TabDrill) {
             calculationLengthPointDrill((Drill) tool, (TabDrill) tab);
         }
     }
