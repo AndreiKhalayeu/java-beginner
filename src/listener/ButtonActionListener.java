@@ -131,10 +131,26 @@ public class ButtonActionListener implements ActionListener {
      */
     private void calculationModesTap(Tap tool, TabTap tab) {
         if (conditionInputDiameterTap(tool, tab)) {
-            calculateWithCheckBox(tool, tab);
-            tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(numberDiameter)));
-            tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин" + "  F = " + tool.calculateTurns(numberDiameter) + " * " + Tap.getFeedTap() + ", мм/мин");
+            calculateWithCheckBoxTap(tool, tab);
             tab.getFieldDrill().setText(String.format("%.2f", tool.calculateDiameterDrill(numberDiameter)));
+        }
+    }
+
+    /**
+     * Метод проверяет стоит ли флажек во вкладке метчик. Если стоит расчет подачи ведется для станка ГФ2171, иначе
+     * расчет подачи ведется по обычному варианту
+     * @param tool инструмент метчик
+     * @param tab вкладка метчик
+     */
+    private void calculateWithCheckBoxTap(Tap tool, TabTap tab) {
+        if (tab.isCheckBox()) {
+            tab.getFieldTurns().setText("" + tool.calculateTurnsGF(tool.calculateTurns(numberDiameter)));
+            tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurnsGF(tool.calculateTurns(numberDiameter))));
+            tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин" + "  F = " + tool.calculateTurnsGF(tool.calculateTurns(numberDiameter)) + " * " + Tap.getFeedTap() + " * 0.9" + ", мм/мин");
+        } else {
+            tab.getFieldTurns().setText("" + tool.calculateTurns(numberDiameter));
+            tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(numberDiameter)));
+            tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин" + "  F = " + tool.calculateTurns(numberDiameter) + " * " + Tap.getFeedTap() + " * 0.9" + ", мм/мин");
         }
     }
 
@@ -192,20 +208,18 @@ public class ButtonActionListener implements ActionListener {
     private void calculationModesTool(AbstractTool tool, TabCutter tab) {
         try {
             if (conditionInputDiameter(tool, tab) && conditionInputDiameterFeed(tool, tab)) {
-                calculateWithCheckBox(tool, tab);
                 selectSpecificTab(tool, tab);
-                tab.getFieldMachineFeed().setText("" + tool.calculateFeed(numberFeed, tool.calculateTurns(numberDiameter)));
+                tab.getFieldMachineFeed().setText("" + tool.calculateFeed(numberFeed, calculateWithCheckBox(tool, tab)));
                 tab.getFieldFeed().setText("" + numberFeed);
-                tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин  F = " + tool.calculateTurns(numberDiameter) + " * " + numberFeed + ", мм/мин");
+                tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин  F = " + calculateWithCheckBox(tool, tab) + " * " + numberFeed + ", мм/мин");
             }
         } catch (NumberFormatException e) {
             field.getMessageError().setForeground(Color.green);
             field.getMessageError().setText("Установлена средняя подача S=" + tool.getFeed() + " мм/об");
-            calculateWithCheckBox(tool, tab);
             selectSpecificTab(tool, tab);
-            tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(numberDiameter)));
+            tab.getFieldMachineFeed().setText("" + tool.calculateFeed(calculateWithCheckBox(tool, tab)));
             tab.getFieldFeed().setText("" + tool.getFeed());
-            tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин  F = " + tool.calculateTurns(numberDiameter) + " * " + tool.getFeed() + ", мм/мин");
+            tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин  F = " + calculateWithCheckBox(tool, tab) + " * " + tool.getFeed() + ", мм/мин");
         }
     }
 
@@ -226,13 +240,18 @@ public class ButtonActionListener implements ActionListener {
      * расчет подачи ведется по обычному варианту
      * @param tool инструмент
      * @param tab вкладка
+     * @return возвращает подачу для ГФ2171 если true(флажек установлен), возвращает расчетную подачу если false(флажек
+     * не установлен)
      */
-    private void calculateWithCheckBox(AbstractTool tool, TabCutter tab) {
+    private int calculateWithCheckBox(AbstractTool tool, TabCutter tab) {
+        int turns;
         if (tab.isCheckBox()) {
-            tab.getFieldTurns().setText("" + tool.calculateTurnsGF(tool.calculateTurns(numberDiameter)));
+            turns = tool.calculateTurnsGF(tool.calculateTurns(numberDiameter));
         } else {
-            tab.getFieldTurns().setText("" + tool.calculateTurns(numberDiameter));
+            turns = tool.calculateTurns(numberDiameter);
         }
+        tab.getFieldTurns().setText("" + turns);
+        return turns;
     }
 
     /**
