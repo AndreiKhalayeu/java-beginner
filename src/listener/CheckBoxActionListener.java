@@ -5,6 +5,9 @@ import engineeringtechnology.cuttingmodes.data.Data;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Класс слушатель флажка
+ */
 public class CheckBoxActionListener implements ActionListener {
 
     @Override
@@ -12,6 +15,10 @@ public class CheckBoxActionListener implements ActionListener {
         verifyCheckBox(TabActionListener.getNumberTab());
     }
 
+    /**
+     *Метод проверяет установлен ли флажек
+     * @param numberTab номер вкладки
+     */
     private void verifyCheckBox(int numberTab) {
         for (int i = 0; i < Data.LIST_TAB.size(); i++) {
             if (numberTab == i) {

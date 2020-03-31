@@ -5,9 +5,18 @@ import engineeringtechnology.cuttingmodes.AbstractTool;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс инструмент метчик
+ */
 public class Tap extends AbstractTool {
+    /**
+     * Поле подача
+     */
     private static double feedTap = 0.8;
 
+    /**
+     * Поле список подач
+     */
     public static final List<Double> FEED = new ArrayList<>();
     static {
         FEED.add(0.8);
@@ -20,6 +29,10 @@ public class Tap extends AbstractTool {
         FEED.add(3.0);
         FEED.add(3.5);
     }
+
+    /**
+     * Конструктор инструменьа метчик
+     */
     public Tap() {
         super(6,6,30);
     }
@@ -27,6 +40,15 @@ public class Tap extends AbstractTool {
     @Override
     public int calculateFeed(int turns) {
         return (int)(turns * feedTap * 0.9);
+    }
+
+    /**
+     * Метод расчитывает диаметр сверла под метчик
+     * @param number диаметр метчика
+     * @return возвращает диаметр сверла под метчик
+     */
+    public double calculateDiameterDrill(double number) {
+        return number - feedTap;
     }
 
     public static double getFeedTap() {

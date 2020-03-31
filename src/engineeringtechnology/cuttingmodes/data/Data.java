@@ -9,7 +9,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * Класс содержащий данные
+ */
 public class Data {
+    /**
+     * Поле список подач для станка ГФ2171
+     */
     public static final Map<Integer, Integer> LIST_TURNS = new TreeMap<>();
     static {
         LIST_TURNS.put(56, 50);
@@ -32,6 +38,9 @@ public class Data {
         LIST_TURNS.put(2500, 2500);
     }
 
+    /**
+     * Поле список вкладок
+     */
     public static final List<TabCutter> LIST_TAB = new ArrayList<>();
     static {
         LIST_TAB.add(new TabCutter());
@@ -41,32 +50,50 @@ public class Data {
         LIST_TAB.add(new TabTap());
     }
 
+    /**
+     * Поле список фрез
+     */
     public static final List<AbstractTool> LIST_CUTTER = new ArrayList<>();
     static {
         LIST_CUTTER.add(new Cutter());
         LIST_CUTTER.add(new CutterButt());
     }
 
+    /**
+     * Поле список сверл
+     */
     public static final List<AbstractTool> LIST_DRILL = new ArrayList<>();
     static {
         LIST_DRILL.add(new Drill());
     }
 
+    /**
+     * Поле список зенкеров
+     */
     public static final List<AbstractTool> LIST_COUNTERSINK = new ArrayList<>();
     static {
         LIST_COUNTERSINK.add(new Countersink());
     }
 
+    /**
+     * Поле список разверток
+     */
     public static final List<AbstractTool> LIST_SWEEP = new ArrayList<>();
     static {
         LIST_SWEEP.add(new Sweep());
     }
 
+    /**
+     * Поле список метчиков
+     */
     public static final List<AbstractTool> LIST_TAP = new ArrayList<>();
     static {
         LIST_TAP.add(new Tap());
     }
 
+    /**
+     * Поле список групп инструментов
+     */
     public static final List<List<AbstractTool>> LIST_TOOL = new ArrayList<>();
     static {
         LIST_TOOL.add(LIST_CUTTER);

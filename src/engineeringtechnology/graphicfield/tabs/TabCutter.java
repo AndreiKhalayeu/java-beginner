@@ -6,20 +6,60 @@ import listener.ComboBoxActionListener;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Класс вкладка фреза
+ */
 public class TabCutter extends JPanel {
+    /**
+     * Поле флажек
+     */
     protected boolean checkBox = false;
+
+    /**
+     * Поле номер в выпадающем списке
+     */
     protected int numberComboBox;
+
+    /**
+     * Поле для ввода диаметра
+     */
     private JFormattedTextField fieldDiameter;
+
+    /**
+     * Поле для ввода подачи
+     */
     private JFormattedTextField fieldFeed;
+
+    /**
+     * Поле для вывода оборотов
+     */
     private JFormattedTextField fieldTurns;
+
+    /**
+     * Поле для вывода машинной подачи
+     */
     private JFormattedTextField fieldMachineFeed;
+
+    /**
+     * Поле имя выпадающего списка
+     */
     protected JComboBox<String> comboBoxName;
+
+    /**
+     * Поле надпись формул оборотов и подачи
+     */
     private JLabel labelFormulaTurnsFeed;
 
+    /**
+     * Конструктор вкладка фреза
+     */
     public TabCutter() {
         createFlowLayoutTab();
     }
 
+    /**
+     * Метод создает линейную схему расположения с тремя панелями
+     */
     protected void createFlowLayoutTab() {
         FlowLayout flowLayout = new FlowLayout();
         this.setLayout(flowLayout);
@@ -29,6 +69,10 @@ public class TabCutter extends JPanel {
         flowLayout.setAlignment(FlowLayout.LEFT);
     }
 
+    /**
+     * Метод создает левую панель с полярным расположением панелей (центральная, южная)
+     * @return возвращает созданную панель
+     */
     protected JPanel createPanelBorderLayoutTabLeft() {
         JPanel panelBorderLayoutTabLeft = new JPanel();
         panelBorderLayoutTabLeft.setLayout(new BorderLayout());
@@ -38,6 +82,10 @@ public class TabCutter extends JPanel {
         return panelBorderLayoutTabLeft;
     }
 
+    /**
+     * Метод создает центральную панель с полярным расположением панелей (центральная, южная)
+     * @return возвращает созданную панель
+     */
     protected JPanel createPanelBorderLayoutTabCenter() {
         JPanel panelBorderLayoutTabCenter = new JPanel();
         panelBorderLayoutTabCenter.setLayout(new BorderLayout());
@@ -46,6 +94,12 @@ public class TabCutter extends JPanel {
         return panelBorderLayoutTabCenter;
     }
 
+
+    /**
+     * Метод создает понель по линейной схеме расположения поля: надпись диаметра, поле диаметра, надпись
+     * подачи, поле подачи, надпись машинной подачи, поле машинной подачи, надпись оборотов, поле оборотов
+     * @return возвращает созданную панель
+     */
     protected JPanel createPanelFlowLayoutTabCenter() {
         JPanel panelFlowLayoutTabCenter = new JPanel();
         panelFlowLayoutTabCenter.setLayout(new FlowLayout());
@@ -60,6 +114,10 @@ public class TabCutter extends JPanel {
         return panelFlowLayoutTabCenter;
     }
 
+    /**
+     * Метод создает правую панель с полярным расположением панелей (центральная)
+     * @return возвращает созданную панель
+     */
     protected JPanel createPanelBorderLayoutTabRight() {
         JPanel panelBorderLayoutTabRight = new JPanel();
         panelBorderLayoutTabRight.setLayout(new BorderLayout());
@@ -67,12 +125,20 @@ public class TabCutter extends JPanel {
         return panelBorderLayoutTabRight;
     }
 
+    /**
+     * Метод создает панель по линейной схеме расположения
+     * @return возвращает созданную панель
+     */
     protected JPanel createPanelFlowLayoutTabRight() {
         JPanel rightPanelBorderLayout = new JPanel();
         rightPanelBorderLayout.setLayout(new FlowLayout());
         return rightPanelBorderLayout;
     }
 
+    /**
+     * Метод создает выподающий список фрез
+     * @return возвращает выподающий список фрез
+     */
     protected JComboBox<String> createFieldName() {
         ComboBoxActionListener comboBoxActionListener = new ComboBoxActionListener();
         comboBoxName = new JComboBox<>();
@@ -83,6 +149,10 @@ public class TabCutter extends JPanel {
         return comboBoxName;
     }
 
+    /**
+     * Метод создает флажек
+     * @return возвращает флажек
+     */
     protected JCheckBox createCheckBox() {
         CheckBoxActionListener processingCheckBox = new CheckBoxActionListener();
         JCheckBox jCheckBox = new JCheckBox("ГФ2171");
@@ -91,12 +161,20 @@ public class TabCutter extends JPanel {
         return jCheckBox;
     }
 
+    /**
+     * Метод создает надпись диаметра
+     * @return возвращает надпись диаметра
+     */
     protected JLabel createLabelDiameter() {
         JLabel labelDiameter = new JLabel("D,мм: ");
         add(labelDiameter);
         return labelDiameter;
     }
 
+    /**
+     * Метод создает поле диаметра
+     * @return возвращает поле диаметра
+     */
     protected JFormattedTextField createFieldDiameter() {
         fieldDiameter = new JFormattedTextField();
         add(fieldDiameter);
@@ -104,12 +182,20 @@ public class TabCutter extends JPanel {
         return fieldDiameter;
     }
 
+    /**
+     * Метод создает надпись подачи
+     * @return возвращает надпись подачи
+     */
     protected JLabel createLabelFeed() {
         JLabel labelFeed = new JLabel("s,мм/об: ");
         add(labelFeed);
         return labelFeed;
     }
 
+    /**
+     * Метод создает поле подачи
+     * @return возвращает поле подачи
+     */
     private JFormattedTextField createFieldFeed() {
         fieldFeed = new JFormattedTextField();
         add(fieldFeed);
@@ -117,12 +203,20 @@ public class TabCutter extends JPanel {
         return fieldFeed;
     }
 
+    /**
+     * Метод создает надпись машинной подачи
+     * @return возвращает надпись машинной подачи
+     */
     protected JLabel createLabelMachineFeed() {
         JLabel labelMachineFeed = new JLabel("F,мм/мин: ");
         add(labelMachineFeed);
         return labelMachineFeed;
     }
 
+    /**
+     * Метод создает поле машинной подачи
+     * @return возвращает поле машинной подачи
+     */
     protected JFormattedTextField createFieldMachineFeed() {
         fieldMachineFeed = new JFormattedTextField("0");
         add(fieldMachineFeed);
@@ -131,12 +225,20 @@ public class TabCutter extends JPanel {
         return fieldMachineFeed;
     }
 
+    /**
+     * Метод создает надпись оборотов
+     * @return возвращает надпись оборотов
+     */
     protected JLabel createLabelTurns() {
         JLabel labelTurns = new JLabel("n,об/мин: ");
         add(labelTurns);
         return labelTurns;
     }
 
+    /**
+     * Метод создает поле оборотов
+     * @return возвращает поле оборотов
+     */
     protected JFormattedTextField createFieldTurns() {
         fieldTurns = new JFormattedTextField("0");
         add(fieldTurns);
@@ -145,6 +247,10 @@ public class TabCutter extends JPanel {
         return fieldTurns;
     }
 
+    /**
+     * Метод создает надпись формулы оборотов и подачи
+     * @return возвращает надпись формулы оборотов и подачи
+     */
     private JLabel createLabelFormulaTurnsFeed() {
         labelFormulaTurnsFeed = new JLabel("");
         add(labelFormulaTurnsFeed);

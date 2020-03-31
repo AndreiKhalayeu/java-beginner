@@ -7,9 +7,20 @@ import listener.ComboBoxFeedActionListener;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Класс вкладка метчик
+ */
 public class TabTap extends TabCutter {
+    /**
+     * поле сверло
+     */
     private JFormattedTextField fieldDrill;
 
+    /**
+     * Метод создает понель по линейной схеме расположения поля: надпись диаметра, поле диаметра, надпись
+     * подачи, поле подачи, надпись машинной подачи, поле машинной подачи, надпись оборотов, поле оборотов
+     * @return возвращает созданную панель
+     */
     @Override
     protected JPanel createPanelFlowLayoutTabCenter() {
         JPanel panelFlowLayoutTabCenter = new JPanel();
@@ -25,6 +36,11 @@ public class TabTap extends TabCutter {
         return panelFlowLayoutTabCenter;
     }
 
+    /**
+     * Метод создает панель по линейной схеме расположения поля: надпись диаметра под метчик,
+     * поле диаметра под метчик
+     * @return возвращает созданную панель
+     */
     @Override
     protected JPanel createPanelFlowLayoutTabRight() {
         JPanel rightPanelBorderLayout = new JPanel();
@@ -34,6 +50,10 @@ public class TabTap extends TabCutter {
         return rightPanelBorderLayout;
     }
 
+    /**
+     * Метод создает выподающий список метчиков
+     * @return возвращает выподающий список метчиков
+     */
     @Override
     protected JComboBox<String> createFieldName() {
         ComboBoxActionListener comboBoxActionListener = new ComboBoxActionListener();
@@ -44,6 +64,10 @@ public class TabTap extends TabCutter {
         return comboBoxName;
     }
 
+    /**
+     * Метод создает выподающий список подач
+     * @return возвращает выподающий список подач
+     */
     private JComboBox<Double> createFieldFeed() {
         ComboBoxFeedActionListener comboBoxFeedActionListener = new ComboBoxFeedActionListener();
         JComboBox<Double> comboBoxFeed = new JComboBox<>();
@@ -55,12 +79,20 @@ public class TabTap extends TabCutter {
         return comboBoxFeed;
     }
 
+    /**
+     * Метод создает надпись диаметра под метчик
+     * @return возвращает надпись диаметра под метчик
+     */
     private JLabel createLabelDrill() {
         JLabel labelDrill = new JLabel("Сверло D,мм: ");
         add(labelDrill);
         return labelDrill;
     }
 
+    /**
+     * Метод создает поле диаметра под метчик
+     * @return возвращает поле диаметра под метчик
+     */
     private JFormattedTextField createFieldDrill() {
         fieldDrill = new JFormattedTextField();
         add(fieldDrill);

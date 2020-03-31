@@ -5,20 +5,53 @@ import engineeringtechnology.cuttingmodes.data.Data;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Абстрактный класс инструмент
+ */
 public abstract class AbstractTool implements CuttingConditions {
+    /**
+     * Поле скорость
+     */
     protected final int speed;
+
+    /**
+     * Поле минимальный диаметр
+     */
     protected double minDiameter;
+
+    /**
+     * Поле максимальный диаметр
+     */
     protected double maxDiameter;
+
+    /**
+     * Поле подача
+     */
     protected double feed;
+
+    /**
+     * Поле минимальная подача
+     */
     protected double minFeed;
+
+    /**
+     * Поле максимальная подача
+     */
     protected double maxFeed;
 
+    /**
+     * Конструктор принимает на вход скорость, минимальный диаметр, максимальный диаметр
+     */
     public AbstractTool(int speed, double minDiameter, double maxDiameter) {
         this.speed = speed;
         this.minDiameter = minDiameter;
         this.maxDiameter = maxDiameter;
     }
 
+    /**
+     * Конструктор принимает на вход скорость, подачу, минимальный диаметр, максимальный диаметр,
+     * минимальную подачу, максимальную подачу
+     */
     public AbstractTool(int speed, double feed, double minDiameter, double maxDiameter, double minFeed, double maxFeed) {
         this.speed = speed;
         this.feed = feed;

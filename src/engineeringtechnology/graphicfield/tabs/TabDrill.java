@@ -8,6 +8,11 @@ import java.awt.*;
 public class TabDrill extends TabCutter {
     private JFormattedTextField fieldBlade;
 
+    /**
+     * Метод создает панель по линейной схеме расположения поля: надпись длинны острой части сверла,
+     * поле длинны острой части сверла
+     * @return возвращает созданную панель
+     */
     @Override
     protected JPanel createPanelFlowLayoutTabRight() {
         JPanel rightPanelBorderLayout = new JPanel();
@@ -17,6 +22,10 @@ public class TabDrill extends TabCutter {
         return rightPanelBorderLayout;
     }
 
+    /**
+     * Метод создает выподающий список сверл
+     * @return возвращает выподающий список сверл
+     */
     @Override
     protected JComboBox<String> createFieldName() {
         ComboBoxActionListener comboBoxActionListener = new ComboBoxActionListener();
@@ -27,12 +36,20 @@ public class TabDrill extends TabCutter {
         return comboBoxName;
     }
 
+    /**
+     * Метод создает надпись длинны острой части сверла
+     * @return возвращает надпись длинны острой части сверла
+     */
     private JLabel createLabelLengthBlade() {
         JLabel labelLengthBlade = new JLabel(">,мм: ");
         add(labelLengthBlade);
         return labelLengthBlade;
     }
 
+    /**
+     * Метод создает поле длинны острой части сверла
+     * @return возвращает поле длинны острой части сверла
+     */
     private JFormattedTextField createFieldBlade() {
         fieldBlade = new JFormattedTextField("0");
         add(fieldBlade);

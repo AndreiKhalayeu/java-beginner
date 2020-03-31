@@ -8,16 +8,39 @@ import listener.TabActionListener;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Класс поле создает графическую оболочку
+ */
 public class Field {
+    /**
+     * Поле кннопка рассчитать
+     */
     private JButton buttonStart;
+
+    /**
+     * Поле кнопка сброс
+     */
     private JButton buttonStop;
+
+    /**
+     * поле кнопочный слушатель
+     */
     private ButtonActionListener buttonActionListener;
+    /**
+     * Поле сообщение ошибки
+     */
     private JLabel messageError;
 
+    /**
+     * Конструктор графической оболочки
+     */
     Field() {
         createFrame();
     }
 
+    /**
+     * Метод создает фрейм
+     */
     private void createFrame() {
         JFrame frame = new JFrame("Calculation of modes");
         frame.setContentPane(createMainPanel());
@@ -28,6 +51,10 @@ public class Field {
         frame.setResizable(false);
     }
 
+    /**
+     * Метод создает панель с полярным расположением панелей(северная, центральная, южная)
+     * @return возвращает панель с полярным расположением панелей
+     */
     private JPanel createMainPanel() {
         JPanel mainPanel = new JPanel();
         BorderLayout layout = new BorderLayout();
@@ -38,6 +65,10 @@ public class Field {
         return mainPanel;
     }
 
+    /**
+     * Метод создает северную панель
+     * @return возвращает северную панель
+     */
     private JPanel createNorthPanel() {
         JPanel northPanel = new JPanel();
         northPanel.setBackground(Color.BLACK);
@@ -46,6 +77,10 @@ public class Field {
         return northPanel;
     }
 
+    /**
+     * Метод создает центральную панель
+     * @return возвращает центральную панель
+     */
     private JPanel createCenterPanel() {
         JPanel centerPanel = new JPanel();
         centerPanel.setBackground(Color.BLACK);
@@ -53,6 +88,10 @@ public class Field {
         return centerPanel;
     }
 
+    /**
+     * Метод создает южную панель
+     * @return возвращает южную панель
+     */
     private JPanel createSouthPanel() {
         JPanel southPanel = new JPanel();
         southPanel.setBackground(Color.BLACK);
@@ -61,6 +100,10 @@ public class Field {
         return southPanel;
     }
 
+    /**
+     * Метод создает кнопку рассчитать
+     * @return возвращает кнопку рассчитать
+     */
     private JButton createButtonStart() {
         buttonStart = new JButton("Расчитать");
         buttonStart.setBackground(Color.LIGHT_GRAY);
@@ -68,6 +111,10 @@ public class Field {
         return buttonStart;
     }
 
+    /**
+     * Метод создает кнопку сброс
+     * @return возвращает кнопку сброс
+     */
     private JButton createButtonStop() {
         buttonStop = new JButton("Сброс");
         buttonStop.setBackground(Color.LIGHT_GRAY);
@@ -75,6 +122,10 @@ public class Field {
         return buttonStop;
     }
 
+    /**
+     * Метод создает панель вкладок
+     * @return возвращает панель вкладок
+     */
     private JTabbedPane createTads() {
         JTabbedPane tab = new JTabbedPane();
         TabCutter tabCutter = Data.LIST_TAB.get(0);
