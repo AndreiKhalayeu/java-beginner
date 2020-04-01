@@ -1,6 +1,6 @@
 package engineeringtechnology.graphicfield.tabs;
 
-import listener.ComboBoxActionListener;
+import engineeringtechnology.listener.ComboBoxActionListener;
 
 import javax.swing.*;
 

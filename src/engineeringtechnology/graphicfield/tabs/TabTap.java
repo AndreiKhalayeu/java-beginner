@@ -1,8 +1,8 @@
 package engineeringtechnology.graphicfield.tabs;
 
 import engineeringtechnology.cuttingmodes.tool.Tap;
-import listener.ComboBoxActionListener;
-import listener.ComboBoxFeedActionListener;
+import engineeringtechnology.listener.ComboBoxActionListener;
+import engineeringtechnology.listener.ComboBoxFeedActionListener;
 
 import javax.swing.*;
 import java.awt.*;

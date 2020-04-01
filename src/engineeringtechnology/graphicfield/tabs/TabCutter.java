@@ -1,7 +1,7 @@
 package engineeringtechnology.graphicfield.tabs;
 
-import listener.CheckBoxActionListener;
-import listener.ComboBoxActionListener;
+import engineeringtechnology.listener.CheckBoxActionListener;
+import engineeringtechnology.listener.ComboBoxActionListener;
 
 import javax.swing.*;
 import java.awt.*;

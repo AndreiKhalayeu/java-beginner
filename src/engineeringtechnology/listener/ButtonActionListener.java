@@ -1,4 +1,4 @@
-package listener;
+package engineeringtechnology.listener;
 
 import engineeringtechnology.cuttingmodes.AbstractTool;
 import engineeringtechnology.cuttingmodes.data.Data;
@@ -327,7 +327,7 @@ public class ButtonActionListener implements ActionListener {
             return true;
         } else {
             field.getMessageError().setForeground(Color.red);
-            field.getMessageError().setText("Введите подачу инструмента от " + tool.getMinFeed() + " до " + tool.getMaxFeed() + " мм!");
+            field.getMessageError().setText("Введите подачу инструмента от " + tool.getMinFeed() + " до " + tool.getMaxFeed() + " мм/об!");
             tab.getFieldTurns().setText("0");
             tab.getFieldMachineFeed().setText("0");
             tab.getLabelFormulaTurnsFeed().setText("");

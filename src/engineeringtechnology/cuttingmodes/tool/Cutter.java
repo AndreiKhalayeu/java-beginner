@@ -10,6 +10,6 @@ public class Cutter extends AbstractTool {
      * Конструктор инструмента фреза
      */
     public Cutter() {
-        super(25,0.2,5,65,0.1,0.3);
+        super(25,0.15,10,50,0.01,0.3);
     }
 }

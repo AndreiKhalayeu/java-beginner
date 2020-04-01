@@ -10,6 +10,6 @@ public class Sweep extends AbstractTool {
      * Конструктор инструмента развертка
      */
     public Sweep() {
-        super(8, 0.5,4,50,0.4,0.6);
+        super(8, 0.5,8,50,0.4,0.6);
     }
 }

@@ -12,14 +12,15 @@ public class Tap extends AbstractTool {
     /**
      * Поле подача
      */
-    private static double feedTap = 0.8;
+    private static double feedTap = 0.5;
 
     /**
      * Поле список подач
      */
     public static final List<Double> FEED = new ArrayList<>();
     static {
-        FEED.add(0.8);
+        FEED.add(0.5);
+        FEED.add(0.75);
         FEED.add(1.0);
         FEED.add(1.25);
         FEED.add(1.5);
@@ -31,10 +32,10 @@ public class Tap extends AbstractTool {
     }
 
     /**
-     * Конструктор инструменьа метчик
+     * Конструктор инструмента метчик
      */
     public Tap() {
-        super(6,6,30);
+        super(6,8,30);
     }
 
     @Override

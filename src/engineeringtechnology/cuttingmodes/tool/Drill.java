@@ -10,7 +10,7 @@ public class Drill extends AbstractTool {
      * Конструктор инструмента сверло
      */
     public Drill() {
-        super(18,0.2, 4, 50, 0.1, 0.3);
+        super(18,0.2, 7, 50, 0.1, 0.3);
     }
 
     /**
