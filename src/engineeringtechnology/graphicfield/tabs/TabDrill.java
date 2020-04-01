@@ -5,16 +5,15 @@ import engineeringtechnology.listener.ComboBoxActionListener;
 import javax.swing.*;
 import java.awt.*;
 
-public class TabDrill extends TabCutter {
+public class TabDrill extends AbstractTab {
     private JFormattedTextField fieldBlade;
 
-    /**
-     * Метод создает панель по линейной схеме расположения поля: надпись длинны острой части сверла,
-     * поле длинны острой части сверла
-     * @return возвращает созданную панель
-     */
+    public TabDrill() {
+        super();
+    }
+
     @Override
-    protected JPanel createPanelFlowLayoutTabRight() {
+    public JPanel createPanelFlowLayoutTabRight() {
         JPanel rightPanelBorderLayout = new JPanel();
         rightPanelBorderLayout.setLayout(new FlowLayout());
         rightPanelBorderLayout.add(createLabelLengthBlade());
@@ -22,12 +21,8 @@ public class TabDrill extends TabCutter {
         return rightPanelBorderLayout;
     }
 
-    /**
-     * Метод создает выподающий список сверл
-     * @return возвращает выподающий список сверл
-     */
     @Override
-    protected JComboBox<String> createFieldName() {
+    public JComboBox<String> createFieldName() {
         ComboBoxActionListener comboBoxActionListener = new ComboBoxActionListener();
         comboBoxName = new JComboBox<>();
         comboBoxName.addItem("Сверло");
@@ -36,20 +31,12 @@ public class TabDrill extends TabCutter {
         return comboBoxName;
     }
 
-    /**
-     * Метод создает надпись длинны острой части сверла
-     * @return возвращает надпись длинны острой части сверла
-     */
     private JLabel createLabelLengthBlade() {
         JLabel labelLengthBlade = new JLabel(">,мм: ");
         add(labelLengthBlade);
         return labelLengthBlade;
     }
 
-    /**
-     * Метод создает поле длинны острой части сверла
-     * @return возвращает поле длинны острой части сверла
-     */
     private JFormattedTextField createFieldBlade() {
         fieldBlade = new JFormattedTextField("0");
         add(fieldBlade);

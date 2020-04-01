@@ -128,7 +128,7 @@ public class Field {
      */
     private JTabbedPane createTads() {
         JTabbedPane tab = new JTabbedPane();
-        TabCutter tabCutter = Data.LIST_TAB.get(0);
+        TabCutter tabCutter = (TabCutter) Data.LIST_TAB.get(0);
         TabDrill tabDrill = (TabDrill) Data.LIST_TAB.get(1);
         TabCountersink tabCountersink = (TabCountersink) Data.LIST_TAB.get(2);
         TabSweep tabSweep = (TabSweep) Data.LIST_TAB.get(3);

@@ -7,14 +7,14 @@ import javax.swing.*;
 /**
  * Класс вкладка развертка
  */
-public class TabSweep extends TabCutter {
+public class TabSweep extends AbstractTab {
 
-    /**
-     * Метод создает выподающий список разверток
-     * @return возвращает выподающий список разверток
-     */
+    public TabSweep() {
+        super();
+    }
+
     @Override
-    protected JComboBox<String> createFieldName() {
+    public JComboBox<String> createFieldName() {
         ComboBoxActionListener comboBoxActionListener = new ComboBoxActionListener();
         comboBoxName = new JComboBox<>();
         comboBoxName.addItem("Цилиндр. развертка");
@@ -22,5 +22,4 @@ public class TabSweep extends TabCutter {
         comboBoxName.addActionListener(comboBoxActionListener);
         return comboBoxName;
     }
-
 }

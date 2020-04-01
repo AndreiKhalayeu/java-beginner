@@ -77,15 +77,12 @@ public class ButtonActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clickedButton = (JButton) e.getSource();
-        TabCutter tab = getTab(TabActionListener.getNumberTab());
+        AbstractTab tab = getTab(TabActionListener.getNumberTab());
         AbstractTool tool = getTool(TabActionListener.getNumberTab(), tab.getNumberComboBox());
         if (clickedButton == field.getButtonStart()) {
-            if (tool instanceof Tap && tab instanceof TabTap) {
-                calculationModesTap((Tap) tool, (TabTap) tab);
-            } else {
-                calculationModesTool(tool, tab);
-            }
-        } else if (clickedButton == field.getButtonStop()) {
+            calculationModesTool(tool, tab);
+        }
+        if (clickedButton == field.getButtonStop()) {
             deleteSelectTab(tool, tab);
         }
     }
@@ -95,14 +92,8 @@ public class ButtonActionListener implements ActionListener {
      * @param numberTab номер вкладки
      * @return возвращает активизированную вкладку
      */
-    private TabCutter getTab(int numberTab) {
-        TabCutter tab = null;
-        for (int i = 0; i < Data.LIST_TAB.size(); i++) {
-            if (numberTab == i) {
-                tab = Data.LIST_TAB.get(i);
-            }
-        }
-        return tab;
+    private AbstractTab getTab(int numberTab) {
+        return Data.LIST_TAB.get(numberTab);
     }
 
     /**
@@ -112,92 +103,7 @@ public class ButtonActionListener implements ActionListener {
      * @return возвращает активизированный инструмент
      */
     private AbstractTool getTool(int numberTab, int numberComboBox) {
-        for (int i = 0; i < Data.LIST_TOOL.size(); i++) {
-            if (numberTab == i) {
-                for (int j = 0; j < Data.LIST_TOOL.get(i).size(); j++) {
-                    if (numberComboBox == j) {
-                        return Data.LIST_TOOL.get(i).get(j);
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Метод рассчитывает режимы резания метчика
-     * @param tool инструмент метчик
-     * @param tab вкладка метчик
-     */
-    private void calculationModesTap(Tap tool, TabTap tab) {
-        if (conditionInputDiameterTap(tool, tab)) {
-            calculateWithCheckBoxTap(tool, tab);
-            tab.getFieldDrill().setText(String.format("%.2f", tool.calculateDiameterDrill(numberDiameter)));
-        }
-    }
-
-    /**
-     * Метод проверяет стоит ли флажек во вкладке метчик. Если стоит расчет подачи ведется для станка ГФ2171, иначе
-     * расчет подачи ведется по обычному варианту
-     * @param tool инструмент метчик
-     * @param tab вкладка метчик
-     */
-    private void calculateWithCheckBoxTap(Tap tool, TabTap tab) {
-        if (tab.isCheckBox()) {
-            tab.getFieldTurns().setText("" + tool.calculateTurnsGF(tool.calculateTurns(numberDiameter)));
-            tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurnsGF(tool.calculateTurns(numberDiameter))));
-            tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин" + "  F = " + tool.calculateTurnsGF(tool.calculateTurns(numberDiameter)) + " * " + Tap.getFeedTap() + " * 0.9" + ", мм/мин");
-        } else {
-            tab.getFieldTurns().setText("" + tool.calculateTurns(numberDiameter));
-            tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.calculateTurns(numberDiameter)));
-            tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин" + "  F = " + tool.calculateTurns(numberDiameter) + " * " + Tap.getFeedTap() + " * 0.9" + ", мм/мин");
-        }
-    }
-
-    /**
-     * Метод проверяет поле диаметра метчика на наличие числа
-     * @param tool инструмент метчик
-     * @param tab вкладка метчик
-     * @return возвращает false, если в поле число отсутствует
-     */
-    private boolean conditionInputDiameterTap(Tap tool, TabTap tab) {
-        String stringDiameter = tab.getFieldDiameter().getText();
-        if (stringDiameter.equals("")) {
-            massageForDiameterTap(tool, tab);
-            return false;
-        }
-        field.getMessageError().setText("");
-        numberDiameter = Double.parseDouble(stringDiameter);
-        return allowableDiameterTap(tool, tab, numberDiameter);
-    }
-
-    /**
-     * Метод проверяет попадает ли диаметр метчика в диапазон
-     * @param tool инструмент метчик
-     * @param tab вкладка метчик
-     * @param diameter диаметр метчика
-     * @return возвращает true если диаметр вошел в диапазон и false если не вошел
-     */
-    private boolean allowableDiameterTap(Tap tool, TabTap tab, double diameter) {
-        if (diameter >= tool.getMinDiameter() && diameter <= tool.getMaxDiameter()) {
-            return true;
-        } else {
-            massageForDiameterTap(tool, tab);
-        }
-        return false;
-    }
-
-    /**
-     * Метод выводит сообщение о нужном размере диаметра метчика
-     * @param tool инструмент метчик
-     * @param tab вкладка метчик
-     */
-    private void massageForDiameterTap(Tap tool, TabTap tab) {
-        field.getMessageError().setForeground(Color.red);
-        field.getMessageError().setText("Введите диаметр инструмента от " + (int) tool.getMinDiameter() + " до " + (int) tool.getMaxDiameter() + " мм!");
-        tab.getFieldTurns().setText("0");
-        tab.getFieldMachineFeed().setText("0");
-        tab.getLabelFormulaTurnsFeed().setText("");
+        return Data.LIST_TOOL.get(numberTab).get(numberComboBox);
     }
 
     /**
@@ -205,7 +111,7 @@ public class ButtonActionListener implements ActionListener {
      * @param tool инструмент
      * @param tab вкладка
      */
-    private void calculationModesTool(AbstractTool tool, TabCutter tab) {
+    private void calculationModesTool(AbstractTool tool, AbstractTab tab) {
         try {
             if (conditionInputDiameter(tool, tab) && conditionInputDiameterFeed(tool, tab)) {
                 selectSpecificTab(tool, tab);
@@ -229,9 +135,12 @@ public class ButtonActionListener implements ActionListener {
      * @param tool инструмент
      * @param tab вкладка
      */
-    private void selectSpecificTab(AbstractTool tool, TabCutter tab) {
+    private void selectSpecificTab(AbstractTool tool, AbstractTab tab) {
         if (tool instanceof Drill && tab instanceof TabDrill) {
             calculationLengthPointDrill((Drill) tool, (TabDrill) tab);
+        }
+        if (tool instanceof Tap && tab instanceof TabTap) {
+            calculationModesTap((Tap) tool, (TabTap) tab);
         }
     }
 
@@ -243,7 +152,7 @@ public class ButtonActionListener implements ActionListener {
      * @return возвращает подачу для ГФ2171 если true(флажек установлен), возвращает расчетную подачу если false(флажек
      * не установлен)
      */
-    private int calculateWithCheckBox(AbstractTool tool, TabCutter tab) {
+    private int calculateWithCheckBox(AbstractTool tool, AbstractTab tab) {
         int turns;
         if (tab.isCheckBox()) {
             turns = tool.calculateTurnsGF(tool.calculateTurns(numberDiameter));
@@ -260,7 +169,7 @@ public class ButtonActionListener implements ActionListener {
      * @param tab вкладка
      * @return возвращает false, если в поле число отсутствует
      */
-    private boolean conditionInputDiameter(AbstractTool tool, TabCutter tab) {
+    private boolean conditionInputDiameter(AbstractTool tool, AbstractTab tab) {
         String stringDiameter = tab.getFieldDiameter().getText();
         if (stringDiameter.equals("")) {
             massageForDiameter(tool, tab);
@@ -278,7 +187,7 @@ public class ButtonActionListener implements ActionListener {
      * @param diameter диаметр инструмента
      * @return возвращает true если диаметр вошел в диапазон и false если не вошел
      */
-    private boolean allowableDiameter(AbstractTool tool, TabCutter tab, double diameter) {
+    private boolean allowableDiameter(AbstractTool tool, AbstractTab tab, double diameter) {
         if (diameter >= tool.getMinDiameter() && diameter <= tool.getMaxDiameter()) {
             return true;
         } else {
@@ -292,7 +201,7 @@ public class ButtonActionListener implements ActionListener {
      * @param tool инструмент
      * @param tab вкладка
      */
-    private void massageForDiameter(AbstractTool tool, TabCutter tab) {
+    private void massageForDiameter(AbstractTool tool, AbstractTab tab) {
         field.getMessageError().setForeground(Color.red);
         field.getMessageError().setText("Введите диаметр инструмента от " + (int) tool.getMinDiameter() + " до " + (int) tool.getMaxDiameter() + " мм!");
         tab.getFieldFeed().setText("");
@@ -308,7 +217,7 @@ public class ButtonActionListener implements ActionListener {
      * @return возвращает true если поле не пустое и подача в указанном диапазоне, false если
      * поле пустое или находится не в указанном диапазоне значений
      */
-    private boolean conditionInputDiameterFeed(AbstractTool tool, TabCutter tab) {
+    private boolean conditionInputDiameterFeed(AbstractTool tool, AbstractTab tab) {
         String stringFeed = tab.getFieldFeed().getText();
         numberFeed = Double.parseDouble(stringFeed);
         return !stringFeed.equals("") && allowableFeed(tool, tab, numberFeed);
@@ -322,7 +231,7 @@ public class ButtonActionListener implements ActionListener {
      * @return возвращает true если поле в указанном диапазоне, false если
      * поле не в указанном диапазоне значений
      */
-    private boolean allowableFeed(AbstractTool tool, TabCutter tab, double feed) {
+    private boolean allowableFeed(AbstractTool tool, AbstractTab tab, double feed) {
         if (feed >= tool.getMinFeed() && feed <= tool.getMaxFeed()) {
             return true;
         } else {
@@ -354,12 +263,21 @@ public class ButtonActionListener implements ActionListener {
     }
 
     /**
+     * Метод рассчитывает режимы резания метчика
+     * @param tool инструмент метчик
+     * @param tab вкладка метчик
+     */
+    private void calculationModesTap(Tap tool, TabTap tab) {
+        tab.getFieldDrill().setText(String.format("%.2f", tool.calculateDiameterDrill(numberDiameter, numberFeed)));
+    }
+
+    /**
      * Метод выбирает вкладку в которой требуется удались содержимое полей
      * @param tool инструмент
      * @param tab вкладка
      */
-    private void deleteSelectTab(AbstractTool tool, TabCutter tab) {
-        if (tool instanceof Cutter) {
+    private void deleteSelectTab(AbstractTool tool, AbstractTab tab) {
+        if (tool instanceof Cutter && tab instanceof TabCutter) {
             deleteContentField(tabCutter);
         }
         if (tool instanceof Drill && tab instanceof TabDrill) {
@@ -386,7 +304,7 @@ public class ButtonActionListener implements ActionListener {
      * Метод очищает все поля вкладки
      * @param tab вкладка
      */
-    private void deleteContentField(TabCutter tab) {
+    private void deleteContentField(AbstractTab tab) {
         field.getMessageError().setText("");
         tab.getFieldDiameter().setText("");
         tab.getFieldFeed().setText("");

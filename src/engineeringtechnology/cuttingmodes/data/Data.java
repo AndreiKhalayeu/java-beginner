@@ -1,6 +1,7 @@
 package engineeringtechnology.cuttingmodes.data;
 
 import engineeringtechnology.cuttingmodes.AbstractTool;
+import engineeringtechnology.cuttingmodes.CuttingConditions;
 import engineeringtechnology.cuttingmodes.tool.*;
 import engineeringtechnology.graphicfield.tabs.*;
 
@@ -16,32 +17,32 @@ public class Data {
     /**
      * Поле список подач для станка ГФ2171
      */
-    public static final Map<Integer, Integer> LIST_TURNS = new TreeMap<>();
+    public static final Map<Integer, Integer> MAP_TURNS = new TreeMap<>();
     static {
-        LIST_TURNS.put(56, 50);
-        LIST_TURNS.put(71, 63);
-        LIST_TURNS.put(89, 80);
-        LIST_TURNS.put(112, 100);
-        LIST_TURNS.put(142, 125);
-        LIST_TURNS.put(179, 160);
-        LIST_TURNS.put(224, 200);
-        LIST_TURNS.put(282, 250);
-        LIST_TURNS.put(357, 315);
-        LIST_TURNS.put(449, 400);
-        LIST_TURNS.put(564, 500);
-        LIST_TURNS.put(714, 630);
-        LIST_TURNS.put(899, 800);
-        LIST_TURNS.put(1124, 1000);
-        LIST_TURNS.put(1424, 1250);
-        LIST_TURNS.put(1799, 1600);
-        LIST_TURNS.put(2249, 2000);
-        LIST_TURNS.put(2500, 2500);
+        MAP_TURNS.put(56, 50);
+        MAP_TURNS.put(71, 63);
+        MAP_TURNS.put(89, 80);
+        MAP_TURNS.put(112, 100);
+        MAP_TURNS.put(142, 125);
+        MAP_TURNS.put(179, 160);
+        MAP_TURNS.put(224, 200);
+        MAP_TURNS.put(282, 250);
+        MAP_TURNS.put(357, 315);
+        MAP_TURNS.put(449, 400);
+        MAP_TURNS.put(564, 500);
+        MAP_TURNS.put(714, 630);
+        MAP_TURNS.put(899, 800);
+        MAP_TURNS.put(1124, 1000);
+        MAP_TURNS.put(1424, 1250);
+        MAP_TURNS.put(1799, 1600);
+        MAP_TURNS.put(2249, 2000);
+        MAP_TURNS.put(2500, 2500);
     }
 
     /**
      * Поле список вкладок
      */
-    public static final List<TabCutter> LIST_TAB = new ArrayList<>();
+    public static final List<AbstractTab> LIST_TAB = new ArrayList<>();
     static {
         LIST_TAB.add(new TabCutter());
         LIST_TAB.add(new TabDrill());

@@ -42,10 +42,12 @@ public abstract class AbstractTool implements CuttingConditions {
     /**
      * Конструктор принимает на вход скорость, минимальный диаметр, максимальный диаметр
      */
-    public AbstractTool(int speed, double minDiameter, double maxDiameter) {
+    public AbstractTool(int speed, double minDiameter, double maxDiameter, double minFeed, double maxFeed) {
         this.speed = speed;
         this.minDiameter = minDiameter;
         this.maxDiameter = maxDiameter;
+        this.minFeed = minFeed;
+        this.maxFeed = maxFeed;
     }
 
     /**
@@ -68,7 +70,7 @@ public abstract class AbstractTool implements CuttingConditions {
 
     @Override
     public int calculateTurnsGF(int turns) {
-        Set<Map.Entry<Integer, Integer>> data = Data.LIST_TURNS.entrySet();
+        Set<Map.Entry<Integer, Integer>> data = Data.MAP_TURNS.entrySet();
         for (Map.Entry<Integer, Integer> value : data) {
             if (turns <= value.getKey()) {
                 return value.getValue();

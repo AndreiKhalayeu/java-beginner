@@ -7,14 +7,14 @@ import javax.swing.*;
 /**
  * Класс вкладка зенкер
  */
-public class TabCountersink extends TabCutter {
+public class TabCountersink extends AbstractTab {
 
-    /**
-     * Метод создает выподающий список зенкеров
-     * @return возвращает выподающий список зенкеров
-     */
+    public TabCountersink() {
+        super();
+    }
+
     @Override
-    protected JComboBox<String> createFieldName() {
+    public JComboBox<String> createFieldName() {
         ComboBoxActionListener comboBoxActionListener = new ComboBoxActionListener();
         comboBoxName = new JComboBox<>();
         comboBoxName.addItem("Цилиндр. зенкер");
