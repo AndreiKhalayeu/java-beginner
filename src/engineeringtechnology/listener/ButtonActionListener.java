@@ -171,7 +171,7 @@ public class ButtonActionListener implements ActionListener {
      */
     private boolean conditionInputDiameter(AbstractTool tool, AbstractTab tab) {
         String stringDiameter = tab.getFieldDiameter().getText();
-        if (stringDiameter.equals("")) {
+        if ("".equals(stringDiameter)) {
             massageForDiameter(tool, tab);
             return false;
         }
@@ -220,7 +220,7 @@ public class ButtonActionListener implements ActionListener {
     private boolean conditionInputDiameterFeed(AbstractTool tool, AbstractTab tab) {
         String stringFeed = tab.getFieldFeed().getText();
         numberFeed = Double.parseDouble(stringFeed);
-        return !stringFeed.equals("") && allowableFeed(tool, tab, numberFeed);
+        return !"".equals(stringFeed) && allowableFeed(tool, tab, numberFeed);
     }
 
     /**

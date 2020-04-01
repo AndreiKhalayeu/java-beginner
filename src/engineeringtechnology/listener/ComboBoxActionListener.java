@@ -27,10 +27,6 @@ public class ComboBoxActionListener implements ActionListener {
      * @param numberTab номер выподающего списка
      */
     private void setNumberComboBox(int numberTab) {
-        for (int i = 0; i < Data.LIST_TAB.size(); i++) {
-            if (numberTab == i) {
-                Data.LIST_TAB.get(i).setNumberComboBox(numberComboBox);
-            }
-        }
+        Data.LIST_TAB.get(numberTab).setNumberComboBox(numberComboBox);
     }
 }

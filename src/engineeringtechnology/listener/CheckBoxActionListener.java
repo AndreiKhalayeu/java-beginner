@@ -20,14 +20,10 @@ public class CheckBoxActionListener implements ActionListener {
      * @param numberTab номер вкладки
      */
     private void verifyCheckBox(int numberTab) {
-        for (int i = 0; i < Data.LIST_TAB.size(); i++) {
-            if (numberTab == i) {
-                if (Data.LIST_TAB.get(i).isCheckBox()) {
-                    Data.LIST_TAB.get(i).setCheckBox(false);
-                } else {
-                    Data.LIST_TAB.get(i).setCheckBox(true);
-                }
-            }
+        if (Data.LIST_TAB.get(numberTab).isCheckBox()) {
+            Data.LIST_TAB.get(numberTab).setCheckBox(false);
+        } else {
+            Data.LIST_TAB.get(numberTab).setCheckBox(true);
         }
     }
 }
