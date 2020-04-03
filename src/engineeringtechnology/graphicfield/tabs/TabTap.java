@@ -44,7 +44,7 @@ public class TabTap extends AbstractTab {
     }
 
     private JFormattedTextField createFieldDrill() {
-        fieldDrill = new JFormattedTextField();
+        fieldDrill = new JFormattedTextField("0");
         add(fieldDrill);
         fieldDrill.setPreferredSize(new Dimension(45,20));
         fieldDrill.setEditable(false);

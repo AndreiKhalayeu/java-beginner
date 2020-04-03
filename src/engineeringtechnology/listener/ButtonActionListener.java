@@ -80,7 +80,11 @@ public class ButtonActionListener implements ActionListener {
         AbstractTab tab = getTab(TabActionListener.getNumberTab());
         AbstractTool tool = getTool(TabActionListener.getNumberTab(), tab.getNumberComboBox());
         if (clickedButton == field.getButtonStart()) {
-            calculationModesTool(tool, tab);
+            if (tool instanceof Tap && tab instanceof TabTap) {
+                calculationModesTap((Tap) tool, (TabTap) tab);
+            } else {
+                calculationModesTool(tool, tab);
+            }
         }
         if (clickedButton == field.getButtonStop()) {
             deleteSelectTab(tool, tab);
@@ -114,60 +118,31 @@ public class ButtonActionListener implements ActionListener {
     private void calculationModesTool(AbstractTool tool, AbstractTab tab) {
         try {
             if (conditionInputDiameter(tool, tab) && conditionInputDiameterFeed(tool, tab)) {
-                selectSpecificTab(tool, tab);
-                tab.getFieldMachineFeed().setText("" + tool.calculateFeed(numberFeed, calculateWithCheckBox(tool, tab)));
-                tab.getFieldFeed().setText("" + numberFeed);
-                tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин  F = " + calculateWithCheckBox(tool, tab) + " * " + numberFeed + ", мм/мин");
+                setFieldsWithoutFeed(tool, tab);
             }
         } catch (NumberFormatException e) {
-            field.getMessageError().setForeground(Color.green);
-            field.getMessageError().setText("Установлена средняя подача S=" + tool.getFeed() + " мм/об");
-            selectSpecificTab(tool, tab);
-            tab.getFieldMachineFeed().setText("" + tool.calculateFeed(calculateWithCheckBox(tool, tab)));
-            tab.getFieldFeed().setText("" + tool.getFeed());
-            tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter + ", об/мин  F = " + calculateWithCheckBox(tool, tab) + " * " + tool.getFeed() + ", мм/мин");
+            setFieldsWithFeed(tool, tab);
         }
+        selectSpecificTab(tool, tab);
     }
 
     /**
-     * Метод ищет инструмент сверло и вкладку сверло
-     * и бросает в выбранный метод уже преобразованные типы
+     * Метод рассчитывает режимы резания метчика
      * @param tool инструмент
      * @param tab вкладка
      */
-    private void selectSpecificTab(AbstractTool tool, AbstractTab tab) {
-        if (tool instanceof Drill && tab instanceof TabDrill) {
-            calculationLengthPointDrill((Drill) tool, (TabDrill) tab);
+    private void calculationModesTap(Tap tool, TabTap tab) {
+        if (conditionInputDiameter(tool, tab) && conditionInputDiameterFeedTap(tool, tab)) {
+            setFieldsTabTap(tool, tab);
         }
-        if (tool instanceof Tap && tab instanceof TabTap) {
-            calculationModesTap((Tap) tool, (TabTap) tab);
-        }
+        selectSpecificTab(tool, tab);
     }
 
     /**
-     * Метод проверяет стоит ли флажек во вкладке. Если стоит расчет подачи ведется для станка ГФ2171, иначе
-     * расчет подачи ведется по обычному варианту
+     * Метод проверяет поле диаметра на наличие диаметра находящегося в определенном диапазоне
      * @param tool инструмент
      * @param tab вкладка
-     * @return возвращает подачу для ГФ2171 если true(флажек установлен), возвращает расчетную подачу если false(флажек
-     * не установлен)
-     */
-    private int calculateWithCheckBox(AbstractTool tool, AbstractTab tab) {
-        int turns;
-        if (tab.isCheckBox()) {
-            turns = tool.calculateTurnsGF(tool.calculateTurns(numberDiameter));
-        } else {
-            turns = tool.calculateTurns(numberDiameter);
-        }
-        tab.getFieldTurns().setText("" + turns);
-        return turns;
-    }
-
-    /**
-     * Метод проверяет поле диаметра на наличие числа
-     * @param tool инструмент
-     * @param tab вкладка
-     * @return возвращает false, если в поле число отсутствует
+     * @return возвращает false, если в поле число отсутствует или не в том диапазоне
      */
     private boolean conditionInputDiameter(AbstractTool tool, AbstractTab tab) {
         String stringDiameter = tab.getFieldDiameter().getText();
@@ -177,33 +152,23 @@ public class ButtonActionListener implements ActionListener {
         }
         field.getMessageError().setText("");
         numberDiameter = Double.parseDouble(stringDiameter);
-        return allowableDiameter(tool, tab, numberDiameter);
-    }
-
-    /**
-     * Метод проверяет попадает ли диаметр инструмента в диапазон
-     * @param tool инструмент
-     * @param tab вкладка
-     * @param diameter диаметр инструмента
-     * @return возвращает true если диаметр вошел в диапазон и false если не вошел
-     */
-    private boolean allowableDiameter(AbstractTool tool, AbstractTab tab, double diameter) {
-        if (diameter >= tool.getMinDiameter() && diameter <= tool.getMaxDiameter()) {
+        if (numberDiameter >= tool.getMinDiameter() && numberDiameter <= tool.getMaxDiameter()) {
             return true;
         } else {
             massageForDiameter(tool, tab);
+            return false;
         }
-        return false;
     }
 
     /**
-     * Метод выводит сообщение о нужном размере диаметра инструмента
+     * Метод выводит сообщение о нужном размере диаметра инструмента и обнуляет нужные поля
      * @param tool инструмент
      * @param tab вкладка
      */
     private void massageForDiameter(AbstractTool tool, AbstractTab tab) {
         field.getMessageError().setForeground(Color.red);
-        field.getMessageError().setText("Введите диаметр инструмента от " + (int) tool.getMinDiameter() + " до " + (int) tool.getMaxDiameter() + " мм!");
+        field.getMessageError().setText("Введите диаметр инструмента от " + (int) tool.getMinDiameter() +
+                " до " + (int) tool.getMaxDiameter() + " мм!");
         tab.getFieldFeed().setText("");
         tab.getFieldTurns().setText("0");
         tab.getFieldMachineFeed().setText("0");
@@ -211,42 +176,148 @@ public class ButtonActionListener implements ActionListener {
     }
 
     /**
-     * Метод проверяет поле подачи
+     * Метод проверяет в нужном ли диапазоне находиться поле подач
      * @param tool инструмент
      * @param tab вкладка
-     * @return возвращает true если поле не пустое и подача в указанном диапазоне, false если
-     * поле пустое или находится не в указанном диапазоне значений
+     * @return возвращает true если подача в указанном диапазоне значений, false если
+     * не в указанном диапазоне значений
      */
     private boolean conditionInputDiameterFeed(AbstractTool tool, AbstractTab tab) {
         String stringFeed = tab.getFieldFeed().getText();
         numberFeed = Double.parseDouble(stringFeed);
-        return !"".equals(stringFeed) && allowableFeed(tool, tab, numberFeed);
-    }
-
-    /**
-     * Метод проверяет поле подачи
-     * @param tool инструмент
-     * @param tab вкладка
-     * @param feed подача
-     * @return возвращает true если поле в указанном диапазоне, false если
-     * поле не в указанном диапазоне значений
-     */
-    private boolean allowableFeed(AbstractTool tool, AbstractTab tab, double feed) {
-        if (feed >= tool.getMinFeed() && feed <= tool.getMaxFeed()) {
+        if (numberFeed >= tool.getMinFeed() && numberFeed <= tool.getMaxFeed()) {
             return true;
         } else {
-            field.getMessageError().setForeground(Color.red);
-            field.getMessageError().setText("Введите подачу инструмента от " + tool.getMinFeed() + " до " + tool.getMaxFeed() + " мм/об!");
-            tab.getFieldTurns().setText("0");
-            tab.getFieldMachineFeed().setText("0");
-            tab.getLabelFormulaTurnsFeed().setText("");
+            massageForFeed(tool, tab);
+            return false;
         }
-        return feed >= tool.getMinFeed() && feed <= tool.getMaxFeed();
     }
 
     /**
-     * Метод проверяет входит ли диаметр сверла в диапазон. Если входит , торассчитывается длина острого конца сверла,
-     * если не входит в поле остается значение 0
+     * Метод проверяет есть ли подача для метчика
+     * @param tool инструмент метчик
+     * @param tab вкладка метчик
+     * @return возвращает true если подача есть, false если
+     * подачи нет
+     */
+    private boolean conditionInputDiameterFeedTap(Tap tool, TabTap tab) {
+        String stringFeed = tab.getFieldFeed().getText();
+        if ("".equals(stringFeed)) {
+            massageForFeedTap(tab);
+            return false;
+        }
+        numberFeed = Double.parseDouble(stringFeed);
+        if (tool.isFeed(numberFeed)) {
+            return true;
+        } else {
+            massageForFeedTap(tab);
+            return false;
+        }
+    }
+
+    /**
+     * Метод выводит сообщение о нужном размере подачи инструмента и обнуляет нужные поля
+     * @param tool инструмент
+     * @param tab вкладка
+     */
+    private void massageForFeed(AbstractTool tool, AbstractTab tab) {
+        field.getMessageError().setForeground(Color.red);
+        field.getMessageError().setText("Введите подачу инструмента от " + tool.getMinFeed() +
+                " до " + tool.getMaxFeed() + " мм/об!");
+        tab.getFieldTurns().setText("0");
+        tab.getFieldMachineFeed().setText("0");
+        tab.getLabelFormulaTurnsFeed().setText("");
+    }
+
+    /**
+     * Метод выводит сообщение о нужном размере подачи инструмента и обнуляет нужные поля
+     * @param tab вкладка метчик
+     */
+    private void massageForFeedTap(TabTap tab) {
+        field.getMessageError().setForeground(Color.red);
+        field.getMessageError().setText("Введите стандартный шаг метрического метчика от 0.5 до 3.5!");
+        tab.getFieldDrill().setText("0");
+        tab.getFieldTurns().setText("0");
+        tab.getFieldMachineFeed().setText("0");
+        tab.getLabelFormulaTurnsFeed().setText("");
+    }
+
+    /**
+     * Метод выбирает инструмент сверло или метчик
+     * и бросает в выбранный метод уже преобразованные типы
+     * @param tool инструмент
+     * @param tab вкладка
+     */
+    private void selectSpecificTab(AbstractTool tool, AbstractTab tab) {
+        if (tool instanceof Drill && tab instanceof TabDrill) {
+            calculationLengthPointDrill((Drill) tool, (TabDrill) tab);
+        }
+        if (tool instanceof Tap && tab instanceof TabTap) {
+            calculationDrill((Tap) tool, (TabTap) tab);
+        }
+    }
+
+    /**
+     * Метод выбирает расчет оборотов в зависимости стоит ли флажек.
+     * @param tool инструмент
+     * @param tab вкладка
+     * @return возвращает обороты для ГФ2171 если true(флажек установлен), возвращает расчетные обороты если false(флажек
+     * не установлен)
+     */
+    private int calculateWithCheckBox(AbstractTool tool, AbstractTab tab) {
+        int turns;
+        if (tab.isCheckBox()) {
+            turns = tool.calculateTurnsGF(tool.calculateTurns(numberDiameter));
+        } else {
+            turns = tool.calculateTurns(numberDiameter);
+        }
+        return turns;
+    }
+
+    /**
+     * Метод заполняет расчетные поля при установленной подаче
+     * @param tool инструмент
+     * @param tab вкладка
+     */
+    private void setFieldsWithoutFeed(AbstractTool tool, AbstractTab tab) {
+        tab.getFieldMachineFeed().setText("" + tool.calculateFeed(numberFeed, calculateWithCheckBox(tool, tab)));
+        tab.getFieldFeed().setText("" + numberFeed);
+        tab.getFieldTurns().setText("" + calculateWithCheckBox(tool, tab));
+        tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter +
+                ", об/мин  F = " + calculateWithCheckBox(tool, tab) + " * " + numberFeed + ", мм/мин");
+    }
+
+    /**
+     * Метод заполняет расчетные поля при неустановленной подаче, устанавливает среднюю подачу и
+     * выводит сообщение об этой установке
+     * @param tool инструмент
+     * @param tab вкладка
+     */
+    private void setFieldsWithFeed(AbstractTool tool, AbstractTab tab) {
+        field.getMessageError().setForeground(Color.green);
+        field.getMessageError().setText("Установлена средняя подача S=" + tool.getFeed() + " мм/об");
+        tab.getFieldMachineFeed().setText("" + tool.calculateFeed(calculateWithCheckBox(tool, tab)));
+        tab.getFieldFeed().setText("" + tool.getFeed());
+        tab.getFieldTurns().setText("" + calculateWithCheckBox(tool, tab));
+        tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter +
+                ", об/мин  F = " + calculateWithCheckBox(tool, tab) + " * " + tool.getFeed() + ", мм/мин");
+    }
+
+    /**
+     * Метод заполняет расчетные поля вкладки метчик
+     * @param tool инструмент метчик
+     * @param tab вкладка метчик
+     */
+    private void setFieldsTabTap(Tap tool, TabTap tab) {
+        tab.getFieldMachineFeed().setText("" + tool.calculateFeed(numberFeed, calculateWithCheckBox(tool, tab)));
+        tab.getFieldTurns().setText("" + calculateWithCheckBox(tool, tab));
+        tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter +
+                ", об/мин  F = " + calculateWithCheckBox(tool, tab) + " * " + numberFeed + " * 0.9, мм/мин");
+    }
+
+    /**
+     * Метод расчитывает длину острого конца сверла, если диаметр сверла не входит в заданные пределы , то обнуляется
+     * поле расчета острого конца сверла
      * @param drill инструмент сверло
      * @param tab вкладка сверло
      */
@@ -263,16 +334,21 @@ public class ButtonActionListener implements ActionListener {
     }
 
     /**
-     * Метод рассчитывает режимы резания метчика
-     * @param tool инструмент метчик
+     * Метод рассчитывает сверло под метчик, если диаметр метчика не входит в заданные пределы, то обнуляет поле
+     * расчета сверла под метчик
+     * @param tap инструмент метчик
      * @param tab вкладка метчик
      */
-    private void calculationModesTap(Tap tool, TabTap tab) {
-        tab.getFieldDrill().setText(String.format("%.2f", tool.calculateDiameterDrill(numberDiameter, numberFeed)));
+    private void calculationDrill(Tap tap, TabTap tab) {
+        if (numberDiameter >= tap.getMinDiameter() && numberDiameter <= tap.getMaxDiameter()) {
+            tab.getFieldDrill().setText(String.format("%.2f", tap.calculateDiameterDrill(numberDiameter, numberFeed)));
+        } else {
+            tab.getFieldDrill().setText("0");
+        }
     }
 
     /**
-     * Метод выбирает вкладку в которой требуется удались содержимое полей
+     * Метод определяет вкладку и удаляет содержимое всех полей
      * @param tool инструмент
      * @param tab вкладка
      */
@@ -291,12 +367,8 @@ public class ButtonActionListener implements ActionListener {
             deleteContentField(tabSweep);
         }
         if (tool instanceof Tap && tab instanceof TabTap) {
-            field.getMessageError().setText("");
-            tabTap.getFieldDiameter().setText("");
-            tabTap.getFieldTurns().setText("0");
-            tabTap.getFieldMachineFeed().setText("0");
+            deleteContentField(tabTap);
             tabTap.getFieldDrill().setText("0");
-            tabTap.getLabelFormulaTurnsFeed().setText("");
         }
     }
 

@@ -42,12 +42,10 @@ public abstract class AbstractTool implements CuttingConditions {
     /**
      * Конструктор принимает на вход скорость, минимальный диаметр, максимальный диаметр
      */
-    public AbstractTool(int speed, double minDiameter, double maxDiameter, double minFeed, double maxFeed) {
+    public AbstractTool(int speed, double minDiameter, double maxDiameter) {
         this.speed = speed;
         this.minDiameter = minDiameter;
         this.maxDiameter = maxDiameter;
-        this.minFeed = minFeed;
-        this.maxFeed = maxFeed;
     }
 
     /**
