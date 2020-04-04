@@ -1,9 +1,13 @@
 package engineeringtechnology.graphicfield.tabs;
 
 import engineeringtechnology.listener.CheckBoxActionListener;
+import engineeringtechnology.listener.ComboBoxActionListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class AbstractTab extends JPanel implements FieldsTab {
 
@@ -49,6 +53,12 @@ public abstract class AbstractTab extends JPanel implements FieldsTab {
 
     public AbstractTab() {
         createFlowLayoutTab();
+    }
+
+    protected abstract String[] getItems();
+
+    protected Map<JLabel, JFormattedTextField> getComponent() {
+        return new HashMap<>();
     }
 
     @Override
@@ -107,11 +117,25 @@ public abstract class AbstractTab extends JPanel implements FieldsTab {
     public JPanel createPanelFlowLayoutTabRight() {
         JPanel rightPanelBorderLayout = new JPanel();
         rightPanelBorderLayout.setLayout(new FlowLayout());
+        Set<Map.Entry<JLabel, JFormattedTextField>> data = getComponent().entrySet();
+        for (Map.Entry<JLabel, JFormattedTextField> value : data) {
+            rightPanelBorderLayout.add(value.getKey());
+            rightPanelBorderLayout.add(value.getValue());
+        }
         return rightPanelBorderLayout;
     }
 
     @Override
-    public abstract JComboBox<String> createFieldName();
+    public JComboBox<String> createFieldName() {
+        ComboBoxActionListener comboBoxActionListener = new ComboBoxActionListener();
+        comboBoxName = new JComboBox<>();
+        for (String item : getItems()) {
+            comboBoxName.addItem(item);
+        }
+        add(comboBoxName);
+        comboBoxName.addActionListener(comboBoxActionListener);
+        return comboBoxName;
+    }
 
     @Override
     public JCheckBox createCheckBox() {

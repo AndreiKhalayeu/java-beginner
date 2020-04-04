@@ -1,9 +1,9 @@
 package engineeringtechnology.graphicfield.tabs;
 
-import engineeringtechnology.listener.ComboBoxActionListener;
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Класс вкладка метчик
@@ -19,22 +19,15 @@ public class TabTap extends AbstractTab {
     }
 
     @Override
-    public JPanel createPanelFlowLayoutTabRight() {
-        JPanel rightPanelBorderLayout = new JPanel();
-        rightPanelBorderLayout.setLayout(new FlowLayout());
-        rightPanelBorderLayout.add(createLabelDrill());
-        rightPanelBorderLayout.add(createFieldDrill());
-        return rightPanelBorderLayout;
+    protected String[] getItems() {
+        return new String[] {"Метр. резьба ГОСТ 24705-81"};
     }
 
     @Override
-    public JComboBox<String> createFieldName() {
-        ComboBoxActionListener comboBoxActionListener = new ComboBoxActionListener();
-        comboBoxName = new JComboBox<>();
-        comboBoxName.addItem("Метр. резьба ГОСТ 24705-81");
-        add(comboBoxName);
-        comboBoxName.addActionListener(comboBoxActionListener);
-        return comboBoxName;
+    protected Map<JLabel, JFormattedTextField> getComponent() {
+        Map<JLabel, JFormattedTextField> map = new HashMap<>();
+        map.put(createLabelDrill(), createFieldDrill());
+        return map;
     }
 
     private JLabel createLabelDrill() {

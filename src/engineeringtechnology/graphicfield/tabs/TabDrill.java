@@ -1,9 +1,9 @@
 package engineeringtechnology.graphicfield.tabs;
 
-import engineeringtechnology.listener.ComboBoxActionListener;
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TabDrill extends AbstractTab {
     private JFormattedTextField fieldBlade;
@@ -13,22 +13,15 @@ public class TabDrill extends AbstractTab {
     }
 
     @Override
-    public JPanel createPanelFlowLayoutTabRight() {
-        JPanel rightPanelBorderLayout = new JPanel();
-        rightPanelBorderLayout.setLayout(new FlowLayout());
-        rightPanelBorderLayout.add(createLabelLengthBlade());
-        rightPanelBorderLayout.add(createFieldBlade());
-        return rightPanelBorderLayout;
+    protected String[] getItems() {
+        return new String[] {"Сверло"};
     }
 
     @Override
-    public JComboBox<String> createFieldName() {
-        ComboBoxActionListener comboBoxActionListener = new ComboBoxActionListener();
-        comboBoxName = new JComboBox<>();
-        comboBoxName.addItem("Сверло");
-        add(comboBoxName);
-        comboBoxName.addActionListener(comboBoxActionListener);
-        return comboBoxName;
+    protected Map<JLabel, JFormattedTextField> getComponent() {
+        Map<JLabel, JFormattedTextField> map = new HashMap<>();
+        map.put(createLabelLengthBlade(), createFieldBlade());
+        return map;
     }
 
     private JLabel createLabelLengthBlade() {
