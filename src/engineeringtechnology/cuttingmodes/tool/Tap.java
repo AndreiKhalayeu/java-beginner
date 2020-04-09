@@ -45,7 +45,11 @@ public class Tap extends AbstractTool {
      * @return возвращает диаметр сверла под метчик
      */
     public double calculateDiameterDrill(double numberDiameter, double numberFeed) {
-        return numberDiameter - numberFeed;
+        if (isFeed(numberFeed)) {
+            return numberDiameter - numberFeed;
+        } else {
+            return numberDiameter;
+        }
     }
 
     /**

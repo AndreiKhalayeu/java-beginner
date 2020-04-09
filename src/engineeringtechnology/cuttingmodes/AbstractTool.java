@@ -9,6 +9,17 @@ import java.util.Set;
  * Абстрактный класс инструмент
  */
 public abstract class AbstractTool implements CuttingConditions {
+
+    /**
+     * Поле число диаметра
+     */
+    protected double numberDiameter;
+
+    /**
+     * Поле число подачи
+     */
+    private double numberFeed;
+
     /**
      * Поле скорость
      */
@@ -109,5 +120,21 @@ public abstract class AbstractTool implements CuttingConditions {
 
     public int getSpeed() {
         return speed;
+    }
+
+    public double getNumberDiameter() {
+        return numberDiameter;
+    }
+
+    public void setNumberDiameter(double numberDiameter) {
+        this.numberDiameter = numberDiameter;
+    }
+
+    public double getNumberFeed() {
+        return numberFeed;
+    }
+
+    public void setNumberFeed(double numberFeed) {
+        this.numberFeed = numberFeed;
     }
 }

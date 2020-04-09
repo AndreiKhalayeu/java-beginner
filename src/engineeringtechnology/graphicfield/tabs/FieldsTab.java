@@ -40,6 +40,12 @@ public interface FieldsTab {
     JPanel createPanelFlowLayoutTabRight();
 
     /**
+     * Метод создает панель сообщения вывода ошибки
+     * @return возвращает созданную панель
+     */
+    JPanel createMessageError();
+
+    /**
      * Метод создает выподающий список инструментов
      * @return возвращает выподающий список инструментов
      */

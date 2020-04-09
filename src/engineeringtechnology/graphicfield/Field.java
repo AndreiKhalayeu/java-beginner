@@ -26,7 +26,6 @@ public class Field extends AbstractFieldsWindow{
     @Override
     Map<String, JPanel> getLocationPanel() {
         Map<String, JPanel> locationPanel = new HashMap<>();
-        locationPanel.put("North", createNorthPanel());
         locationPanel.put("Center", createCenterPanel());
         locationPanel.put("South", createSouthPanel());
         return locationPanel;
@@ -57,7 +56,7 @@ public class Field extends AbstractFieldsWindow{
         tab.addChangeListener(new TabActionListener());
         tab.setBackground(Color.gray);
         tab.setForeground(Color.BLACK);
-        tab.setPreferredSize(new Dimension(830,90));
+        tab.setPreferredSize(new Dimension(775,110));
         return tab;
     }
 

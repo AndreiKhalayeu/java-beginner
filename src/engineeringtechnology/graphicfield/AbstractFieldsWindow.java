@@ -24,10 +24,6 @@ public abstract class AbstractFieldsWindow implements FieldsWindow {
      * поле кнопочный слушатель
      */
     protected ButtonActionListener buttonActionListener;
-    /**
-     * Поле сообщение ошибки
-     */
-    private JLabel messageError;
 
     public AbstractFieldsWindow() {
         createFrame();
@@ -46,7 +42,7 @@ public abstract class AbstractFieldsWindow implements FieldsWindow {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         //frame.setSize(700, 200);
         frame.setVisible(true);
-        frame.setBounds(600,400,840,180);
+        frame.setBounds(600,400,785,180);
         frame.setResizable(false);
     }
 
@@ -60,15 +56,6 @@ public abstract class AbstractFieldsWindow implements FieldsWindow {
             mainPanel.add(value.getKey(), value.getValue());
         }
         return mainPanel;
-    }
-
-    @Override
-    public JPanel createNorthPanel() {
-        JPanel northPanel = new JPanel();
-        northPanel.setBackground(Color.BLACK);
-        messageError = new JLabel("");
-        northPanel.add(messageError);
-        return northPanel;
     }
 
     @Override
@@ -116,9 +103,5 @@ public abstract class AbstractFieldsWindow implements FieldsWindow {
 
     public JButton getButtonStop() {
         return buttonStop;
-    }
-
-    public JLabel getMessageError() {
-        return messageError;
     }
 }

@@ -1,7 +1,6 @@
 package engineeringtechnology.cuttingmodes.data;
 
 import engineeringtechnology.cuttingmodes.AbstractTool;
-import engineeringtechnology.cuttingmodes.CuttingConditions;
 import engineeringtechnology.cuttingmodes.tool.*;
 import engineeringtechnology.graphicfield.tabs.*;
 

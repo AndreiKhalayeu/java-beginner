@@ -12,6 +12,11 @@ import java.util.Set;
 public abstract class AbstractTab extends JPanel implements FieldsTab {
 
     /**
+     * Поле сообщение ошибки
+     */
+    protected JLabel messageError;
+
+    /**
      * Поле флажек
      */
     protected boolean checkBox = false;
@@ -77,7 +82,7 @@ public abstract class AbstractTab extends JPanel implements FieldsTab {
         panelBorderLayoutTabLeft.setLayout(new BorderLayout());
         panelBorderLayoutTabLeft.add("Center", createFieldName());
         panelBorderLayoutTabLeft.add("South", createCheckBox());
-        panelBorderLayoutTabLeft.setPreferredSize(new Dimension(220,50));
+        panelBorderLayoutTabLeft.setPreferredSize(new Dimension(195,50));
         return panelBorderLayoutTabLeft;
     }
 
@@ -85,6 +90,7 @@ public abstract class AbstractTab extends JPanel implements FieldsTab {
     public JPanel createPanelBorderLayoutTabCenter() {
         JPanel panelBorderLayoutTabCenter = new JPanel();
         panelBorderLayoutTabCenter.setLayout(new BorderLayout());
+        panelBorderLayoutTabCenter.add("North", createMessageError());
         panelBorderLayoutTabCenter.add("Center", createPanelFlowLayoutTabCenter());
         panelBorderLayoutTabCenter.add("South", createLabelFormulaTurnsFeed());
         return panelBorderLayoutTabCenter;
@@ -123,6 +129,15 @@ public abstract class AbstractTab extends JPanel implements FieldsTab {
             rightPanelBorderLayout.add(value.getValue());
         }
         return rightPanelBorderLayout;
+    }
+
+    @Override
+    public JPanel createMessageError() {
+        JPanel error = new JPanel();
+        messageError = new JLabel("");
+        error.add(messageError);
+        messageError.setPreferredSize(new Dimension(350, 15));
+        return error;
     }
 
     @Override
@@ -213,6 +228,7 @@ public abstract class AbstractTab extends JPanel implements FieldsTab {
         labelFormulaTurnsFeed = new JLabel("");
         add(labelFormulaTurnsFeed);
         labelFormulaTurnsFeed.setForeground(Color.gray);
+        labelFormulaTurnsFeed.setPreferredSize(new Dimension(350, 15));
         return labelFormulaTurnsFeed;
     }
 
@@ -250,5 +266,9 @@ public abstract class AbstractTab extends JPanel implements FieldsTab {
 
     public void setNumberComboBox(int numberComboBox) {
         this.numberComboBox = numberComboBox;
+    }
+
+    public JLabel getMessageError() {
+        return messageError;
     }
 }

@@ -16,12 +16,6 @@ public interface FieldsWindow {
     JPanel createMainPanel();
 
     /**
-     * Метод создает северную панель
-     * @return возвращает северную панель
-     */
-    JPanel createNorthPanel();
-
-    /**
      * Метод создает центральную панель
      * @return возвращает центральную панель
      */

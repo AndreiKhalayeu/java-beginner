@@ -46,16 +46,6 @@ public class ButtonActionListener implements ActionListener {
     private TabTap tabTap;
 
     /**
-     * Поле число диаметра
-     */
-    private double numberDiameter;
-
-    /**
-     * Поле число подачи
-     */
-    private double numberFeed;
-
-    /**
      * Конструктор кнопочного слушателя
      * @param field поле
      * @param tabCountersink вкладка зенкер
@@ -87,6 +77,7 @@ public class ButtonActionListener implements ActionListener {
             }
         }
         if (clickedButton == field.getButtonStop()) {
+            tab.getMessageError().setText("");
             deleteSelectTab(tool, tab);
         }
     }
@@ -147,12 +138,13 @@ public class ButtonActionListener implements ActionListener {
     private boolean conditionInputDiameter(AbstractTool tool, AbstractTab tab) {
         String stringDiameter = tab.getFieldDiameter().getText();
         if ("".equals(stringDiameter)) {
+            tool.setNumberDiameter(0);
             massageForDiameter(tool, tab);
             return false;
         }
-        field.getMessageError().setText("");
-        numberDiameter = Double.parseDouble(stringDiameter);
-        if (numberDiameter >= tool.getMinDiameter() && numberDiameter <= tool.getMaxDiameter()) {
+        tab.getMessageError().setText("");
+        tool.setNumberDiameter(Double.parseDouble(stringDiameter));
+        if (tool.getNumberDiameter() >= tool.getMinDiameter() && tool.getNumberDiameter() <= tool.getMaxDiameter()) {
             return true;
         } else {
             massageForDiameter(tool, tab);
@@ -166,13 +158,10 @@ public class ButtonActionListener implements ActionListener {
      * @param tab вкладка
      */
     private void massageForDiameter(AbstractTool tool, AbstractTab tab) {
-        field.getMessageError().setForeground(Color.red);
-        field.getMessageError().setText("Введите диаметр инструмента от " + (int) tool.getMinDiameter() +
+        tab.getMessageError().setForeground(Color.red);
+        tab.getMessageError().setText("Введите диаметр инструмента от " + (int) tool.getMinDiameter() +
                 " до " + (int) tool.getMaxDiameter() + " мм!");
-        tab.getFieldFeed().setText("");
-        tab.getFieldTurns().setText("0");
-        tab.getFieldMachineFeed().setText("0");
-        tab.getLabelFormulaTurnsFeed().setText("");
+        deleteSelectTab(tool, tab);
     }
 
     /**
@@ -184,8 +173,8 @@ public class ButtonActionListener implements ActionListener {
      */
     private boolean conditionInputDiameterFeed(AbstractTool tool, AbstractTab tab) {
         String stringFeed = tab.getFieldFeed().getText();
-        numberFeed = Double.parseDouble(stringFeed);
-        if (numberFeed >= tool.getMinFeed() && numberFeed <= tool.getMaxFeed()) {
+        tool.setNumberFeed(Double.parseDouble(stringFeed));
+        if (tool.getNumberFeed() >= tool.getMinFeed() && tool.getNumberFeed() <= tool.getMaxFeed()) {
             return true;
         } else {
             massageForFeed(tool, tab);
@@ -195,19 +184,20 @@ public class ButtonActionListener implements ActionListener {
 
     /**
      * Метод проверяет есть ли подача для метчика
-     * @param tool инструмент метчик
+     * @param tap инструмент метчик
      * @param tab вкладка метчик
      * @return возвращает true если подача есть, false если
      * подачи нет
      */
-    private boolean conditionInputDiameterFeedTap(Tap tool, TabTap tab) {
+    private boolean conditionInputDiameterFeedTap(Tap tap, TabTap tab) {
         String stringFeed = tab.getFieldFeed().getText();
         if ("".equals(stringFeed)) {
+            tap.setNumberFeed(0);
             massageForFeedTap(tab);
             return false;
         }
-        numberFeed = Double.parseDouble(stringFeed);
-        if (tool.isFeed(numberFeed)) {
+        tap.setNumberFeed(Double.parseDouble(stringFeed));
+        if (tap.isFeed(tap.getNumberFeed())) {
             return true;
         } else {
             massageForFeedTap(tab);
@@ -221,8 +211,8 @@ public class ButtonActionListener implements ActionListener {
      * @param tab вкладка
      */
     private void massageForFeed(AbstractTool tool, AbstractTab tab) {
-        field.getMessageError().setForeground(Color.red);
-        field.getMessageError().setText("Введите подачу инструмента от " + tool.getMinFeed() +
+        tab.getMessageError().setForeground(Color.red);
+        tab.getMessageError().setText("Введите подачу инструмента от " + tool.getMinFeed() +
                 " до " + tool.getMaxFeed() + " мм/об!");
         tab.getFieldTurns().setText("0");
         tab.getFieldMachineFeed().setText("0");
@@ -234,8 +224,8 @@ public class ButtonActionListener implements ActionListener {
      * @param tab вкладка метчик
      */
     private void massageForFeedTap(TabTap tab) {
-        field.getMessageError().setForeground(Color.red);
-        field.getMessageError().setText("Введите стандартный шаг метрического метчика от 0.5 до 3.5!");
+        tab.getMessageError().setForeground(Color.red);
+        tab.getMessageError().setText("Введите шаг метрической резьбы от 0.5 до 3.5!");
         tab.getFieldDrill().setText("0");
         tab.getFieldTurns().setText("0");
         tab.getFieldMachineFeed().setText("0");
@@ -267,9 +257,9 @@ public class ButtonActionListener implements ActionListener {
     private int calculateWithCheckBox(AbstractTool tool, AbstractTab tab) {
         int turns;
         if (tab.isCheckBox()) {
-            turns = tool.calculateTurnsGF(tool.calculateTurns(numberDiameter));
+            turns = tool.calculateTurnsGF(tool.calculateTurns(tool.getNumberDiameter()));
         } else {
-            turns = tool.calculateTurns(numberDiameter);
+            turns = tool.calculateTurns(tool.getNumberDiameter());
         }
         return turns;
     }
@@ -280,11 +270,11 @@ public class ButtonActionListener implements ActionListener {
      * @param tab вкладка
      */
     private void setFieldsWithoutFeed(AbstractTool tool, AbstractTab tab) {
-        tab.getFieldMachineFeed().setText("" + tool.calculateFeed(numberFeed, calculateWithCheckBox(tool, tab)));
-        tab.getFieldFeed().setText("" + numberFeed);
+        tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.getNumberFeed(), calculateWithCheckBox(tool, tab)));
+        tab.getFieldFeed().setText("" + tool.getNumberFeed());
         tab.getFieldTurns().setText("" + calculateWithCheckBox(tool, tab));
-        tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter +
-                ", об/мин  F = " + calculateWithCheckBox(tool, tab) + " * " + numberFeed + ", мм/мин");
+        tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + tool.getNumberDiameter() +
+                ", об/мин  F = " + calculateWithCheckBox(tool, tab) + " * " + tool.getNumberFeed() + ", мм/мин");
     }
 
     /**
@@ -294,12 +284,12 @@ public class ButtonActionListener implements ActionListener {
      * @param tab вкладка
      */
     private void setFieldsWithFeed(AbstractTool tool, AbstractTab tab) {
-        field.getMessageError().setForeground(Color.green);
-        field.getMessageError().setText("Установлена средняя подача S=" + tool.getFeed() + " мм/об");
+        tab.getMessageError().setForeground(Color.GRAY);
+        tab.getMessageError().setText("Установлена средняя подача S=" + tool.getFeed() + " мм/об");
         tab.getFieldMachineFeed().setText("" + tool.calculateFeed(calculateWithCheckBox(tool, tab)));
         tab.getFieldFeed().setText("" + tool.getFeed());
         tab.getFieldTurns().setText("" + calculateWithCheckBox(tool, tab));
-        tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter +
+        tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " +tool.getNumberDiameter() +
                 ", об/мин  F = " + calculateWithCheckBox(tool, tab) + " * " + tool.getFeed() + ", мм/мин");
     }
 
@@ -309,10 +299,10 @@ public class ButtonActionListener implements ActionListener {
      * @param tab вкладка метчик
      */
     private void setFieldsTabTap(Tap tool, TabTap tab) {
-        tab.getFieldMachineFeed().setText("" + tool.calculateFeed(numberFeed, calculateWithCheckBox(tool, tab)));
+        tab.getFieldMachineFeed().setText("" + tool.calculateFeed(tool.getNumberFeed(), calculateWithCheckBox(tool, tab)));
         tab.getFieldTurns().setText("" + calculateWithCheckBox(tool, tab));
-        tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + numberDiameter +
-                ", об/мин  F = " + calculateWithCheckBox(tool, tab) + " * " + numberFeed + " * 0.9, мм/мин");
+        tab.getLabelFormulaTurnsFeed().setText("n = 1000 * " + tool.getSpeed() + " / 3.14 * " + tool.getNumberDiameter() +
+                ", об/мин  F = " + calculateWithCheckBox(tool, tab) + " * " + tool.getNumberFeed() + " * 0.9, мм/мин");
     }
 
     /**
@@ -322,11 +312,11 @@ public class ButtonActionListener implements ActionListener {
      * @param tab вкладка сверло
      */
     private void calculationLengthPointDrill(Drill drill, TabDrill tab) {
-        if (numberDiameter >= drill.getMinDiameter() && numberDiameter <= drill.getMaxDiameter()) {
-            if (drill.lengthPointDrill(numberDiameter) % 1 == 0) {
-                tab.getFieldBlade().setText("" + (int) drill.lengthPointDrill(numberDiameter));
+        if (drill.getNumberDiameter() >= drill.getMinDiameter() && drill.getNumberDiameter() <= drill.getMaxDiameter()) {
+            if (drill.lengthPointDrill(drill.getNumberDiameter()) % 1 == 0) {
+                tab.getFieldBlade().setText("" + (int) drill.lengthPointDrill(drill.getNumberDiameter()));
             } else {
-                tab.getFieldBlade().setText(String.format("%.2f", drill.lengthPointDrill(numberDiameter)).replaceAll("\\.?0*$", ""));
+                tab.getFieldBlade().setText(String.format("%.2f", drill.lengthPointDrill(drill.getNumberDiameter())).replaceAll("\\.?0*$", ""));
             }
         } else {
             tab.getFieldBlade().setText("0");
@@ -340,8 +330,8 @@ public class ButtonActionListener implements ActionListener {
      * @param tab вкладка метчик
      */
     private void calculationDrill(Tap tap, TabTap tab) {
-        if (numberDiameter >= tap.getMinDiameter() && numberDiameter <= tap.getMaxDiameter()) {
-            tab.getFieldDrill().setText(String.format("%.2f", tap.calculateDiameterDrill(numberDiameter, numberFeed)));
+        if (tap.getNumberDiameter() >= tap.getMinDiameter() && tap.getNumberDiameter() <= tap.getMaxDiameter()) {
+            tab.getFieldDrill().setText(String.format("%.2f", tap.calculateDiameterDrill(tap.getNumberDiameter(), tap.getNumberFeed())));
         } else {
             tab.getFieldDrill().setText("0");
         }
@@ -377,7 +367,6 @@ public class ButtonActionListener implements ActionListener {
      * @param tab вкладка
      */
     private void deleteContentField(AbstractTab tab) {
-        field.getMessageError().setText("");
         tab.getFieldDiameter().setText("");
         tab.getFieldFeed().setText("");
         tab.getFieldTurns().setText("0");
