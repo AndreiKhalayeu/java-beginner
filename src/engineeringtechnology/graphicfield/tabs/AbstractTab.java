@@ -17,6 +17,21 @@ public abstract class AbstractTab extends JPanel implements FieldsTab {
     protected JLabel messageError;
 
     /**
+     * Поле расположение северной панели
+     */
+    private static final String NORTH = "North";
+
+    /**
+     * Поле расположение центральной панели
+     */
+    private static final String CENTER = "Center";
+
+    /**
+     * Поле расположение южной панели
+     */
+    private static final String SOUTH = "South";
+
+    /**
      * Поле флажек
      */
     protected boolean checkBox = false;
@@ -80,8 +95,8 @@ public abstract class AbstractTab extends JPanel implements FieldsTab {
     public JPanel createPanelBorderLayoutTabLeft() {
         JPanel panelBorderLayoutTabLeft = new JPanel();
         panelBorderLayoutTabLeft.setLayout(new BorderLayout());
-        panelBorderLayoutTabLeft.add("Center", createFieldName());
-        panelBorderLayoutTabLeft.add("South", createCheckBox());
+        panelBorderLayoutTabLeft.add(CENTER, createFieldName());
+        panelBorderLayoutTabLeft.add(SOUTH, createCheckBox());
         panelBorderLayoutTabLeft.setPreferredSize(new Dimension(195,50));
         return panelBorderLayoutTabLeft;
     }
@@ -90,9 +105,9 @@ public abstract class AbstractTab extends JPanel implements FieldsTab {
     public JPanel createPanelBorderLayoutTabCenter() {
         JPanel panelBorderLayoutTabCenter = new JPanel();
         panelBorderLayoutTabCenter.setLayout(new BorderLayout());
-        panelBorderLayoutTabCenter.add("North", createMessageError());
-        panelBorderLayoutTabCenter.add("Center", createPanelFlowLayoutTabCenter());
-        panelBorderLayoutTabCenter.add("South", createLabelFormulaTurnsFeed());
+        panelBorderLayoutTabCenter.add(NORTH, createMessageError());
+        panelBorderLayoutTabCenter.add(CENTER, createPanelFlowLayoutTabCenter());
+        panelBorderLayoutTabCenter.add(SOUTH, createLabelFormulaTurnsFeed());
         return panelBorderLayoutTabCenter;
     }
 

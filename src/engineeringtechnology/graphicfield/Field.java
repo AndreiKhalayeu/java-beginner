@@ -17,6 +17,11 @@ import java.util.Map;
 public class Field extends AbstractFieldsWindow{
 
     /**
+     * Поле список кнопок
+     */
+    private ArrayList<JButton> listButton;
+
+    /**
      * Конструктор графической оболочки
      */
     Field() {
@@ -26,17 +31,9 @@ public class Field extends AbstractFieldsWindow{
     @Override
     Map<String, JPanel> getLocationPanel() {
         Map<String, JPanel> locationPanel = new HashMap<>();
-        locationPanel.put("Center", createCenterPanel());
-        locationPanel.put("South", createSouthPanel());
+        locationPanel.put(CENTER, createCenterPanel());
+        locationPanel.put(SOUTH, createSouthPanel());
         return locationPanel;
-    }
-
-    @Override
-    ArrayList<JButton> getButton() {
-        ArrayList<JButton> listButton = new ArrayList<>();
-        listButton.add(createButtonStart());
-        listButton.add(createButtonStop());
-        return listButton;
     }
 
     @Override
@@ -58,6 +55,18 @@ public class Field extends AbstractFieldsWindow{
         tab.setForeground(Color.BLACK);
         tab.setPreferredSize(new Dimension(775,110));
         return tab;
+    }
+
+    @Override
+    ArrayList<JButton> createButtons() {
+        listButton = new ArrayList<>();
+        listButton.add(new JButton("Рассчитать"));
+        listButton.add(new JButton("Сброс"));
+        return listButton;
+    }
+
+    public ArrayList<JButton> getListButton() {
+        return listButton;
     }
 
     public static void main(String[] args) {

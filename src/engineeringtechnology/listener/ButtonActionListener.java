@@ -69,14 +69,14 @@ public class ButtonActionListener implements ActionListener {
         JButton clickedButton = (JButton) e.getSource();
         AbstractTab tab = getTab(TabActionListener.getNumberTab());
         AbstractTool tool = getTool(TabActionListener.getNumberTab(), tab.getNumberComboBox());
-        if (clickedButton == field.getButtonStart()) {
+        if (clickedButton == field.getListButton().get(0)) {
             if (tool instanceof Tap && tab instanceof TabTap) {
                 calculationModesTap((Tap) tool, (TabTap) tab);
             } else {
                 calculationModesTool(tool, tab);
             }
         }
-        if (clickedButton == field.getButtonStop()) {
+        if (clickedButton == field.getListButton().get(1)) {
             tab.getMessageError().setText("");
             deleteSelectTab(tool, tab);
         }

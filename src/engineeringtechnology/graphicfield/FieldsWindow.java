@@ -1,6 +1,7 @@
 package engineeringtechnology.graphicfield;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public interface FieldsWindow {
 
@@ -28,16 +29,10 @@ public interface FieldsWindow {
     JPanel createSouthPanel();
 
     /**
-     * Метод создает кнопку рассчитать
+     * Метод создает кнопки
      * @return возвращает кнопку рассчитать
      */
-    JButton createButtonStart();
-
-    /**
-     * Метод создает кнопку сброс
-     * @return возвращает кнопку сброс
-     */
-    JButton createButtonStop();
+    ArrayList<JButton> createButton();
 
     /**
      * Метод создает панель вкладок

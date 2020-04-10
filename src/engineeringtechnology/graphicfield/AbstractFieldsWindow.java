@@ -11,14 +11,14 @@ import java.util.Set;
 public abstract class AbstractFieldsWindow implements FieldsWindow {
 
     /**
-     * Поле кннопка рассчитать
+     * Поле расположение центральной панели
      */
-    private JButton buttonStart;
+    protected static final String CENTER = "Center";
 
     /**
-     * Поле кнопка сброс
+     * Поле расположение южной панели
      */
-    private JButton buttonStop;
+    protected static final String SOUTH = "South";
 
     /**
      * поле кнопочный слушатель
@@ -31,9 +31,9 @@ public abstract class AbstractFieldsWindow implements FieldsWindow {
 
     abstract Map<String, JPanel> getLocationPanel();
 
-    abstract ArrayList<JButton> getButton();
-
     abstract JTabbedPane getTab();
+
+    abstract ArrayList<JButton> createButtons();
 
     @Override
     public void createFrame() {
@@ -70,38 +70,25 @@ public abstract class AbstractFieldsWindow implements FieldsWindow {
     public JPanel createSouthPanel() {
         JPanel southPanel = new JPanel();
         southPanel.setBackground(Color.BLACK);
-        for (JButton button : getButton()) {
+        for (JButton button : createButton()) {
             southPanel.add(button);
         }
         return southPanel;
     }
 
     @Override
-    public JButton createButtonStart() {
-        buttonStart = new JButton("Расчитать");
-        buttonStart.setBackground(Color.LIGHT_GRAY);
-        buttonStart.addActionListener(buttonActionListener);
-        return buttonStart;
+    public ArrayList<JButton> createButton() {
+        ArrayList<JButton> list = createButtons();
+        for (JButton jButton : list) {
+            jButton.setBackground(Color.LIGHT_GRAY);
+            jButton.addActionListener(buttonActionListener);
+        }
+        return list;
     }
 
-    @Override
-    public JButton createButtonStop() {
-        buttonStop = new JButton("Сброс");
-        buttonStop.setBackground(Color.LIGHT_GRAY);
-        buttonStop.addActionListener(buttonActionListener);
-        return buttonStop;
-    }
 
     @Override
     public JTabbedPane createTads() {
         return getTab();
-    }
-
-    public JButton getButtonStart() {
-        return buttonStart;
-    }
-
-    public JButton getButtonStop() {
-        return buttonStop;
     }
 }
